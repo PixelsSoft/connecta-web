@@ -1,0 +1,166 @@
+.user__profile-setUp {
+  padding: 60px 0;
+}
+
+.steps {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  gap: 20px;
+  position: relative;
+  z-index: 2;
+}
+/* .steps::before {
+  content: '';
+  height: 1px;
+  background-color: #e0e6eb;
+  position: absolute;
+  left: 0;
+  top: 14px;
+  width: 100%;
+  z-index: 1;
+} */
+.step {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  color: #888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+}
+
+.step.active {
+  background: #c8102e;
+  color: white;
+  font-weight: bold;
+}
+
+.step-content {
+  min-height: 200px;
+  margin-bottom: 20px;
+}
+
+.step-buttons {
+  display: flex;
+  gap: 16px;
+}
+
+.step-labelContent {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+}
+.step-labelContent:not(:last-child)::before {
+  content: '';
+  height: 2px;
+  background-color: #e0e6eb;
+  position: absolute;
+  left: 110%;
+  top: 13px;
+  width: 100%;
+  z-index: 1;
+}
+
+.step-labelContent span {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+}
+
+/* Content */
+.step-1-content .sec-head h3 {
+  font-size: 30px;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+/* Custom CheckBox */
+.customCheckBoxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.customCheck-wrapper {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  width: 129px;
+  height: 129px;
+  /* border: 2px solid #ccc; */
+  border: 1px solid transparent;
+  border-radius: 12px;
+  /* overflow: hidden; */
+  transition: border-color 0.3s;
+}
+
+.customCheck-wrapper input[type='checkbox'] {
+  display: none;
+}
+
+.customCheck-box {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
+  position: relative;
+}
+
+.customCheck-img {
+  max-width: 100%;
+  height: 60px;
+  object-fit: contain;
+}
+
+.customCheck-label {
+  margin-top: 8px;
+  display: block;
+  font-weight: 500;
+  line-height: 1;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.customCheck-icon {
+  position: absolute;
+  /* top: 10px;
+  right: 10px; */
+  top: -10px;
+  right: -10px;
+  width: 20px;
+  height: 20px;
+  display: none;
+}
+
+.customCheck-wrapper input:checked + .customCheck-box .customCheck-icon {
+  display: block;
+}
+
+/* .customCheck-wrapper input:checked + .customCheck-box {
+  border-color: #007bff;
+} */
+
+.customCheck-wrapper:has(input:checked) {
+  border: 1px solid #000;
+}
+
+@media (max-width: 1199px) {
+  .step-labelContent:not(:last-child)::before {
+    left: 110%;
+    width: 80%;
+    z-index: 1;
+  }
+}
+
+@media (max-width: 991px) {
+  .step-labelContent:not(:last-child)::before {
+    content: unset;
+  }
+}
