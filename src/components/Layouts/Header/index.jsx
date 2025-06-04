@@ -17,7 +17,11 @@ const Header = (props) => {
 
         <Navbar.Collapse id='navbar-nav'>
           <Nav className='ms-auto'>
-            <Nav.Link as={Link} className='header__postJob-icon' to=''>
+            <Nav.Link
+              as={Link}
+              to='/find-professionals'
+              className='header__postJob-icon'
+            >
               Post A job
             </Nav.Link>
             <Nav.Link

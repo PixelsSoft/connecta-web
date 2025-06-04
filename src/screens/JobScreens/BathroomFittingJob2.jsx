@@ -24,11 +24,6 @@ const BathroomFittingJob2 = () => {
                     <label for='userEmail' class='form-label'>
                       Email
                     </label>
-                    {/* <textarea
-                      class='form-control'
-                      placeholder='Add Description'
-                      rows={3}
-                    ></textarea> */}
                     <input
                       type='email'
                       class='form-control'

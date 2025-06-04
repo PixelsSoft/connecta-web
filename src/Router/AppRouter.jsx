@@ -3,7 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from '../screens/Home';
 import Login from '../screens/AuthPages/Login';
 import SignUP from '../screens/AuthPages/SignUP';
+
 import FindProfessional from '../screens/JobScreens/FindProfessional';
+import PaintingJob from '../screens/JobScreens/PaintingJob';
+
 import PaintingJob1 from '../screens/JobScreens/PaintingJob1';
 import PaintingJob2 from '../screens/JobScreens/PaintingJob2';
 import BathroomFittingJob1 from '../screens/JobScreens/BathRoomFittingJob1';
@@ -29,6 +32,8 @@ import AppliedJobs from '../screens/UserScreens/AccountSettingsScreens/AppliedJo
 import PaymentMethod from '../screens/UserScreens/AccountSettingsScreens/PaymentMethod';
 import UserContactCenter from '../screens/UserScreens/ContactCenter';
 import SetUpProfile from '../screens/SetUpProfile';
+import SavedLeads from '../screens/UserScreens/SavedLeads';
+import TopJobForYou from '../screens/UserScreens/TopJobForYou';
 
 const AppRouter = () => {
   return (
@@ -41,11 +46,13 @@ const AppRouter = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/sign-up' element={<SignUP />} />
 
+        <Route path='/painting-job' element={<PaintingJob />} />
+
         {/* Find Jobs || Find Professionls */}
         <Route path='/find-professionals' element={<FindProfessional />} />
-        <Route path='/painting-job-1' element={<PaintingJob1 />} />
-        <Route path='/painting-job-2' element={<PaintingJob2 />} />
 
+        {/* <Route path='/painting-job-1' element={<PaintingJob1 />} />
+        <Route path='/painting-job-2' element={<PaintingJob2 />} />
         <Route
           path='/bathroom-fitting-job-1'
           element={<BathroomFittingJob1 />}
@@ -57,7 +64,7 @@ const AppRouter = () => {
         <Route
           path='/bathroom-fitting-job-3'
           element={<BathroomFittingJob3 />}
-        />
+        /> */}
 
         {/* Recruiter Screens */}
         <Route
@@ -112,6 +119,8 @@ const AppRouter = () => {
         />
 
         <Route path='/user/contact-center' element={<UserContactCenter />} />
+        <Route path='/user/saved-leads' element={<SavedLeads />} />
+        <Route path='/user/top-job-for-you' element={<TopJobForYou />} />
         <Route path='/set-up-profile' element={<SetUpProfile />} />
       </Routes>
     </Router>

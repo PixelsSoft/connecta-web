@@ -35,12 +35,6 @@ const BathroomFittingJob1 = () => {
                         resize: 'none',
                       }}
                     ></textarea>
-                    {/* <input
-                      type='email'
-                      class='form-control'
-                      id='userName'
-                      placeholder='info@wrappixel.com'
-                    /> */}
                   </div>
                   <div class='inputGroup'>
                     <label for='userName' class='form-label mb-0'>

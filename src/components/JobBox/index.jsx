@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 
 const JobBox = ({
   to = '',
+  onClick,
+  isActive,
   applied = false,
   icon = paintingHouseSmIcon,
   title = 'Painting House',
@@ -15,8 +17,8 @@ const JobBox = ({
   date = '02/20/2025',
 }) => {
   return (
-    <Link to={to} style={{ textDecoration: 'none' }}>
-      <div className='job__box'>
+    <Link to={to} style={{ textDecoration: 'none' }} onClick={onClick}>
+      <div className={`job__box ${isActive ? 'job__box-active' : ''}`}>
         <div className='job__box-content'>
           {applied && (
             <div className='job__box-content-applied'>

@@ -118,8 +118,10 @@ const FindProfessional = () => {
               </div>
             </div>
             <div className='col-lg-5'>
-              <div className='jobPosting__banner-img'>
-                <img src={jobPostingBannerImg} className='img-fluid' alt='' />
+              <div className='h-100 d-flex align-items-center justify-content-center'>
+                <div className='jobPosting__banner-img'>
+                  <img src={jobPostingBannerImg} className='img-fluid' alt='' />
+                </div>
               </div>
             </div>
           </div>
