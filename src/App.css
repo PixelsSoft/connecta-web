@@ -2126,6 +2126,13 @@ label {
   border-right: 0;
 }
 
+.input-group-btn .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
 /* Responsive */
 @media (max-width: 1399px) {
   .mostRecentCategories_boxes {

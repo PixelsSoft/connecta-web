@@ -64,8 +64,8 @@ const UserHeader = () => {
                   </Link>
 
                   <Link
-                    to=''
-                    // className={`${isActive('') ? 'active' : ''}`}
+                    to='/user/chat'
+                    className={`${isActive('/user/chat') ? 'active' : ''}`}
                   >
                     <div className={`btn__witchIcon `}>
                       <img src={chaticon} alt='' />
