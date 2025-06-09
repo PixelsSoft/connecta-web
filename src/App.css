@@ -762,9 +762,11 @@ p {
 .footer-links ul li {
   margin-bottom: 5px;
 }
-.footer-links ul li a {
+.footer-links ul li .footerLink {
   color: var(--grayColor);
   text-decoration: none;
+  border: none;
+  background-color: unset;
 }
 
 .footer__copyright-sec {
@@ -1685,7 +1687,7 @@ label {
   margin-bottom: 16px;
 }
 
-.dashboardFooter .footer-links ul li a {
+.dashboardFooter .footer-links ul li .footerLink {
   color: #fff !important;
   font-weight: 700;
   font-size: 14px;
@@ -2792,7 +2794,7 @@ label {
   .footer-title {
     font-size: 17px;
   }
-  .footer-links ul li a {
+  .footer-links ul li .footerLink {
     font-size: 14px;
   }
   .dashboardFooter .footer-title {

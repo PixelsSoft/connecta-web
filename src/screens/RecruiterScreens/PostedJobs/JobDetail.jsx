@@ -176,7 +176,7 @@ const JobDetail = () => {
                 {/* <div className='interested-pro-boxes'> */}
                 <div className='row'>
                   {interestedPros.map((pro, index) => (
-                    <div className='col-xl-12 col-md-6 mb-3'>
+                    <div className='col-xl-12 col-md-6 mb-3' key={index}>
                       <InterestedProBox
                         key={index}
                         userImg={pro.userImg}

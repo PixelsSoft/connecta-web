@@ -1,27 +1,21 @@
+// components/CustomModal.js
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
-const CustomModal = ({ show, onClose, title, children, onSubmit, footer }) => {
+const CustomModal = ({ show, handleClose, title, children, size = 'md' }) => {
   return (
-    <Modal show={show} onHide={onClose} centered size='lg'>
-      <Modal.Header closeButton>
-        <Modal.Title>{title}</Modal.Title>
-      </Modal.Header>
-
-      <Modal.Body>{children}</Modal.Body>
-
-      {footer !== false && (
-        <Modal.Footer>
-          <Button variant='secondary' onClick={onClose}>
-            Close
-          </Button>
-          {onSubmit && (
-            <Button variant='primary' onClick={onSubmit}>
-              Submit
-            </Button>
-          )}
-        </Modal.Footer>
+    <Modal
+      show={show}
+      onHide={handleClose}
+      centered
+      size={size} // sm, md (default), lg, xl
+    >
+      {title && (
+        <Modal.Header closeButton>
+          <Modal.Title>{title}</Modal.Title>
+        </Modal.Header>
       )}
+      <Modal.Body>{children}</Modal.Body>
     </Modal>
   );
 };

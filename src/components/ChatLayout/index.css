@@ -1,8 +1,13 @@
 .chatSection {
-  padding: 40px 0 20px;
-  flex-grow: 1;
+  /* padding: 40px 0 20px; */
+  /* flex-grow: 1; */
+  /* height: 100vh; */
+  height: calc(100vh - 109px);
 }
 
+.theme-menu-icon {
+  line-height: 1;
+}
 .chatScreen-page {
   display: flex;
   flex-direction: column;
@@ -11,11 +16,13 @@
 
 /* Base layout styles */
 .chat-layout {
-  display: flex;
   position: relative;
   overflow: hidden;
   background-color: #fff;
-  flex-grow: 1;
+  display: flex;
+  /* height: 100vh; */
+  height: 100%;
+  overflow: hidden;
 }
 
 .chat-layout__sidebar {
@@ -24,13 +31,20 @@
   transition: transform 0.3s ease;
   z-index: 1000;
   background-color: #fff;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-layout__sidebar .chat-layout__body {
+  flex: 1;
+  overflow-y: auto;
 }
 
 .chat-layout__chat {
   flex: 1;
+  display: flex;
+  flex-direction: column;
   background: #fff;
-  overflow-y: auto;
 }
 
 .chat-layout__job {
@@ -38,6 +52,8 @@
   border-left: 1px solid #ddd;
   padding: 1rem;
   transition: transform 0.3s ease;
+  background-color: #fff;
+  overflow-y: auto;
 }
 
 .chat-layout__header {
@@ -45,16 +61,12 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  background-color: #fff;
   position: sticky;
   top: 0;
-  background-color: #fff;
 }
 .chat-layout__header-icon {
   max-width: 70px;
-}
-
-.chat-layout__body {
-  /* padding: 1rem; */
 }
 
 .chatUserBox {
@@ -80,6 +92,10 @@
   font-family: 'Manrope', sans-serif;
   font-size: 16px;
   font-weight: 600;
+  width: 150px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .chatUserBox__content {
@@ -99,6 +115,11 @@
   font-family: 'Manrope', sans-serif;
   font-weight: 400;
   color: #98a4ae;
+
+  width: 155px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .chatUserBox__content-header span {
@@ -172,6 +193,9 @@
 .userChat-detail-head {
   padding: 16px;
   border-bottom: 1px solid #e0e6eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .userChat-detail-headUser {
@@ -193,6 +217,7 @@
   height: 48px;
   border-radius: 50%;
   overflow: hidden;
+  flex: 0 0 48px;
 }
 
 .userChat-detail-headUser-img img {
@@ -201,6 +226,8 @@
 
 .userChat-detail-content {
   padding: 16px 0 16px 16px;
+  flex: 1;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -229,10 +256,6 @@
   font-size: 14px;
 }
 
-.userChat-detail-content .message.left .bubble {
-  white-space: nowrap;
-}
-
 .userChat-detail-content .message.right {
   margin: 0 0 auto;
   display: flex;
@@ -258,12 +281,71 @@
   font-family: 'Manrope', sans-serif;
   font-size: 14px;
   font-weight: 400;
+  word-wrap: break-word;
 }
 .userChat-detail-content .message.left .bubble {
   background-color: #eff4fa;
 }
 .userChat-detail-content .message.right .bubble {
   background-color: #ecfdfd;
+}
+
+.chat-menu-icon {
+  line-height: 1;
+  background-color: #fff;
+  font-size: 24px;
+  padding: 0;
+}
+.job-layout__header {
+  margin-bottom: 10px;
+}
+.chat-layout__header-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.chat-input-form {
+  border-top: 1px solid #e0e6eb;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chat-input-form-inputFields {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.chat-input-form-inputFields .chat-input {
+  flex-grow: 1;
+  border: unset;
+  outline: unset;
+  box-shadow: unset;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  /* color: #98a4ae; */
+}
+
+.chat-file-upload img {
+  width: 20px;
+}
+
+.chat-send-btn {
+  border: unset;
+  background: unset;
+  line-height: 1;
+  padding: 5px 0 5px 12px;
+}
+
+.chat-send-btn img {
+  width: 15px;
+}
+
+label.chat-file-upload {
+  cursor: pointer;
+  padding: 0 5px;
 }
 
 /* --- Sidebar (Left Panel) for max-width: 991px --- */
@@ -311,5 +393,14 @@
 
   .chat-layout__job.hidden {
     transform: translateX(100%);
+  }
+}
+
+@media (max-width: 481px) {
+  .userChat-detail-content {
+    padding: 10px 0 10px 10px;
+  }
+  .userChat-detail-content .message {
+    max-width: 70%;
   }
 }

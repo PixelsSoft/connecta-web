@@ -6,8 +6,11 @@ import deleteIcon from '../../../assets/images/delete-icon.png';
 
 import checkLgIcon from '../../../assets/images/check-lg-icon.png';
 import deleteLgIcon from '../../../assets/images/delete-lg-icon.png';
+import CustomModal from '../../../components/CustomModal';
+import { Form } from 'react-bootstrap';
 
 const ManageAccount = () => {
+  const [showVerifyModal, setShowVerifyModal] = useState(false);
   return (
     <>
       <RecruiterAccountSettingLayout>
@@ -30,7 +33,12 @@ const ManageAccount = () => {
                       </p>
                     </div>
                   </div>
-                  <button className='customBtn btn-bgRed'>Verify</button>
+                  <button
+                    className='customBtn btn-bgRed'
+                    onClick={() => setShowVerifyModal(true)}
+                  >
+                    Verify
+                  </button>
                 </div>
               </div>
 
@@ -57,6 +65,25 @@ const ManageAccount = () => {
           </div>
         </div>
       </RecruiterAccountSettingLayout>
+
+      <CustomModal
+        show={showVerifyModal}
+        handleClose={() => setShowVerifyModal(false)}
+        // title='Verify Account'
+        size='sm'
+      >
+        <div className='emailVerificationModal'>
+          <p>Please enter the verification code sent to your email.</p>
+          <div className='row justify-content-center my-3'>
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className='col-3'>
+                <Form.Control maxLength={1} className='text-center' />
+              </div>
+            ))}
+          </div>
+          <button className='w-100 customBtn btn-bgRed'>Verify</button>
+        </div>
+      </CustomModal>
     </>
   );
 };

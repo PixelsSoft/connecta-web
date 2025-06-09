@@ -34,15 +34,15 @@ const footerData = [
       { name: 'Privacy Policy', to: '' },
     ],
   },
-  {
-    title: 'Select Language',
-    links: [
-      { name: 'English', to: '' },
-      { name: 'German', to: '' },
-      { name: 'French', to: '' },
-      { name: 'Italian', to: '' },
-    ],
-  },
+  // {
+  //   title: 'Select Language',
+  //   links: [
+  //     { name: 'English', to: '' },
+  //     { name: 'German', to: '' },
+  //     { name: 'French', to: '' },
+  //     { name: 'Italian', to: '' },
+  //   ],
+  // },
 ];
 
 const HomeFooter = () => {
@@ -105,13 +105,42 @@ const HomeFooter = () => {
                           <ul className='footer-links'>
                             {item.links.map((link, i) => (
                               <li key={i}>
-                                <Link to={link.to}>{link.name}</Link>
+                                <Link to={link.to} className='footerLink'>
+                                  {link.name}
+                                </Link>
                               </li>
                             ))}
                           </ul>
                         </div>
                       </div>
                     ))}
+                    <div className='col-md-3 col-6 mb-md-0 mb-3'>
+                      <div className='footer-links'>
+                        <h2 className='footer-title'>Select Language</h2>
+                        <ul className='footer-links'>
+                          <li>
+                            <a href='javascript:;' className='footerLink'>
+                              English
+                            </a>
+                          </li>
+                          <li>
+                            <a href='javascript:;' className='footerLink'>
+                              German
+                            </a>
+                          </li>
+                          <li>
+                            <a href='javascript:;' className='footerLink'>
+                              French
+                            </a>
+                          </li>
+                          <li>
+                            <a href='javascript:;' className='footerLink'>
+                              Italian
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

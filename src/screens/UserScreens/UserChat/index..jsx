@@ -4,11 +4,17 @@ import ChatLayout from '../../../components/ChatLayout';
 
 const UserChat = () => {
   return (
-    <div className='chatScreen-page'>
+    <>
+      {/* <div className='chatScreen-page'>
       <UserLayout>
         <ChatLayout />
       </UserLayout>
-    </div>
+      </div> */}
+      {/* <ChatLayout /> */}
+      <UserLayout>
+        <ChatLayout />
+      </UserLayout>
+    </>
   );
 };
 

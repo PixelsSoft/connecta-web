@@ -3,12 +3,17 @@ import './index.css';
 import { BiSearch } from 'react-icons/bi';
 
 import chatheadicon from '../../assets/images/chat-head-icon.png';
+import menuIcon from '../../assets/images/menu-icon.png';
+import sendIcon from '../../assets/images/send-icon.png';
+import attachIcon from '../../assets/images/attach-icon.png';
 
 import chatusericon1 from '../../assets/images/chat-user-icon1.png';
 import chatusericon2 from '../../assets/images/chat-user-icon2.png';
 import chatusericon3 from '../../assets/images/chat-user-icon3.png';
 import chatusericon4 from '../../assets/images/chat-user-icon4.png';
 import chatusericon5 from '../../assets/images/chat-user-icon5.png';
+import { IoIosClose } from 'react-icons/io';
+import { LuMenu } from 'react-icons/lu';
 
 const chatUsersData = [
   {
@@ -53,9 +58,142 @@ const chatUsersData = [
     message: 'Nice looking dress you...',
     lastOnline: '30 minutes',
   },
+  // Add more users as needed
+
+  // {
+  //   id: 1,
+  //   image: chatusericon1,
+  //   name: 'Michell Flintoff',
+  //   message: 'You: Yesterdy was great...',
+  //   lastOnline: '15 minutes',
+  // },
+  // {
+  //   id: 2,
+  //   image: chatusericon2,
+  //   name: 'Bianca Anderson',
+  //   message: 'Nice looking dress you...',
+  //   lastOnline: '30 minutes',
+  // },
+  // {
+  //   id: 3,
+  //   image: chatusericon3,
+  //   name: 'Andrew Johnson',
+  //   message: 'Sent a photo',
+  //   lastOnline: '2 hours',
+  // },
+  // {
+  //   id: 4,
+  //   image: chatusericon4,
+  //   name: 'Mark Strokes',
+  //   message: 'Lorem ispusm text sud...',
+  //   lastOnline: '5 days',
+  // },
+  // {
+  //   id: 5,
+  //   image: chatusericon5,
+  //   name: 'Mark, Stoinus & Rishvi..',
+  //   message: 'Lorem ispusm text ...',
+  //   lastOnline: '5 days',
+  // },
+  // {
+  //   id: 6,
+  //   image: chatusericon1,
+  //   name: 'Bianca Anderson',
+  //   message: 'Nice looking dress you...',
+  //   lastOnline: '30 minutes',
+  // },
+
+  // {
+  //   id: 1,
+  //   image: chatusericon1,
+  //   name: 'Michell Flintoff',
+  //   message: 'You: Yesterdy was great...',
+  //   lastOnline: '15 minutes',
+  // },
+  // {
+  //   id: 2,
+  //   image: chatusericon2,
+  //   name: 'Bianca Anderson',
+  //   message: 'Nice looking dress you...',
+  //   lastOnline: '30 minutes',
+  // },
+  // {
+  //   id: 3,
+  //   image: chatusericon3,
+  //   name: 'Andrew Johnson',
+  //   message: 'Sent a photo',
+  //   lastOnline: '2 hours',
+  // },
+  // {
+  //   id: 4,
+  //   image: chatusericon4,
+  //   name: 'Mark Strokes',
+  //   message: 'Lorem ispusm text sud...',
+  //   lastOnline: '5 days',
+  // },
+  // {
+  //   id: 5,
+  //   image: chatusericon5,
+  //   name: 'Mark, Stoinus & Rishvi..',
+  //   message: 'Lorem ispusm text ...',
+  //   lastOnline: '5 days',
+  // },
+  // {
+  //   id: 6,
+  //   image: chatusericon1,
+  //   name: 'Bianca Anderson',
+  //   message: 'Nice looking dress you...',
+  //   lastOnline: '30 minutes',
+  // },
+
+  // {
+  //   id: 1,
+  //   image: chatusericon1,
+  //   name: 'Michell Flintoff',
+  //   message: 'You: Yesterdy was great...',
+  //   lastOnline: '15 minutes',
+  // },
+  // {
+  //   id: 2,
+  //   image: chatusericon2,
+  //   name: 'Bianca Anderson',
+  //   message: 'Nice looking dress you...',
+  //   lastOnline: '30 minutes',
+  // },
+  // {
+  //   id: 3,
+  //   image: chatusericon3,
+  //   name: 'Andrew Johnson',
+  //   message: 'Sent a photo',
+  //   lastOnline: '2 hours',
+  // },
+  // {
+  //   id: 4,
+  //   image: chatusericon4,
+  //   name: 'Mark Strokes',
+  //   message: 'Lorem ispusm text sud...',
+  //   lastOnline: '5 days',
+  // },
+  // {
+  //   id: 5,
+  //   image: chatusericon5,
+  //   name: 'Mark, Stoinus & Rishvi..',
+  //   message: 'Lorem ispusm text ...',
+  //   lastOnline: '5 days',
+  // },
+  // {
+  //   id: 6,
+  //   image: chatusericon1,
+  //   name: 'Bianca Anderson',
+  //   message: 'Nice looking dress you...',
+  //   lastOnline: '30 minutes',
+  // },
 ];
 
 const ChatLayout = () => {
+  const [message, setMessage] = useState('');
+  const [file, setFile] = useState(null);
+
   const [activeSection, setActiveSection] = useState('chat');
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -72,9 +210,32 @@ const ChatLayout = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+
+    // Handle text message
+    if (message.trim()) {
+      console.log('Text Message:', message);
+    }
+
+    // Handle file upload
+    if (file) {
+      console.log('File uploaded:', file.name);
+    }
+
+    // Clear input after submit
+    setMessage('');
+    setFile(null);
+    e.target.reset(); // resets file input visually
+  };
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   return (
-    <section className='chatSection d-flex flex-column'>
-      <div className='container d-flex flex-column flex-grow-1'>
+    <section className='chatSection'>
+      <div className='container h-100'>
         <div className='chat-layout'>
           <div
             className={`chat-layout__sidebar ${sidebarOpen ? 'open' : ''} ${
@@ -82,7 +243,7 @@ const ChatLayout = () => {
             }`}
           >
             <div className='chat-layout__header'>
-              <div>
+              <div className='chat-layout__header-title'>
                 <img
                   src={chatheadicon}
                   className='chat-layout__header-icon'
@@ -90,7 +251,12 @@ const ChatLayout = () => {
                 />
                 {/* <h5>Chat List</h5> */}
                 {isMobile && (
-                  <button onClick={() => setSidebarOpen(false)}>Close</button>
+                  <button
+                    className='chat-menu-icon'
+                    onClick={() => setSidebarOpen(false)}
+                  >
+                    <IoIosClose />
+                  </button>
                 )}
               </div>
               <div className='travelForWork-search-box mt-0 mb-0'>
@@ -139,85 +305,138 @@ const ChatLayout = () => {
               </div>
             </div>
           </div>
-
           <div className='chat-layout__chat'>
-            <div>
-              <div className='userChat-detail-head'>
-                <div className=''>
-                  {isMobile && (
-                    <button onClick={() => setSidebarOpen(true)}>☰</button>
-                  )}
-                  <div className='userChat-detail-headUser'>
-                    <div className='userChat-detail-headUser-img'>
-                      <img src={chatusericon1} alt='' />
-                    </div>
-                    <p>Away</p>
+            <div className='userChat-detail-head'>
+              <div className='d-flex justify-content-between align-items-center gap-2'>
+                {isMobile && (
+                  <button
+                    className='theme-menu-icon'
+                    onClick={() => setSidebarOpen(true)}
+                  >
+                    {/* <img src={menuIcon} alt='' /> */}
+                    <LuMenu />
+                  </button>
+                )}
+                <div className='userChat-detail-headUser'>
+                  <div className='userChat-detail-headUser-img'>
+                    <img src={chatusericon1} alt='' />
                   </div>
-                  {isTablet && (
-                    <button onClick={() => setActiveSection('job')}>
-                      Details
-                    </button>
-                  )}
+                  <p>Away</p>
                 </div>
               </div>
-              <div className='userChat-detail-content'>
-                <div className='userChat-detail-content-left'>
-                  <div class='message left'>
-                    <div className='userChat-detail-headUser-img'>
-                      <img src={chatusericon3} alt='' />
-                    </div>
-                    <div>
-                      <p>Andrew, 2 hours ago</p>
-                      <div class='bubble'>
-                        If I don't like something, I’ll stay away from it.
-                      </div>
+              {isTablet && (
+                <button
+                  className='theme-menu-icon'
+                  onClick={() => setActiveSection('job')}
+                >
+                  {/* <img src={menuIcon} alt='' /> */}
+                  <LuMenu />
+                </button>
+              )}
+            </div>
+            <div className='userChat-detail-content'>
+              <div className='userChat-detail-content-left'>
+                <div className='message left'>
+                  <div className='userChat-detail-headUser-img'>
+                    <img src={chatusericon3} alt='' />
+                  </div>
+                  <div>
+                    <p>Andrew, 2 hours ago</p>
+                    <div className='bubble'>
+                      If I don't like something, I’ll stay away from it.
                     </div>
                   </div>
                 </div>
-
-                <div className='userChat-detail-content-right'>
-                  <div class='message right'>
-                    <div className='message-rightDiv'>
-                      <p>2 hours ago</p>
-                      <div class='bubble'>
-                        If I don't like something, I’ll stay away from it.
-                      </div>
+              </div>
+              <div className='userChat-detail-content-right'>
+                <div className='message right'>
+                  <div className='message-rightDiv'>
+                    <p>2 hours ago</p>
+                    <div className='bubble'>
+                      If I don't like something, I’ll stay away from it.
                     </div>
                   </div>
                 </div>
-
-                <div className='userChat-detail-content-left'>
-                  <div class='message left'>
-                    <div className='userChat-detail-headUser-img'>
-                      <img src={chatusericon3} alt='' />
-                    </div>
-                    <div>
-                      <p>Andrew, 2 hours ago</p>
-                      <div class='bubble'>
-                        I want more detailed information.
-                      </div>
+              </div>
+              <div className='userChat-detail-content-left'>
+                <div className='message left'>
+                  <div className='userChat-detail-headUser-img'>
+                    <img src={chatusericon3} alt='' />
+                  </div>
+                  <div>
+                    <p>Andrew, 2 hours ago</p>
+                    <div className='bubble'>
+                      I want more detailed information.
                     </div>
                   </div>
                 </div>
-
-                <div className='userChat-detail-content-right'>
-                  <div class='message right'>
-                    <div className='message-rightDiv'>
-                      <p>2 hours ago</p>
-                      <div class='bubble'>
-                        If I don't like something, I’ll stay away from it.
-                      </div>
-                      <div class='bubble'>
-                        They got there early, and they got really good seats.
-                      </div>
+              </div>
+              <div className='userChat-detail-content-right'>
+                <div className='message right'>
+                  <div className='message-rightDiv'>
+                    <p>2 hours ago</p>
+                    <div className='bubble'>
+                      If I don't like something, I’ll stay away from it.
+                    </div>
+                    <div className='bubble'>
+                      They got there early, and they got really good seats.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className='userChat-detail-content-left'>
+                <div className='message left'>
+                  <div className='userChat-detail-headUser-img'>
+                    <img src={chatusericon3} alt='' />
+                  </div>
+                  <div>
+                    <p>Andrew, 2 hours ago</p>
+                    <div className='bubble'>
+                      I want more detailed information.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className='userChat-detail-content-right'>
+                <div className='message right'>
+                  <div className='message-rightDiv'>
+                    <p>2 hours ago</p>
+                    <div className='bubble'>
+                      If I don't like something, I’ll stay away from it.
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className='chat-layout__chat-inputBar'></div>
+            <div className='chat-layout__chat-inputBar'>
+              <form onSubmit={handleSendMessage}>
+                <div className='chat-input-form'>
+                  <div className='chat-input-form-inputFields'>
+                    <input
+                      type='text'
+                      className='chat-input'
+                      placeholder='Type your message...'
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                    />
+                    <label className='chat-file-upload'>
+                      <input
+                        type='file'
+                        onChange={handleFileChange}
+                        style={{ display: 'none' }}
+                      />
+                      <span role='img' aria-label='Attach file'>
+                        <img src={attachIcon} alt='' />
+                      </span>
+                    </label>
+                  </div>
+                  <button type='submit' className='chat-send-btn'>
+                    <img src={sendIcon} alt='Send' />
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
-
           <div
             className={`chat-layout__job ${
               isTablet
@@ -229,7 +448,12 @@ const ChatLayout = () => {
           >
             <div className='job-layout__header'>
               {isTablet && (
-                <button onClick={() => setActiveSection('chat')}>Back</button>
+                <button
+                  className='chat-menu-icon'
+                  onClick={() => setActiveSection('chat')}
+                >
+                  <IoIosClose />
+                </button>
               )}
             </div>
             <div className='chat-layout__body'>
