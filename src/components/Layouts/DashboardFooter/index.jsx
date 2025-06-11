@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/images/logo3.png';
 
@@ -9,29 +9,37 @@ import facebookIcon from '../../../assets/images/facebook-icon.png';
 import xIcon from '../../../assets/images/x-icon.png';
 import linkedinIcon from '../../../assets/images/linkedin-icon.png';
 
+import CustomModal from '../../../components/CustomModal';
+
+import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
+
 const footerData = [
   {
     title: 'Quick Links',
     links: [
       { name: 'Home', to: '/' },
       { name: 'About Us', to: '' },
-      { name: 'Contact', to: '' },
+      { name: 'For Workers', to: '' },
+      { name: 'For Professionals', to: '' },
+      { name: 'Contact Us', to: '' },
     ],
   },
   {
     title: 'Support',
     links: [
-      { name: 'How It Works', to: '' },
-      { name: 'Book a Service', to: '' },
-      { name: 'Become A Provider', to: '' },
-      { name: 'FAQs', to: '' },
+      { name: 'how it works', to: '' },
+      { name: 'Features', to: '' },
+      { name: 'pricing', to: '' },
+      { name: 'download', to: '' },
     ],
   },
   {
     title: 'Useful links',
     links: [
-      { name: 'Terms & Conditions', to: '' },
-      { name: 'Privacy Policy', to: '' },
+      { name: 'FAQS', to: '' },
+      { name: 'TERMS & CONDITIONS', to: '' },
+      { name: 'PRIVACY POLICY', to: '' },
     ],
   },
   // {
@@ -46,6 +54,17 @@ const footerData = [
 ];
 
 const DashboardFooter = () => {
+  const { t } = useTranslation();
+
+  const [showLangModal, setShowLangModal] = useState(false);
+  const [selectedLang, setSelectedLang] = useState('');
+
+  const handleLanguageChange = (langCode, langLabel) => {
+    i18next.changeLanguage(langCode).then(() => {
+      setSelectedLang(langLabel);
+      setShowLangModal(true);
+    });
+  };
   return (
     <>
       <section className='mainFooter dashboardFooter'>
@@ -121,16 +140,36 @@ const DashboardFooter = () => {
                     <h2 className='footer-title'>Select Language</h2>
                     <ul className='footer-links'>
                       <li>
-                        <button className='footerLink'>English</button>
+                        <button
+                          className='footerLink'
+                          onClick={() => handleLanguageChange('en', 'English')}
+                        >
+                          English
+                        </button>
                       </li>
                       <li>
-                        <button className='footerLink'>German</button>
+                        <button
+                          className='footerLink'
+                          onClick={() => handleLanguageChange('de', 'German')}
+                        >
+                          German
+                        </button>
                       </li>
                       <li>
-                        <button className='footerLink'>French</button>
+                        <button
+                          className='footerLink'
+                          onClick={() => handleLanguageChange('fr', 'French')}
+                        >
+                          French
+                        </button>
                       </li>
                       <li>
-                        <button className='footerLink'>Italian</button>
+                        <button
+                          className='footerLink'
+                          onClick={() => handleLanguageChange('it', 'Italian')}
+                        >
+                          Italian
+                        </button>
                       </li>
                     </ul>
                   </div>
@@ -170,6 +209,15 @@ const DashboardFooter = () => {
           </div>
         </div>
       </section>
+
+      <CustomModal
+        show={showLangModal}
+        handleClose={() => setShowLangModal(false)}
+        title={t('languageModal.title')} // Optional title
+        size='sm'
+      >
+        <p>{t('languageModal.message', { lang: selectedLang })}</p>
+      </CustomModal>
     </>
   );
 };

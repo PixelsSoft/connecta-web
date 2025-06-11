@@ -22,6 +22,7 @@ import twintCardIcon from '../../assets/images/twint-card-icon.png';
 import profileCompletedIcon from '../../assets/images/profile-completed-icon.png';
 
 import { BiSearch } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
 
 const servicesCheckBoxes = [
   { label: 'Painting', value: 'painting', icon: paintingIcon },
@@ -56,6 +57,8 @@ const SetUpProfile = () => {
   const options = [5, 10, 20, 30];
 
   const [selectedMethod, setSelectedMethod] = useState('mastercard');
+
+  const navigate = useNavigate();
 
   const handleChanges = (event) => {
     const { name, value, type, checked } = event.target;
@@ -485,7 +488,7 @@ const SetUpProfile = () => {
                                 <h3>Banking info</h3>
                                 <p>
                                   We use identity verification to ensure your
-                                  security and keep Connecta 24 safe. Your ID
+                                  security and keep Connecta24 safe. Your ID
                                   will be handled securely and will never be
                                   shared with anyone.
                                 </p>
@@ -716,7 +719,10 @@ const SetUpProfile = () => {
                             <div className='profileSetUpCompleted'>
                               <img src={profileCompletedIcon} alt='' />
                               <h4>Profile setup completed!</h4>
-                              <button className='customBtn btn-bgRed'>
+                              <button
+                                className='customBtn btn-bgRed'
+                                onClick={() => navigate('/user/saved-leads')}
+                              >
                                 Browse Leads
                               </button>
                             </div>

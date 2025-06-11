@@ -126,11 +126,11 @@ p {
 .customBtn {
   text-decoration: none;
   font-size: 16px;
-  padding: 10px 20px;
+  padding: 14px 20px;
   display: inline-block;
   color: #121212;
   border: 2px solid #121212;
-  border-radius: 5px;
+  border-radius: 10px;
   font-weight: 500;
   line-height: 1;
 }
@@ -2471,7 +2471,8 @@ label {
     width: 50px;
   }
   .mainBanner-icon-label {
-    font-size: 8px;
+    font-size: 9px;
+    padding: 3px 5px;
   }
   .main__banner-content h1 {
     font-size: 34px;
@@ -2507,7 +2508,7 @@ label {
     flex-direction: row;
   }
 }
-@media (max-width: 575px) {
+@media (max-width: 576px) {
   .contact__center-sec,
   .accountSettings-sec,
   .jobPostingSec,
@@ -2530,6 +2531,9 @@ label {
   /* .recruiterHeader__tabs a {
     padding: 5px 6px;
   } */
+  .mainBanner-iconImgs-2 {
+    padding: 0 0px;
+  }
   .accountSettings-sideBar {
     padding-bottom: 0;
     margin-bottom: 20px;
@@ -2568,6 +2572,12 @@ label {
   }
   .dashboardFooter .footer-links ul {
     padding-left: 0px;
+  }
+  .main__banner-content h1 {
+    font-size: 28px;
+  }
+  .authBottom-btns .customBtn {
+    padding: 14px 12px;
   }
 }
 @media (max-width: 481px) {
@@ -2631,9 +2641,6 @@ label {
     font-size: 18px;
     line-height: 1;
   }
-  .mainBanner-iconImgs-2 {
-    padding: 0 10px;
-  }
   .service-banner-wrapper {
     margin: 20px 0;
   }
@@ -2662,6 +2669,13 @@ label {
   .recruiterHeader__tabs .btn__witchIcon img {
     width: 15px;
     height: 15px;
+  }
+  .mainBanner-iconImgs {
+    width: 100%;
+    left: 0;
+  }
+  .authBottom-btns .customBtn {
+    padding: 14px 20px;
   }
 }
 
@@ -2702,7 +2716,6 @@ label {
     max-width: 326px;
   }
   .main__banner-content h1 {
-    font-size: 31px;
     max-width: 300px;
     margin: 0 auto 30px;
   }
@@ -2786,8 +2799,6 @@ label {
     font-size: 14px;
   }
   .mainBanner-iconImgs {
-    width: 100%;
-    left: 0;
     gap: 80px;
     top: -20px;
   }

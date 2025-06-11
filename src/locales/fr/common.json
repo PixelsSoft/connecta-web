@@ -1,0 +1,6 @@
+{
+  "languageModal": {
+    "title": "Langue modifiée",
+    "message": "La langue a été changée en {{lang}}"
+  }
+}

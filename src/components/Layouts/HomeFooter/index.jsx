@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/images/logo.png';
 
@@ -8,6 +8,11 @@ import playstoreIcon from '../../../assets/images/playstore-icon.png';
 import facebookIcon from '../../../assets/images/facebook-icon.png';
 import xIcon from '../../../assets/images/x-icon.png';
 import linkedinIcon from '../../../assets/images/linkedin-icon.png';
+
+import CustomModal from '../../../components/CustomModal';
+
+import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 const footerData = [
   {
@@ -46,6 +51,17 @@ const footerData = [
 ];
 
 const HomeFooter = () => {
+  const { t } = useTranslation();
+
+  const [showLangModal, setShowLangModal] = useState(false);
+  const [selectedLang, setSelectedLang] = useState('');
+
+  const handleLanguageChange = (langCode, langLabel) => {
+    i18next.changeLanguage(langCode).then(() => {
+      setSelectedLang(langLabel);
+      setShowLangModal(true);
+    });
+  };
   return (
     <>
       <section className='mainFooter'>
@@ -119,24 +135,44 @@ const HomeFooter = () => {
                         <h2 className='footer-title'>Select Language</h2>
                         <ul className='footer-links'>
                           <li>
-                            <a href='javascript:;' className='footerLink'>
+                            <button
+                              className='footerLink'
+                              onClick={() =>
+                                handleLanguageChange('en', 'English')
+                              }
+                            >
                               English
-                            </a>
+                            </button>
                           </li>
                           <li>
-                            <a href='javascript:;' className='footerLink'>
+                            <button
+                              className='footerLink'
+                              onClick={() =>
+                                handleLanguageChange('de', 'German')
+                              }
+                            >
                               German
-                            </a>
+                            </button>
                           </li>
                           <li>
-                            <a href='javascript:;' className='footerLink'>
+                            <button
+                              className='footerLink'
+                              onClick={() =>
+                                handleLanguageChange('fr', 'French')
+                              }
+                            >
                               French
-                            </a>
+                            </button>
                           </li>
                           <li>
-                            <a href='javascript:;' className='footerLink'>
+                            <button
+                              className='footerLink'
+                              onClick={() =>
+                                handleLanguageChange('it', 'Italian')
+                              }
+                            >
                               Italian
-                            </a>
+                            </button>
                           </li>
                         </ul>
                       </div>
@@ -182,6 +218,15 @@ const HomeFooter = () => {
           </div>
         </div>
       </section>
+
+      <CustomModal
+        show={showLangModal}
+        handleClose={() => setShowLangModal(false)}
+        title={t('languageModal.title')} // Optional title
+        size='sm'
+      >
+        <p>{t('languageModal.message', { lang: selectedLang })}</p>
+      </CustomModal>
     </>
   );
 };

@@ -73,8 +73,8 @@ const FindProfessional = () => {
                 <div className='sec-head'>
                   <h1>Find Top Rated Professional for your job</h1>
                   <p>
-                    in which Ctaegory you want to post your job here we have
-                    some common category.
+                    In which Category you want to post your job here we have
+                    some common categories.
                   </p>
                 </div>
                 <div className='findProfessionalContent'>

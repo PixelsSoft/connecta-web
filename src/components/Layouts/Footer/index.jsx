@@ -7,15 +7,16 @@ import footerContentIcon3 from '../../../assets/images/footerContentIcon-3.png';
 const footerContentData = [
   {
     icon: footerContentIcon1,
-    description: 'Post your job for free – no strings attached',
+    description: 'Get Started Now - Post Your Job for Free',
   },
   {
     icon: footerContentIcon2,
-    description: 'More than 237,207 qualified Professionals',
+    description: 'Over 237,000 Verified Professionals at Your Service',
   },
   {
     icon: footerContentIcon3,
-    description: 'More than 2,534,416 independent reviews',
+    description:
+      '825,000+ Satisfied Clients trust Connect24 for quality service',
   },
 ];
 

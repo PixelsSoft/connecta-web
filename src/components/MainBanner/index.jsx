@@ -1,38 +1,34 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import servicearrowicon from "../../assets/images/service-arrow-icon.png";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import servicearrowicon from '../../assets/images/service-arrow-icon.png';
 
-import bannerIconImg1 from "../../assets/images/banner-icon-img1.png";
-import bannerIconImg2 from "../../assets/images/banner-icon-img2.png";
-import bannerIconImg3 from "../../assets/images/banner-icon-img3.png";
-import bannerIconImg4 from "../../assets/images/banner-icon-img4.png";
-import bannerIconImg5 from "../../assets/images/banner-icon-img5.png";
-import bannerIconImg6 from "../../assets/images/banner-icon-img6.png";
+import { useTranslation } from 'react-i18next';
 
-import COLXXL10 from "../COLXXL10";
+import bannerIconImg1 from '../../assets/images/banner-icon-img1.png';
+import bannerIconImg2 from '../../assets/images/banner-icon-img2.png';
+import bannerIconImg3 from '../../assets/images/banner-icon-img3.png';
+import bannerIconImg4 from '../../assets/images/banner-icon-img4.png';
+import bannerIconImg5 from '../../assets/images/banner-icon-img5.png';
+import bannerIconImg6 from '../../assets/images/banner-icon-img6.png';
+
+import COLXXL10 from '../COLXXL10';
 
 const MainBanner = () => {
+  const { t } = useTranslation('home');
   return (
     <section className='main-banner'>
       <div className='container position-relative'>
         <div className='row justify-content-center'>
           <COLXXL10>
             <div className='main__banner-content'>
-              <h1>
-                Find and Book Trusted Professionals for Your Everyday Needs
-              </h1>
-              <p>
-                From cleaning and home repairs to handyman work and tech support
-                — get matched with reliable local experts in just a few
-                clicks.No searching, no paperwork — just fast, simple service
-                when you need it.
-              </p>
+              <h1>{t('banner.title')}</h1>
+              <p>{t('banner.description')}</p>
               <div className='main__banner-btns'>
-                <Link to={""} className='customBtn btn-bgRed btn__witchIcon '>
+                <Link to={''} className='customBtn btn-bgRed btn__witchIcon '>
                   <span>Book a Service</span>
                   <img src={servicearrowicon} alt='Icon' />
                 </Link>
-                <Link to={""} className='customBtn btn-bgWhite'>
+                <Link to={''} className='customBtn btn-bgWhite'>
                   Offer Your Services
                 </Link>
               </div>
@@ -61,7 +57,7 @@ const MainBanner = () => {
                   </div>
                   <div
                     className='mainBanner-icon-label'
-                    style={{ backgroundColor: "#3EE4EF" }}
+                    style={{ backgroundColor: '#3EE4EF' }}
                   >
                     Electrician
                   </div>
@@ -72,7 +68,7 @@ const MainBanner = () => {
                   </div>
                   <div
                     className='mainBanner-icon-label'
-                    style={{ backgroundColor: "#FF9A61" }}
+                    style={{ backgroundColor: '#FF9A61' }}
                   >
                     Cleaner
                   </div>
@@ -85,7 +81,7 @@ const MainBanner = () => {
                   </div>
                   <div
                     className='mainBanner-icon-label'
-                    style={{ backgroundColor: "#3EE4EF" }}
+                    style={{ backgroundColor: '#3EE4EF' }}
                   >
                     IT specialists
                   </div>
@@ -96,9 +92,9 @@ const MainBanner = () => {
                   </div>
                   <div
                     className='mainBanner-icon-label'
-                    style={{ backgroundColor: "#C99FFF" }}
+                    style={{ backgroundColor: '#C99FFF' }}
                   >
-                    Gardner
+                    Gardener
                   </div>
                 </div>
               </div>

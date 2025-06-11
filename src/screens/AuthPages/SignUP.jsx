@@ -1,9 +1,14 @@
 import React from 'react';
 import DefaultLayout2 from '../../components/Layouts/DefaultLayout2';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SignUP = () => {
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate('/set-up-profile');
+  };
   return (
     <DefaultLayout2>
       <section className='auth-sec'>
@@ -12,7 +17,7 @@ const SignUP = () => {
             <div className='col-12'>
               <div className='auth-content'>
                 <h2>Sign Up</h2>
-                <form>
+                <form onSubmit={handleSubmit}>
                   <div className='auth-contentForm'>
                     <div class='inputGroup'>
                       <label for='fullName' class='form-label'>
@@ -59,8 +64,12 @@ const SignUP = () => {
                       />
                     </div>
 
-                    <button className='customBtn btn-bgRed w-100'>
-                      Sign In
+                    <button
+                      type='submit'
+                      className='customBtn btn-bgRed w-100'
+                      // onClick={handleSubmit}
+                    >
+                      Sign Up
                     </button>
                     <div className='authForm-checkBoxes'>
                       <div class='form-check'>
@@ -93,11 +102,14 @@ const SignUP = () => {
                     </div>
                     <p className='m-0 text-center'>or</p>
                     <div className='authBottom-btns'>
-                      <Link to={''} className='customBtn btn-bgBlack'>
+                      <Link
+                        to={'/painting-job'}
+                        className='customBtn btn-bgBlack'
+                      >
                         Post a Job
                       </Link>
-                      <Link to={''} className='customBtn btn-bgGreen'>
-                        Sign Up as Professional
+                      <Link to={'/login'} className='customBtn btn-bgGreen'>
+                        Login
                       </Link>
                     </div>
                   </div>

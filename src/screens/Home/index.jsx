@@ -36,6 +36,7 @@ import { FaBusinessTime, FaRegUser } from 'react-icons/fa';
 import ServicesSlideSec from '../../components/ServicesSlideSec';
 import MainBanner from '../../components/MainBanner';
 import COLXXL10 from '../../components/COLXXL10';
+import { useTranslation } from 'react-i18next';
 
 const whyChooseData = [
   {
@@ -118,7 +119,7 @@ const getStartedForCustomersData = [
     number: 3,
     name: 'Hire & Review',
     description:
-      'Choose the right expert. Once the job is done, mark it complete and leave a review',
+      'Choose the right expert. Once the job is done, mark it complete and leave a review.',
   },
 ];
 const getStartedForBusinessData = [
@@ -142,6 +143,7 @@ const getStartedForBusinessData = [
 ];
 
 const Home = () => {
+  const { t } = useTranslation();
   return (
     <div className='homePage'>
       <DefaultLayout>

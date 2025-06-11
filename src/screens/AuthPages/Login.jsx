@@ -2,10 +2,11 @@ import React from 'react';
 import DefaultLayout2 from '../../components/Layouts/DefaultLayout2';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = (e) => {
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     navigate('/set-up-profile');
   };
   return (
@@ -16,7 +17,7 @@ const Login = () => {
             <div className='col-12'>
               <div className='auth-content'>
                 <h2>Login</h2>
-                <form>
+                <form onSubmit={handleSubmit}>
                   <div className='auth-contentForm'>
                     <div class='inputGroup'>
                       <label for='userName' class='form-label'>
@@ -57,17 +58,21 @@ const Login = () => {
                       </Link>
                     </div>
                     <button
+                      type='submit'
                       className='customBtn btn-bgRed w-100'
-                      onClick={handleSubmit}
+                      // onClick={handleSubmit}
                     >
                       Sign In
                     </button>
                     <p className='m-0 text-center'>or</p>
                     <div className='authBottom-btns'>
-                      <Link to={''} className='customBtn btn-bgBlack'>
+                      <Link
+                        to={'/painting-job'}
+                        className='customBtn btn-bgBlack'
+                      >
                         Post a Job
                       </Link>
-                      <Link to={''} className='customBtn btn-bgGreen'>
+                      <Link to={'/sign-up'} className='customBtn btn-bgGreen'>
                         Sign Up as Professional
                       </Link>
                     </div>
