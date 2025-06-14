@@ -14,6 +14,7 @@ import chimneyicon from '../../assets/images/chimney-icon.png';
 import brickLayingicon from '../../assets/images/brickLaying-icon.png';
 
 import jobPostingBannerImg from '../../assets/images/jobPosting-banner-img.png';
+import { Link, useNavigate } from 'react-router-dom';
 
 const categoryData = [
   {
@@ -63,6 +64,18 @@ const categoryData = [
 ];
 
 const FindProfessional = () => {
+  const navigate = useNavigate();
+
+  const handleSelectChange = (e) => {
+    const selectedValue = e.target.value;
+
+    // if (selectedValue === 'painting-job') {
+    //   navigate('/painting-job');
+    // }
+    navigate('/painting-job');
+
+    // Add more redirects if needed for other categories
+  };
   return (
     <DefaultLayout2>
       <section className='jobPostingSec'>
@@ -85,32 +98,42 @@ const FindProfessional = () => {
                     <select
                       id='selectCategory'
                       className='form-select form-control'
-                      aria-label='Default select example'
+                      aria-label='Select job category'
+                      onChange={handleSelectChange}
+                      defaultValue=''
                     >
-                      <option selected>Select Category</option>
-                      <option value='1'>Painting</option>
-                      <option value='2'>Home Repairing</option>
-                      <option value='3'>Gardening</option>
-                      <option value='4'>Electrician</option>
-                      <option value='5'>Cleaning</option>
-                      <option value='6'>Roofing</option>
-                      <option value='7'>Kitchen Repairing</option>
-                      <option value='8'>Plumbing</option>
-                      <option value='9'>Architectural Services</option>
-                      <option value='10'>Chimney</option>
-                      <option value='11'>Brick Laying</option>
+                      <option value={''} disabled>
+                        Select Category
+                      </option>
+                      <option value='painting-job'>Painting</option>
+                      <option value='home-repairing'>Home Repairing</option>
+                      <option value='gardening'>Gardening</option>
+                      <option value='electrician'>Electrician</option>
+                      <option value='cleaning'>Cleaning</option>
+                      <option value='roofing'>Roofing</option>
+                      <option value='kitchen-Repairing'>tchen Repairing</option>
+                      <option value='plumbing'>Plumbing</option>
+                      <option value='architectural-Services'>
+                        Architectural Services
+                      </option>
+                      <option value='Chimney0'>Chimney</option>
+                      <option value='brick-Laying'>Brick Laying</option>
                     </select>
                   </div>
                   <div className='mostRecentCategories'>
                     <h4>Most recent Categories</h4>
                     <div className='mostRecentCategories_boxes'>
                       {categoryData.map((item, index) => (
-                        <div className='mostRecentCategories_box' key={index}>
+                        <Link
+                          to={'/painting-job'}
+                          className='mostRecentCategories_box'
+                          key={index}
+                        >
                           <div className='mostRecentCategories_boxe-icon'>
                             <img src={item.icon} alt='' />
                           </div>
                           <p>{item.name}</p>
-                        </div>
+                        </Link>
                       ))}
                     </div>
                   </div>

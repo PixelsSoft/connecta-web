@@ -35,7 +35,7 @@ const ManageAccount = () => {
                   </div>
                   <button
                     className='customBtn btn-bgRed'
-                    onClick={() => setShowVerifyModal(true)}
+                    // onClick={() => setShowVerifyModal(true)}
                   >
                     Verify
                   </button>

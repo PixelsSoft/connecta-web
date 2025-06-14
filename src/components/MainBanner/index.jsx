@@ -24,11 +24,14 @@ const MainBanner = () => {
               <h1>{t('banner.title')}</h1>
               <p>{t('banner.description')}</p>
               <div className='main__banner-btns'>
-                <Link to={''} className='customBtn btn-bgRed btn__witchIcon '>
+                <Link
+                  to={'/find-professionals'}
+                  className='customBtn btn-bgRed btn__witchIcon '
+                >
                   <span>Book a Service</span>
                   <img src={servicearrowicon} alt='Icon' />
                 </Link>
-                <Link to={''} className='customBtn btn-bgWhite'>
+                <Link to={'/sign-up'} className='customBtn btn-bgWhite'>
                   Offer Your Services
                 </Link>
               </div>

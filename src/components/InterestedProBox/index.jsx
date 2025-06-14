@@ -1,6 +1,7 @@
 import StarRating from '../StarRating';
 
 import proCheckIcon from '../../assets/images/applied-check.png';
+import { Link } from 'react-router-dom';
 
 const InterestedProBox = (props) => {
   return (
@@ -22,7 +23,12 @@ const InterestedProBox = (props) => {
         </div>
       </div>
       <p className='interestedProBox-body'>{props.description}</p>
-      <button className='customBtn btn-bgRed w-100'>Start Chat</button>
+      <Link
+        to={'/recruiter/chat'}
+        className='customBtn btn-bgRed w-100 text-center'
+      >
+        Start Chat
+      </Link>
     </div>
   );
 };

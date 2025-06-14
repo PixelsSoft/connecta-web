@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { use, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import DefaultLayout2 from '../../components/Layouts/DefaultLayout2';
 import JobPostingSec from '../../components/JobPostingSec';
 
@@ -15,8 +15,14 @@ import bathroomfittingbanner3 from '../../assets/images/bathroom-fitting-banner-
 const PaintingJob = () => {
   const [step, setStep] = useState(1);
 
+  const navigate = useNavigate();
+
   const nextStep = () => setStep((prev) => prev + 1);
   const prevStep = () => setStep((prev) => prev - 1);
+
+  const handleSubmit = () => {
+    navigate('/recruiter/posted-jobs');
+  };
 
   return (
     <DefaultLayout2>
@@ -260,7 +266,9 @@ const PaintingJob = () => {
               <button onClick={prevStep} className='customBtn btn-blackBorder'>
                 Back
               </button>
-              <button className='customBtn btn-bgRed'>Submit</button>
+              <button className='customBtn btn-bgRed' onClick={handleSubmit}>
+                Next
+              </button>
             </div>
           </div>
         </JobPostingSec>

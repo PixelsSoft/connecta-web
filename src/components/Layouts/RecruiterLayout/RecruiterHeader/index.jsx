@@ -64,8 +64,8 @@ const RecruiterHeader = () => {
                   </Link>
 
                   <Link
-                    to='/recruiter/chat'
-                    className={`${isActive('/recruiter/chat') ? 'active' : ''}`}
+                    to='/chat'
+                    className={`${isActive('/chat') ? 'active' : ''}`}
                   >
                     <div className={`btn__witchIcon `}>
                       <img src={chaticon} alt='' />

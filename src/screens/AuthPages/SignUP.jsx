@@ -103,7 +103,7 @@ const SignUP = () => {
                     <p className='m-0 text-center'>or</p>
                     <div className='authBottom-btns'>
                       <Link
-                        to={'/painting-job'}
+                        to={'/find-professionals'}
                         className='customBtn btn-bgBlack'
                       >
                         Post a Job

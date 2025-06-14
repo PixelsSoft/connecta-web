@@ -14,42 +14,6 @@ import CustomModal from '../../../components/CustomModal';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
 
-const footerData = [
-  {
-    title: 'Quick Links',
-    links: [
-      { name: 'Home', to: '/' },
-      { name: 'About Us', to: '' },
-      { name: 'Contact', to: '' },
-    ],
-  },
-  {
-    title: 'Support',
-    links: [
-      { name: 'How It Works', to: '' },
-      { name: 'Book a Service', to: '' },
-      { name: 'Become A Provider', to: '' },
-      { name: 'FAQs', to: '' },
-    ],
-  },
-  {
-    title: 'Useful links',
-    links: [
-      { name: 'Terms & Conditions', to: '' },
-      { name: 'Privacy Policy', to: '' },
-    ],
-  },
-  // {
-  //   title: 'Select Language',
-  //   links: [
-  //     { name: 'English', to: '' },
-  //     { name: 'German', to: '' },
-  //     { name: 'French', to: '' },
-  //     { name: 'Italian', to: '' },
-  //   ],
-  // },
-];
-
 const HomeFooter = () => {
   const { t } = useTranslation();
 
@@ -61,6 +25,10 @@ const HomeFooter = () => {
       setSelectedLang(langLabel);
       setShowLangModal(true);
     });
+  };
+
+  const scrollTo = (ref) => {
+    ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
   return (
     <>
@@ -114,22 +82,84 @@ const HomeFooter = () => {
                 </div>
                 <div className='col-lg-8'>
                   <div className='row'>
-                    {footerData.map((item, index) => (
-                      <div className='col-md-3 col-6 mb-md-0 mb-3' key={index}>
-                        <div className='footer-links'>
-                          <h2 className='footer-title'>{item.title}</h2>
-                          <ul className='footer-links'>
-                            {item.links.map((link, i) => (
-                              <li key={i}>
-                                <Link to={link.to} className='footerLink'>
-                                  {link.name}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
+                    <div className='col-md-3 col-6 mb-md-0 mb-3'>
+                      <div className='footer-links'>
+                        <h2 className='footer-title'>Quick Links</h2>
+                        <ul className='footer-links'>
+                          <li>
+                            <Link to={'/'} className='footerLink'>
+                              Home
+                            </Link>
+                          </li>
+                          <li>
+                            <a
+                              // to={''}
+                              href='javascript:;'
+                              className='footerLink'
+                              onClick={() => {
+                                const el =
+                                  document.getElementById('home-about');
+                                el?.scrollIntoView({ behavior: 'smooth' });
+                              }}
+                            >
+                              About Us
+                            </a>
+                          </li>
+                          <li>
+                            <Link to={''} className='footerLink'>
+                              Contact
+                            </Link>
+                          </li>
+                        </ul>
                       </div>
-                    ))}
+                    </div>
+                    <div className='col-md-3 col-6 mb-md-0 mb-3'>
+                      <div className='footer-links'>
+                        <h2 className='footer-title'>Support</h2>
+                        <ul className='footer-links'>
+                          <li>
+                            <Link to={'/'} className='footerLink'>
+                              How It Works
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              to={'/find-professionals'}
+                              className='footerLink'
+                            >
+                              Book a Service
+                            </Link>
+                          </li>
+                          <li>
+                            <Link to={'/sign-up'} className='footerLink'>
+                              Become A Provider
+                            </Link>
+                          </li>
+                          <li>
+                            <Link to={''} className='footerLink'>
+                              FAQs
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div className='col-md-3 col-6 mb-md-0 mb-3'>
+                      <div className='footer-links'>
+                        <h2 className='footer-title'>Terms & Conditions</h2>
+                        <ul className='footer-links'>
+                          <li>
+                            <Link to={''} className='footerLink'>
+                              Terms & Conditions
+                            </Link>
+                          </li>
+                          <li>
+                            <Link to={''} className='footerLink'>
+                              Privacy Policy
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
                     <div className='col-md-3 col-6 mb-md-0 mb-3'>
                       <div className='footer-links'>
                         <h2 className='footer-title'>Select Language</h2>

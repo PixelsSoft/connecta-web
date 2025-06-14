@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import DefaultLayout from '../../components/Layouts/DefaultLayout';
 import { Link } from 'react-router-dom';
 
@@ -100,6 +100,47 @@ const industrySecData = [
     name: 'Painting & Decor',
     description: '1039 Staffs',
   },
+  // ========================================================
+  {
+    icon: industryicon1,
+    name: 'Handyman',
+    description: '2853 Staffs',
+  },
+  {
+    icon: industryicon2,
+    name: 'Cleaning Services',
+    description: '2256 Staffs',
+  },
+  {
+    icon: industryicon3,
+    name: 'IT Support',
+    description: '1408 Staffs',
+  },
+  {
+    icon: industryicon4,
+    name: 'Electrician',
+    description: '1740 Staffs',
+  },
+  {
+    icon: industryicon5,
+    name: 'Personal Services',
+    description: '3948 Staffs',
+  },
+  {
+    icon: industryicon6,
+    name: 'General Labor',
+    description: '2984 Staffs',
+  },
+  {
+    icon: industryicon7,
+    name: 'Gardening',
+    description: '4509 Staffs',
+  },
+  {
+    icon: industryicon8,
+    name: 'Painting & Decor',
+    description: '1039 Staffs',
+  },
 ];
 
 const getStartedForCustomersData = [
@@ -143,13 +184,24 @@ const getStartedForBusinessData = [
 ];
 
 const Home = () => {
+  // const aboutRef = useRef(null);
   const { t } = useTranslation();
+
+  const [showAll, setShowAll] = useState(false);
+
+  const initialCount = 8;
+  const displayedItems = showAll
+    ? industrySecData
+    : industrySecData.slice(0, initialCount);
+
+  const handleToggle = () => setShowAll((prev) => !prev);
+
   return (
     <div className='homePage'>
       <DefaultLayout>
         <MainBanner />
 
-        <section className='home-aboutSec'>
+        <section className='home-aboutSec' id='home-about'>
           <div className='container'>
             <div className='row justify-content-center '>
               <COLXXL10>
@@ -290,9 +342,12 @@ const Home = () => {
                         </p>
                       </div>
                       <div className='category-card-img'>
-                        <button className='customBtn btn-bgRed'>
+                        <Link
+                          to={'/find-professionals'}
+                          className='customBtn btn-bgRed'
+                        >
                           Book a Service
-                        </button>
+                        </Link>
                         <img
                           src={categoryimg1}
                           className='img-fluid'
@@ -311,9 +366,9 @@ const Home = () => {
                         </p>
                       </div>
                       <div className='category-card-img'>
-                        <button className='customBtn btn-bgGreen'>
+                        <Link to={'/sign-up'} className='customBtn btn-bgGreen'>
                           Start Offering Services
-                        </button>
+                        </Link>
                         <img
                           src={categoryimg2}
                           className='img-fluid'
@@ -341,7 +396,7 @@ const Home = () => {
                   </div>
                   <div className='col-md-12'>
                     <div className='industry__boxes'>
-                      {industrySecData.map((item, index) => (
+                      {displayedItems.map((item, index) => (
                         <div className='industry__box' key={index}>
                           <div className='industry__box-icon'>
                             <img src={item.icon} alt='' />
@@ -354,8 +409,14 @@ const Home = () => {
                       ))}
                     </div>
                     <div className='text-center mt-4'>
-                      <button className='customBtn btn-bgGreen'>
+                      {/* <button className='customBtn btn-bgGreen'>
                         View All Categories
+                      </button> */}
+                      <button
+                        className='customBtn btn-bgGreen'
+                        onClick={handleToggle}
+                      >
+                        {showAll ? 'Show Less' : 'View All Categories'}
                       </button>
                     </div>
                   </div>

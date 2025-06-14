@@ -36,8 +36,9 @@ import SavedLeads from '../screens/UserScreens/SavedLeads';
 import TopJobForYou from '../screens/UserScreens/TopJobForYou';
 
 // User And Recruiter chat Screens share same chat layout component
-import UserChat from '../screens/UserScreens/UserChat/index.';
-import RecruiterChat from '../screens/RecruiterScreens/RecruiterChat';
+// import UserChat from '../screens/UserScreens/UserChat/index.';
+// import RecruiterChat from '../screens/RecruiterScreens/RecruiterChat';
+import ChatPage from '../screens/ChatPage';
 
 const AppRouter = () => {
   return (
@@ -93,7 +94,7 @@ const AppRouter = () => {
         />
 
         <Route path='/recruiter/contact-center' element={<ContactCenter />} />
-        <Route path='/recruiter/chat' element={<RecruiterChat />} />
+        {/* <Route path='/recruiter/chat' element={<RecruiterChat />} /> */}
 
         <Route path='/recruiter/posted-jobs' element={<PostedJobs />} />
         <Route path='/recruiter/posted-jobs/detail' element={<JobDetail />} />
@@ -126,10 +127,11 @@ const AppRouter = () => {
 
         <Route path='/user/saved-leads' element={<SavedLeads />} />
         <Route path='/user/contact-center' element={<UserContactCenter />} />
-        <Route path='/user/chat' element={<UserChat />} />
+        {/* <Route path='/user/chat' element={<UserChat />} /> */}
 
         <Route path='/user/top-job-for-you' element={<TopJobForYou />} />
         <Route path='/set-up-profile' element={<SetUpProfile />} />
+        <Route path='/chat' element={<ChatPage />} />
       </Routes>
     </Router>
   );
