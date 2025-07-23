@@ -16,50 +16,135 @@ import brickLayingicon from '../../assets/images/brickLaying-icon.png';
 import jobPostingBannerImg from '../../assets/images/jobPosting-banner-img.png';
 import { Link, useNavigate } from 'react-router-dom';
 
+// categories new icon
+import DesignAnplainingicon from '../../assets/images/category-icons/DesignAnplaining-icon.png';
+import GardenAndOutdoorIcon from '../../assets/images/category-icons/GardenAndOutdoor-icon.png';
+import ProjectManagementIcon from '../../assets/images/category-icons/ProjectManagement-icon.png';
+import OutdoorAndLandscapingIcon from '../../assets/images/category-icons/OutdoorAndLandscaping-icon.png';
+import MediaAndCreativeIcon from '../../assets/images/category-icons/MediaAndCreative-icon.png';
+import RentalAndEquipmentIcon from '../../assets/images/category-icons/RentalAndEquipment-icon.png';
+import BusinessAndFacilityServicesIcon from '../../assets/images/category-icons/BusinessAndFacilityServices-icon.png';
+import HomeAndComfortIcon from '../../assets/images/category-icons/HomeAndComfort-icon.png';
+import MaintenanceAndRepairingIcon from '../../assets/images/category-icons/MaintenanceAndRepairing-icon.png';
+import TechnicalAndConstructionIcon from '../../assets/images/category-icons/TechnicalAndConstruction-icon.png';
+import AdministrativeAndPermitsIcon from '../../assets/images/category-icons/AdministrativeAndPermits-icon.png';
+import DigitalAndTechIcon from '../../assets/images/category-icons/DigitalAndTech-icon.png';
+import CleaningServicesIcon from '../../assets/images/category-icons/CleaningServices-icon.png';
+import InteriorAndFinishingIcon from '../../assets/images/category-icons/InteriorAndFinishing-icon.png';
+import TransportAndMovingIcon from '../../assets/images/category-icons/TransportAndMoving-icon.png';
+import TechnicalAndInstallationIcon from '../../assets/images/category-icons/TechnicalAndInstallation-icon.png';
+
+// const categoryData = [
+//   {
+//     icon: paintingicon,
+//     name: 'Painting',
+//   },
+//   {
+//     icon: homeRepairingicon,
+//     name: 'Home Repairing',
+//   },
+//   {
+//     icon: gardeningicon,
+//     name: 'Gardening',
+//   },
+//   {
+//     icon: electricianicon,
+//     name: 'Electrician',
+//   },
+//   {
+//     icon: cleaningicon,
+//     name: 'Cleaning',
+//   },
+//   {
+//     icon: roofingicon,
+//     name: 'Roofing',
+//   },
+//   {
+//     icon: kitchenRepairingicon,
+//     name: 'Kitchen Repairing',
+//   },
+//   {
+//     icon: plumbingicon,
+//     name: 'Plumbing',
+//   },
+//   {
+//     icon: architecturalServicesicon,
+//     name: 'Architectural Services',
+//   },
+//   {
+//     icon: chimneyicon,
+//     name: 'Chimney',
+//   },
+//   {
+//     icon: brickLayingicon,
+//     name: 'Brick Laying',
+//   },
+// ];
+
 const categoryData = [
   {
-    icon: paintingicon,
-    name: 'Painting',
+    icon: DesignAnplainingicon,
+    name: 'Design An plaining',
   },
   {
-    icon: homeRepairingicon,
-    name: 'Home Repairing',
+    icon: GardenAndOutdoorIcon,
+    name: 'Garden & Outdoor',
   },
   {
-    icon: gardeningicon,
-    name: 'Gardening',
+    icon: ProjectManagementIcon,
+    name: 'Project Management',
   },
   {
-    icon: electricianicon,
-    name: 'Electrician',
+    icon: OutdoorAndLandscapingIcon,
+    name: 'Outdoor & Landscaping',
   },
   {
-    icon: cleaningicon,
-    name: 'Cleaning',
+    icon: MediaAndCreativeIcon,
+    name: 'Media & Creative',
   },
   {
-    icon: roofingicon,
-    name: 'Roofing',
+    icon: RentalAndEquipmentIcon,
+    name: 'Rental & Equipment',
   },
   {
-    icon: kitchenRepairingicon,
-    name: 'Kitchen Repairing',
+    icon: BusinessAndFacilityServicesIcon,
+    name: 'Business & Facility Services',
   },
   {
-    icon: plumbingicon,
-    name: 'Plumbing',
+    icon: HomeAndComfortIcon,
+    name: 'Home & Comfort',
   },
   {
-    icon: architecturalServicesicon,
-    name: 'Architectural Services',
+    icon: MaintenanceAndRepairingIcon,
+    name: 'Maintenance & Repairing',
   },
   {
-    icon: chimneyicon,
-    name: 'Chimney',
+    icon: TechnicalAndConstructionIcon,
+    name: 'Technical & Construction',
   },
   {
-    icon: brickLayingicon,
-    name: 'Brick Laying',
+    icon: AdministrativeAndPermitsIcon,
+    name: 'Administrative & Permits',
+  },
+  {
+    icon: DigitalAndTechIcon,
+    name: 'Digital & Tech',
+  },
+  {
+    icon: CleaningServicesIcon,
+    name: 'Cleaning Services',
+  },
+  {
+    icon: InteriorAndFinishingIcon,
+    name: 'Interior & Finishing',
+  },
+  {
+    icon: TransportAndMovingIcon,
+    name: 'Transport & Moving',
+  },
+  {
+    icon: TechnicalAndInstallationIcon,
+    name: 'Technical & Installation',
   },
 ];
 

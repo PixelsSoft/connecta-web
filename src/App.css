@@ -1039,6 +1039,7 @@ label {
   gap: 12px;
   flex: 0 0 80px;
   text-align: center;
+  text-decoration: none;
 }
 
 .mostRecentCategories_box p {

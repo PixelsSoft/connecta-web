@@ -24,25 +24,126 @@ import profileCompletedIcon from '../../assets/images/profile-completed-icon.png
 import { BiSearch } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 
+// categories new icon
+import DesignAnplainingicon from '../../assets/images/category-icons/DesignAnplaining-icon.png';
+import GardenAndOutdoorIcon from '../../assets/images/category-icons/GardenAndOutdoor-icon.png';
+import ProjectManagementIcon from '../../assets/images/category-icons/ProjectManagement-icon.png';
+import OutdoorAndLandscapingIcon from '../../assets/images/category-icons/OutdoorAndLandscaping-icon.png';
+import MediaAndCreativeIcon from '../../assets/images/category-icons/MediaAndCreative-icon.png';
+import RentalAndEquipmentIcon from '../../assets/images/category-icons/RentalAndEquipment-icon.png';
+import BusinessAndFacilityServicesIcon from '../../assets/images/category-icons/BusinessAndFacilityServices-icon.png';
+import HomeAndComfortIcon from '../../assets/images/category-icons/HomeAndComfort-icon.png';
+import MaintenanceAndRepairingIcon from '../../assets/images/category-icons/MaintenanceAndRepairing-icon.png';
+import TechnicalAndConstructionIcon from '../../assets/images/category-icons/TechnicalAndConstruction-icon.png';
+import AdministrativeAndPermitsIcon from '../../assets/images/category-icons/AdministrativeAndPermits-icon.png';
+import DigitalAndTechIcon from '../../assets/images/category-icons/DigitalAndTech-icon.png';
+import CleaningServicesIcon from '../../assets/images/category-icons/CleaningServices-icon.png';
+import InteriorAndFinishingIcon from '../../assets/images/category-icons/InteriorAndFinishing-icon.png';
+import TransportAndMovingIcon from '../../assets/images/category-icons/TransportAndMoving-icon.png';
+import TechnicalAndInstallationIcon from '../../assets/images/category-icons/TechnicalAndInstallation-icon.png';
+
+// const servicesCheckBoxes = [
+//   { label: 'Painting', value: 'painting', icon: paintingIcon },
+//   { label: 'Home Repairing', value: 'home_repairing', icon: homeRepairingIcon },
+//   { label: 'Gardening', value: 'gardening', icon: gardeningIcon },
+//   { label: 'Electrician', value: 'electrician', icon: electricianIcon },
+//   { label: 'Cleaning', value: 'cleaning', icon: cleaningIcon },
+//   {
+//     label: 'Kitchen Repairing',
+//     value: 'kitchen_repairing',
+//     icon: kitchenRepairingIcon,
+//   },
+//   { label: 'Plumbing', value: 'plumbing', icon: plumbingIcon },
+//   {
+//     label: 'Architectural Services',
+//     value: 'architectural',
+//     icon: architecturalServicesIcon,
+//   },
+//   { label: 'Chimney', value: 'chimney', icon: chimneyIcon },
+//   { label: 'Brick Laying', value: 'brick_laying', icon: brickLayingIcon },
+// ];
+
 const servicesCheckBoxes = [
-  { label: 'Painting', value: 'painting', icon: paintingIcon },
-  { label: 'Home Repairing', value: 'home_repairing', icon: homeRepairingIcon },
-  { label: 'Gardening', value: 'gardening', icon: gardeningIcon },
-  { label: 'Electrician', value: 'electrician', icon: electricianIcon },
-  { label: 'Cleaning', value: 'cleaning', icon: cleaningIcon },
   {
-    label: 'Kitchen Repairing',
-    value: 'kitchen_repairing',
-    icon: kitchenRepairingIcon,
+    label: 'Design An plaining',
+    value: 'Design_An_plaining',
+    icon: DesignAnplainingicon,
   },
-  { label: 'Plumbing', value: 'plumbing', icon: plumbingIcon },
   {
-    label: 'Architectural Services',
-    value: 'architectural',
-    icon: architecturalServicesIcon,
+    label: 'Garden & Outdoor',
+    value: 'Garden_&_Outdoor',
+    icon: GardenAndOutdoorIcon,
   },
-  { label: 'Chimney', value: 'chimney', icon: chimneyIcon },
-  { label: 'Brick Laying', value: 'brick_laying', icon: brickLayingIcon },
+  {
+    label: 'Project Management',
+    value: 'Project_Management',
+    icon: ProjectManagementIcon,
+  },
+  {
+    label: 'Outdoor & Landscaping',
+    value: 'Outdoor_&_Landscaping',
+    icon: OutdoorAndLandscapingIcon,
+  },
+  {
+    label: 'Media & Creative',
+    value: 'Media_&_Creative',
+    icon: MediaAndCreativeIcon,
+  },
+  {
+    label: 'Rental & Equipment',
+    value: 'Rental_&_Equipment',
+    icon: RentalAndEquipmentIcon,
+  },
+  {
+    label: 'Business & Facility Services',
+    value: 'Business_&_Facility_Services',
+    icon: BusinessAndFacilityServicesIcon,
+  },
+  {
+    label: 'Home & Comfort',
+    value: 'Home_&_Comfort',
+    icon: HomeAndComfortIcon,
+  },
+  {
+    label: 'Maintenance & Repairing',
+    value: 'Maintenance_&_Repairing',
+    icon: MaintenanceAndRepairingIcon,
+  },
+  {
+    label: 'Technical & Construction',
+    value: 'Technical_&_Construction',
+    icon: TechnicalAndConstructionIcon,
+  },
+  {
+    label: 'Administrative & Permits',
+    value: 'Administrative_&_Permits',
+    icon: AdministrativeAndPermitsIcon,
+  },
+  {
+    label: 'Digital & Tech',
+    value: 'Digital_&_Tech',
+    icon: DigitalAndTechIcon,
+  },
+  {
+    label: 'Cleaning Services',
+    value: 'Cleaning_Services',
+    icon: CleaningServicesIcon,
+  },
+  {
+    label: 'Interior & Finishing',
+    value: 'Interior_&_Finishing',
+    icon: InteriorAndFinishingIcon,
+  },
+  {
+    label: 'Transport & Moving',
+    value: 'Transport_&_Moving',
+    icon: TransportAndMovingIcon,
+  },
+  {
+    label: 'Technical & Installation',
+    value: 'Technical_&_Installation',
+    icon: TechnicalAndInstallationIcon,
+  },
 ];
 
 const SetUpProfile = () => {
