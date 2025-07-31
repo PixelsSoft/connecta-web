@@ -1,38 +1,38 @@
-import React from 'react';
-import DefaultLayout2 from '../../components/Layouts/DefaultLayout2';
+import React from "react";
+import DefaultLayout2 from "../../components/Layouts/DefaultLayout2";
 
-import paintingicon from '../../assets/images/painting-icon.png';
-import homeRepairingicon from '../../assets/images/homeRepairing-icon.png';
-import gardeningicon from '../../assets/images/gardening-icon.png';
-import electricianicon from '../../assets/images/electrician-icon.png';
-import cleaningicon from '../../assets/images/cleaning-icon.png';
-import roofingicon from '../../assets/images/roofing-icon.png';
-import kitchenRepairingicon from '../../assets/images/kitchenRepairing-icon.png';
-import plumbingicon from '../../assets/images/plumbing-icon.png';
-import architecturalServicesicon from '../../assets/images/architecturalServices-icon.png';
-import chimneyicon from '../../assets/images/chimney-icon.png';
-import brickLayingicon from '../../assets/images/brickLaying-icon.png';
+import paintingicon from "../../assets/images/painting-icon.png";
+import homeRepairingicon from "../../assets/images/homeRepairing-icon.png";
+import gardeningicon from "../../assets/images/gardening-icon.png";
+import electricianicon from "../../assets/images/electrician-icon.png";
+import cleaningicon from "../../assets/images/cleaning-icon.png";
+import roofingicon from "../../assets/images/roofing-icon.png";
+import kitchenRepairingicon from "../../assets/images/kitchenRepairing-icon.png";
+import plumbingicon from "../../assets/images/plumbing-icon.png";
+import architecturalServicesicon from "../../assets/images/architecturalServices-icon.png";
+import chimneyicon from "../../assets/images/chimney-icon.png";
+import brickLayingicon from "../../assets/images/brickLaying-icon.png";
 
-import jobPostingBannerImg from '../../assets/images/jobPosting-banner-img.png';
-import { Link, useNavigate } from 'react-router-dom';
+import jobPostingBannerImg from "../../assets/images/jobPosting-banner-img.png";
+import { Link, useNavigate } from "react-router-dom";
 
 // categories new icon
-import DesignAnplainingicon from '../../assets/images/category-icons/DesignAnplaining-icon.png';
-import GardenAndOutdoorIcon from '../../assets/images/category-icons/GardenAndOutdoor-icon.png';
-import ProjectManagementIcon from '../../assets/images/category-icons/ProjectManagement-icon.png';
-import OutdoorAndLandscapingIcon from '../../assets/images/category-icons/OutdoorAndLandscaping-icon.png';
-import MediaAndCreativeIcon from '../../assets/images/category-icons/MediaAndCreative-icon.png';
-import RentalAndEquipmentIcon from '../../assets/images/category-icons/RentalAndEquipment-icon.png';
-import BusinessAndFacilityServicesIcon from '../../assets/images/category-icons/BusinessAndFacilityServices-icon.png';
-import HomeAndComfortIcon from '../../assets/images/category-icons/HomeAndComfort-icon.png';
-import MaintenanceAndRepairingIcon from '../../assets/images/category-icons/MaintenanceAndRepairing-icon.png';
-import TechnicalAndConstructionIcon from '../../assets/images/category-icons/TechnicalAndConstruction-icon.png';
-import AdministrativeAndPermitsIcon from '../../assets/images/category-icons/AdministrativeAndPermits-icon.png';
-import DigitalAndTechIcon from '../../assets/images/category-icons/DigitalAndTech-icon.png';
-import CleaningServicesIcon from '../../assets/images/category-icons/CleaningServices-icon.png';
-import InteriorAndFinishingIcon from '../../assets/images/category-icons/InteriorAndFinishing-icon.png';
-import TransportAndMovingIcon from '../../assets/images/category-icons/TransportAndMoving-icon.png';
-import TechnicalAndInstallationIcon from '../../assets/images/category-icons/TechnicalAndInstallation-icon.png';
+import DesignAnplainingicon from "../../assets/images/category-icons/DesignAnplaining-icon.png";
+import GardenAndOutdoorIcon from "../../assets/images/category-icons/GardenAndOutdoor-icon.png";
+import ProjectManagementIcon from "../../assets/images/category-icons/ProjectManagement-icon.png";
+import OutdoorAndLandscapingIcon from "../../assets/images/category-icons/OutdoorAndLandscaping-icon.png";
+import MediaAndCreativeIcon from "../../assets/images/category-icons/MediaAndCreative-icon.png";
+import RentalAndEquipmentIcon from "../../assets/images/category-icons/RentalAndEquipment-icon.png";
+import BusinessAndFacilityServicesIcon from "../../assets/images/category-icons/BusinessAndFacilityServices-icon.png";
+import HomeAndComfortIcon from "../../assets/images/category-icons/HomeAndComfort-icon.png";
+import MaintenanceAndRepairingIcon from "../../assets/images/category-icons/MaintenanceAndRepairing-icon.png";
+import TechnicalAndConstructionIcon from "../../assets/images/category-icons/TechnicalAndConstruction-icon.png";
+import AdministrativeAndPermitsIcon from "../../assets/images/category-icons/AdministrativeAndPermits-icon.png";
+import DigitalAndTechIcon from "../../assets/images/category-icons/DigitalAndTech-icon.png";
+import CleaningServicesIcon from "../../assets/images/category-icons/CleaningServices-icon.png";
+import InteriorAndFinishingIcon from "../../assets/images/category-icons/InteriorAndFinishing-icon.png";
+import TransportAndMovingIcon from "../../assets/images/category-icons/TransportAndMoving-icon.png";
+import TechnicalAndInstallationIcon from "../../assets/images/category-icons/TechnicalAndInstallation-icon.png";
 
 // const categoryData = [
 //   {
@@ -84,67 +84,67 @@ import TechnicalAndInstallationIcon from '../../assets/images/category-icons/Tec
 const categoryData = [
   {
     icon: DesignAnplainingicon,
-    name: 'Design An plaining',
+    name: "Design An plaining",
   },
   {
     icon: GardenAndOutdoorIcon,
-    name: 'Garden & Outdoor',
+    name: "Garden & Outdoor",
   },
   {
     icon: ProjectManagementIcon,
-    name: 'Project Management',
+    name: "Project Management",
   },
   {
     icon: OutdoorAndLandscapingIcon,
-    name: 'Outdoor & Landscaping',
+    name: "Outdoor & Landscaping",
   },
   {
     icon: MediaAndCreativeIcon,
-    name: 'Media & Creative',
+    name: "Media & Creative",
   },
   {
     icon: RentalAndEquipmentIcon,
-    name: 'Rental & Equipment',
+    name: "Rental & Equipment",
   },
   {
     icon: BusinessAndFacilityServicesIcon,
-    name: 'Business & Facility Services',
+    name: "Business & Facility Services",
   },
   {
     icon: HomeAndComfortIcon,
-    name: 'Home & Comfort',
+    name: "Home & Comfort",
   },
   {
     icon: MaintenanceAndRepairingIcon,
-    name: 'Maintenance & Repairing',
+    name: "Maintenance & Repairing",
   },
   {
     icon: TechnicalAndConstructionIcon,
-    name: 'Technical & Construction',
+    name: "Technical & Construction",
   },
   {
     icon: AdministrativeAndPermitsIcon,
-    name: 'Administrative & Permits',
+    name: "Administrative & Permits",
   },
   {
     icon: DigitalAndTechIcon,
-    name: 'Digital & Tech',
+    name: "Digital & Tech",
   },
   {
     icon: CleaningServicesIcon,
-    name: 'Cleaning Services',
+    name: "Cleaning Services",
   },
   {
     icon: InteriorAndFinishingIcon,
-    name: 'Interior & Finishing',
+    name: "Interior & Finishing",
   },
   {
     icon: TransportAndMovingIcon,
-    name: 'Transport & Moving',
+    name: "Transport & Moving",
   },
   {
     icon: TechnicalAndInstallationIcon,
-    name: 'Technical & Installation',
+    name: "Technical & Installation",
   },
 ];
 
@@ -153,69 +153,71 @@ const FindProfessional = () => {
 
   const handleSelectChange = (e) => {
     const selectedValue = e.target.value;
-
+ 
     // if (selectedValue === 'painting-job') {
     //   navigate('/painting-job');
     // }
-    navigate('/painting-job');
+    navigate(`/post-a-job/${selectedValue}`);
 
     // Add more redirects if needed for other categories
   };
   return (
     <DefaultLayout2>
-      <section className='jobPostingSec'>
-        <div className='container'>
-          <div className='row align-items-end'>
-            <div className='col-lg-7'>
-              <div className='jobPosting__content'>
-                <div className='sec-head'>
+      <section className="jobPostingSec">
+        <div className="container">
+          <div className="row align-items-end">
+            <div className="col-lg-7">
+              <div className="jobPosting__content">
+                <div className="sec-head">
                   <h1>Find Top Rated Professional for your job</h1>
                   <p>
                     In which Category you want to post your job here we have
                     some common categories.
                   </p>
                 </div>
-                <div className='findProfessionalContent'>
-                  <div className='inputGroup'>
-                    <label htmlFor='selectCategory' className='form-label'>
+                <div className="findProfessionalContent">
+                  <div className="inputGroup">
+                    <label htmlFor="selectCategory" className="form-label">
                       What would you like to have done?
                     </label>
                     <select
-                      id='selectCategory'
-                      className='form-select form-control'
-                      aria-label='Select job category'
+                      id="selectCategory"
+                      className="form-select form-control"
+                      aria-label="Select job category"
                       onChange={handleSelectChange}
-                      defaultValue=''
+                      defaultValue=""
                     >
-                      <option value={''} disabled>
+                      <option value={""} disabled>
                         Select Category
                       </option>
-                      <option value='painting-job'>Painting</option>
-                      <option value='home-repairing'>Home Repairing</option>
-                      <option value='gardening'>Gardening</option>
-                      <option value='electrician'>Electrician</option>
-                      <option value='cleaning'>Cleaning</option>
-                      <option value='roofing'>Roofing</option>
-                      <option value='kitchen-Repairing'>tchen Repairing</option>
-                      <option value='plumbing'>Plumbing</option>
-                      <option value='architectural-Services'>
+                      <option value="Painting-job">Painting</option>
+                      <option value="Home-repairing">Home Repairing</option>
+                      <option value="Gardening">Gardening</option>
+                      <option value="Electrician">Electrician</option>
+                      <option value="Cleaning">Cleaning</option>
+                      <option value="Roofing">Roofing</option>
+                      <option value="Kitchen-Repairing">
+                        Kitchen Repairing
+                      </option>
+                      <option value="Plumbing">Plumbing</option>
+                      <option value="Architectural-Services">
                         Architectural Services
                       </option>
-                      <option value='Chimney0'>Chimney</option>
-                      <option value='brick-Laying'>Brick Laying</option>
+                      <option value="Chimney">Chimney</option>
+                      <option value="Brick-Laying">Brick Laying</option>
                     </select>
                   </div>
-                  <div className='mostRecentCategories'>
+                  <div className="mostRecentCategories">
                     <h4>Most recent Categories</h4>
-                    <div className='mostRecentCategories_boxes'>
+                    <div className="mostRecentCategories_boxes">
                       {categoryData.map((item, index) => (
                         <Link
-                          to={'/painting-job'}
-                          className='mostRecentCategories_box'
+                          to={"/painting-job"}
+                          className="mostRecentCategories_box"
                           key={index}
                         >
-                          <div className='mostRecentCategories_boxe-icon'>
-                            <img src={item.icon} alt='' />
+                          <div className="mostRecentCategories_boxe-icon">
+                            <img src={item.icon} alt="" />
                           </div>
                           <p>{item.name}</p>
                         </Link>
@@ -225,10 +227,10 @@ const FindProfessional = () => {
                 </div>
               </div>
             </div>
-            <div className='col-lg-5'>
-              <div className='h-100 d-flex align-items-center justify-content-center'>
-                <div className='jobPosting__banner-img'>
-                  <img src={jobPostingBannerImg} className='img-fluid' alt='' />
+            <div className="col-lg-5">
+              <div className="h-100 d-flex align-items-center justify-content-center">
+                <div className="jobPosting__banner-img">
+                  <img src={jobPostingBannerImg} className="img-fluid" alt="" />
                 </div>
               </div>
             </div>

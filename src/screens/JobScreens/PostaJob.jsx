@@ -1,5 +1,5 @@
 import React, { use, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import DefaultLayout2 from '../../components/Layouts/DefaultLayout2';
 import JobPostingSec from '../../components/JobPostingSec';
 
@@ -12,9 +12,10 @@ import paintingbannerimg from '../../assets/images/painting-banner-img.png';
 import jobPostingbannerimg from '../../assets/images/jobPosting-banner-img.png';
 import bathroomfittingbanner3 from '../../assets/images/bathroom-fitting-banner-3.png';
 
-const PaintingJob = () => {
+const PostaJob = () => {
   const [step, setStep] = useState(1);
-
+const {category} = useParams();
+console.log({category})
   const navigate = useNavigate();
 
   const nextStep = () => setStep((prev) => prev + 1);
@@ -28,7 +29,7 @@ const PaintingJob = () => {
     <DefaultLayout2>
       {step === 1 && (
         <JobPostingSec
-          secTitle='Post a Painting job'
+          secTitle={`Post a ${category} job`}
           secDescription='Get responses from Connecta24 screened and reviewed Professional People near you'
           rightImg={paintingbannerimg}
         >
@@ -277,4 +278,4 @@ const PaintingJob = () => {
   );
 };
 
-export default PaintingJob;
+export default PostaJob;

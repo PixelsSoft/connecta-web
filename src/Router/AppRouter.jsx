@@ -5,7 +5,7 @@ import Login from '../screens/AuthPages/Login';
 import SignUP from '../screens/AuthPages/SignUP';
 
 import FindProfessional from '../screens/JobScreens/FindProfessional';
-import PaintingJob from '../screens/JobScreens/PaintingJob';
+
 
 import PaintingJob1 from '../screens/JobScreens/PaintingJob1';
 import PaintingJob2 from '../screens/JobScreens/PaintingJob2';
@@ -39,6 +39,7 @@ import TopJobForYou from '../screens/UserScreens/TopJobForYou';
 // import UserChat from '../screens/UserScreens/UserChat/index.';
 // import RecruiterChat from '../screens/RecruiterScreens/RecruiterChat';
 import ChatPage from '../screens/ChatPage';
+import PostaJob from '../screens/JobScreens/PostaJob';
 
 const AppRouter = () => {
   return (
@@ -51,7 +52,7 @@ const AppRouter = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/sign-up' element={<SignUP />} />
 
-        <Route path='/painting-job' element={<PaintingJob />} />
+        <Route path='/post-a-job/:category' element={<PostaJob />} />
 
         {/* Find Jobs || Find Professionls */}
         <Route path='/find-professionals' element={<FindProfessional />} />
