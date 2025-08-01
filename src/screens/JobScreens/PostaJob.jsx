@@ -1,89 +1,353 @@
-import React, { use, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import DefaultLayout2 from '../../components/Layouts/DefaultLayout2';
-import JobPostingSec from '../../components/JobPostingSec';
+import React, { use, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import DefaultLayout2 from "../../components/Layouts/DefaultLayout2";
+import JobPostingSec from "../../components/JobPostingSec";
 
-import RoomIcon1 from '../../assets/images/1-room-icon.png';
-import RoomIcon2 from '../../assets/images/2-room-icon.png';
-import RoomIcon3 from '../../assets/images/3-room-icon.png';
-import RoomIcon4 from '../../assets/images/4-room-icon.png';
+import RoomIcon1 from "../../assets/images/1-room-icon.png";
+import RoomIcon2 from "../../assets/images/2-room-icon.png";
+import RoomIcon3 from "../../assets/images/3-room-icon.png";
+import RoomIcon4 from "../../assets/images/4-room-icon.png";
 
-import paintingbannerimg from '../../assets/images/painting-banner-img.png';
-import jobPostingbannerimg from '../../assets/images/jobPosting-banner-img.png';
-import bathroomfittingbanner3 from '../../assets/images/bathroom-fitting-banner-3.png';
+import paintingbannerimg from "../../assets/images/painting-banner-img.png";
+import jobPostingbannerimg from "../../assets/images/jobPosting-banner-img.png";
+import bathroomfittingbanner3 from "../../assets/images/bathroom-fitting-banner-3.png";
 
 const PostaJob = () => {
   const [step, setStep] = useState(1);
-const {category} = useParams();
-console.log({category})
+  const { category } = useParams();
+
   const navigate = useNavigate();
 
   const nextStep = () => setStep((prev) => prev + 1);
   const prevStep = () => setStep((prev) => prev - 1);
 
   const handleSubmit = () => {
-    navigate('/recruiter/posted-jobs');
+    navigate("/recruiter/posted-jobs");
   };
 
+ // Replace the icon imports/variables with your actual icon references.
+const categoryData = [
+  {
+   
+    name: "Design & Planning",
+    value: "Design-And-Planning",
+    subcategories: [
+      "Architect",
+      "Structural Designer / Bouwkundige",
+      "Land Surveyor",
+      "Permit Consultant",
+      "Energy Advisor",
+      "Interior Designer",
+      "3D Renderings & Visualizations",
+    ],
+  },
+  {
+    
+    name: "Garden & Outdoor",
+    value: "Garden-And-Outdoor",
+    subcategories: [
+      "Gardener",
+      "Landscaper",
+      "Lawn Mowing",
+      "Tree Cutting & Pruning",
+      "Swimming Pool Construction – kopen of laten installeren",
+      "Jacuzzi / Hot Tub Installation – kopen of laten installeren",
+    ],
+  },
+  {
+   
+    name: "Project Management",
+    value: "Project-Management",
+    subcategories: [
+      "General Contractor",
+      "Project Manager",
+      "Construction Inspector",
+    ],
+  },
+  {
+  
+    name: "Outdoor & Landscaping",
+    value: "Outdoor-And-Landscaping",
+    subcategories: [
+      "Paver / Stoneworker",
+      "Landscape Designer",
+      "Fence & Gate Builder – kopen of laten installeren",
+      "Garden Architect",
+      "Paving & Stonework",
+      "Deck / Terrace Construction",
+    ],
+  },
+  {
+    
+    name: "Media & Creative",
+    value: "Media-And-Creative",
+    subcategories: [
+      "Drone Services",
+      "Real Estate Photography",
+      "Video Production",
+      "3D Scanning / Lidar",
+      "Company Videos / Animations",
+      "Graphic Design for Signs / Vehicles",
+    ],
+  },
+  {
+    
+    name: "Rental & Equipment",
+    value: "Rental-And-Equipment",
+    subcategories: [
+      "Scaffold Rental",
+      "Construction Tool Rental",
+      "Container (Waste) Rental",
+      "Mobile Toilet Rental",
+      "Mini Excavator with Operator",
+      "Lift/Hoist Services",
+      "Generator Rental – kopen of laten installeren",
+    ],
+  },
+  {
+  
+    name: "Business & Facility Services",
+    value: "Business-And-Facility-Services",
+    subcategories: [
+      "Office Renovation",
+      "Office IT Setup & Cabling",
+      "Facility Management",
+      "Coffee Machine Maintenance",
+      "Industrial Cleaning",
+      "Archive Digitization",
+    ],
+  },
+  {
+   
+    name: "Home & Comfort",
+    value: "Home-And-Comfort",
+    subcategories: [
+      "Smart Home Installation",
+      "Home Theater Setup – kopen of laten installeren",
+      "WiFi & Network Setup",
+      "Curtain / Blind Installation – kopen of laten installeren",
+      "TV Wall Mounting – kopen of laten installeren",
+      "Babyproofing Services",
+      "Indoor Air Quality Check – kopen of laten installeren",
+      "Furniture Restoration / Repair – kopen of laten installeren",
+    ],
+  },
+  {
+ 
+    name: "Maintenance & Repairing",
+    value: "Maintenance-And-Repairing",
+    subcategories: [
+      "Handyman",
+      "Appliance Repair",
+      "Furniture Assembly – kopen of laten installeren",
+      "Locksmith",
+      "Window & Door Installation – kopen of laten installeren",
+      "Roller Shutter Repair",
+      "Chimney Sweep",
+      "Heating System Maintenance",
+      "Light Fixture / Switch Installation",
+      "Curtain Rail / Blind Mounting – kopen of laten installeren",
+      "Silicone Sealing / Kit Replacement",
+      "Painter / Decorator",
+      "Plasterer / Drywall Finisher",
+      "Tile Setter / Floor Layer",
+    ],
+  },
+  {
+  
+    name: "Technical & Construction",
+    value: "Technical-And-Construction",
+    subcategories: [
+      "Electrician",
+      "Plumber",
+      "Carpenter",
+      "Mason / Bricklayer",
+      "Painter & Decorator",
+      "Steel Fixer",
+      "Roofer",
+      "HVAC Technician",
+      "Floor Installation & Tiling",
+      "Drywall Installer (Plastering)",
+      "Insulation Specialist",
+      "Solar Panel Installer",
+      "Scaffolder",
+      "Site Supervisor",
+      "General Laborer",
+      "Kitchen Installation – kopen of laten installeren",
+      "Security System Installation",
+      "Bathroom Installation / Renovation",
+      "Toilet Renovation",
+      "Staircase Builder / Renovation",
+      "Concrete / Foundation Work",
+      "Gutter Installer / Repair",
+      "Soundproofing Specialist",
+      "Groundworker",
+      "Foundation Specialist / Concrete Worker",
+      "Bricklayer / Masonry Contractor",
+      "Rough Construction Carpenter",
+      "Staircase Builder",
+      "Glazier / Window Installer – kopen of laten installeren",
+    ],
+  },
+  {
+  
+    name: "Administrative & Permits",
+    value: "Administrative-And-Permits",
+    subcategories: [
+      "Building Permit Assistance",
+      "Insurance Claim Support",
+      "On-site Project Management",
+      "Safety Checks & Reports",
+    ],
+  },
+  {
+   
+    name: "Digital & Tech",
+    value: "Digital-And-Tech",
+    subcategories: [
+      "Website for Contractors",
+      "Accounting Software Setup",
+      "Online Planning Tools",
+      "Customer Portal Development",
+      "SEO & Google Business Optimization",
+    ],
+  },
+  {
+   
+    name: "Cleaning Services",
+    value: "Cleaning-Services",
+    subcategories: [
+      "General Cleaning",
+      "Deep Cleaning",
+      "Office Cleaning",
+      "Window Cleaning – kopen of laten installeren",
+      "Post-Construction Cleaning",
+      "Carpet & Upholstery Cleaning",
+      "Gutter Cleaning",
+      "Graffiti Removal",
+      "End-of-Rental Cleaning",
+      "Facade Cleaning",
+    ],
+  },
+  {
+   
+    name: "Interior & Finishing",
+    value: "Interior-And-Finishing",
+    subcategories: [
+      "Kitchen Builder – kopen of laten installeren",
+      "Cabinetmaker / Furniture Maker – kopen of laten installeren",
+      "Interior Decorator",
+      "Lighting Installer",
+    ],
+  },
+  {
+  
+    name: "Transport & Moving",
+    value: "Transport-And-Moving",
+    subcategories: [
+      "Moving Services",
+      "Packing & Unpacking",
+      "Furniture Transport – kopen of laten installeren",
+      "Junk Removal",
+      "Van with Driver",
+      "Small Delivery Tasks",
+      "Piano Transport",
+    ],
+  },
+  {
+   
+    name: "Technical & Installation",
+    value: "Technical-And-Installation",
+    subcategories: [
+      "Solar Panel Specialist",
+      "Security System Installer",
+    ],
+  },
+];
+ const matched = categoryData.find((c) => c.value === category);
+
+  if (!matched) {
+    return <div>Unknown category: {category}</div>;
+  }
   return (
     <DefaultLayout2>
       {step === 1 && (
         <JobPostingSec
-          secTitle={`Post a ${category} job`}
-          secDescription='Get responses from Connecta24 screened and reviewed Professional People near you'
+          secTitle={`Post a ${matched.name} job`}
+          secDescription="Get responses from Connecta24 screened and reviewed Professional People near you"
           rightImg={paintingbannerimg}
         >
-          <div className='paintingJobContent'>
-            <div className='input-group'>
-              <label className='form-label fw-600'>
+          <div className="inputGroup">
+            <label htmlFor="selectCategory" className="form-label">
+              What would you like to have done?
+            </label>
+            <select
+              id="selectCategory"
+              className="form-select form-control"
+              aria-label="Select job category"
+              defaultValue=""
+            >
+              <option value={""} disabled>
+                Select {matched.name}  Category
+              </option>
+              {matched.subcategories.map((item, index) => (
+                <option value={item} key={index}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="paintingJobContent mt-3">
+            <div className="input-group">
+              <label className="form-label fw-600">
                 How many room do you want to cover in this services?
               </label>
-              <div className='paintingBoxRadioButtons'>
+              <div className="paintingBoxRadioButtons">
                 {[
-                  { labelId: 'for1Room', title: '1 Room', icon: RoomIcon1 },
-                  { labelId: 'for2Room', title: '2 Room', icon: RoomIcon2 },
-                  { labelId: 'for3Room', title: '3 Room', icon: RoomIcon3 },
-                  { labelId: 'for4Room', title: '4 Room', icon: RoomIcon4 },
+                  { labelId: "for1Room", title: "1 Room", icon: RoomIcon1 },
+                  { labelId: "for2Room", title: "2 Room", icon: RoomIcon2 },
+                  { labelId: "for3Room", title: "3 Room", icon: RoomIcon3 },
+                  { labelId: "for4Room", title: "4 Room", icon: RoomIcon4 },
                 ].map((item, index) => (
-                  <div className='form-check paintJobRadio' key={index}>
-                    <label className='form-check-label' htmlFor={item.labelId}>
-                      <div className='form-check-labelContent'>
-                        <img src={item.icon} alt='' />
+                  <div className="form-check paintJobRadio" key={index}>
+                    <label className="form-check-label" htmlFor={item.labelId}>
+                      <div className="form-check-labelContent">
+                        <img src={item.icon} alt="" />
                         <span>{item.title}</span>
                       </div>
                       <input
-                        className='form-check-input'
-                        type='radio'
-                        name='AditionalVendors'
+                        className="form-check-input"
+                        type="radio"
+                        name="AditionalVendors"
                         id={item.labelId}
                       />
                     </label>
                   </div>
                 ))}
 
-                <div className='form-check paintJobRadio'>
-                  <label className='form-check-label' htmlFor='paintingOther'>
-                    <div className='form-check-labelContent'>
+                <div className="form-check paintJobRadio">
+                  <label className="form-check-label" htmlFor="paintingOther">
+                    <div className="form-check-labelContent">
                       <span>Other</span>
                       <input
-                        type='text'
-                        className='forn-control'
-                        placeholder='No of rooms'
+                        type="text"
+                        className="forn-control"
+                        placeholder="No of rooms"
                       />
                     </div>
                     <input
-                      className='form-check-input'
-                      type='radio'
-                      name='AditionalVendors'
-                      id='paintingOther'
+                      className="form-check-input"
+                      type="radio"
+                      name="AditionalVendors"
+                      id="paintingOther"
                     />
                   </label>
                 </div>
               </div>
             </div>
 
-            <div className='paintingJobContent-btns mt-3'>
-              <button onClick={nextStep} className='customBtn btn-bgRed'>
+            <div className="paintingJobContent-btns mt-3">
+              <button onClick={nextStep} className="customBtn btn-bgRed">
                 Next
               </button>
             </div>
@@ -93,50 +357,50 @@ console.log({category})
 
       {step === 2 && (
         <JobPostingSec
-          secTitle='Post a Painting job'
-          secDescription='Get responses from Connecta24 screened and reviewed Professional People near you'
+          secTitle={`Post a ${matched.name} job`}
+          secDescription="Get responses from Connecta24 screened and reviewed Professional People near you"
           rightImg={paintingbannerimg}
         >
-          <div className='paintingJobContent'>
-            <div className='input-group'>
-              <label className='form-label fw-600'>
+          <div className="paintingJobContent">
+            <div className="input-group">
+              <label className="form-label fw-600">
                 What type of painting do you need?
               </label>
-              <div className='paintingBoxRadioList'>
+              <div className="paintingBoxRadioList">
                 {[
                   {
-                    labelId: 'for1Room',
-                    title: 'In house decoration',
-                    description: 'Completely change a home color',
+                    labelId: "for1Room",
+                    title: "In house decoration",
+                    description: "Completely change a home color",
                   },
                   {
-                    labelId: 'for2Room',
-                    title: 'Wallpaper work',
+                    labelId: "for2Room",
+                    title: "Wallpaper work",
                     description:
-                      'E.g. replace wall color with different wallpapers',
+                      "E.g. replace wall color with different wallpapers",
                   },
                   {
-                    labelId: 'for3Room',
-                    title: 'Touching',
-                    description: 'Need some touching for fresh look',
+                    labelId: "for3Room",
+                    title: "Touching",
+                    description: "Need some touching for fresh look",
                   },
                   {
-                    labelId: 'for4Room',
-                    title: 'Tiling',
-                    description: 'E.g. Color with tiles',
+                    labelId: "for4Room",
+                    title: "Tiling",
+                    description: "E.g. Color with tiles",
                   },
                 ].map((item, index) => (
-                  <div className='form-check paintRadioListItem' key={index}>
-                    <label className='form-check-label' htmlFor={item.labelId}>
+                  <div className="form-check paintRadioListItem" key={index}>
+                    <label className="form-check-label" htmlFor={item.labelId}>
                       <input
-                        className='form-check-input'
-                        type='radio'
-                        name='AditionalVendors'
+                        className="form-check-input"
+                        type="radio"
+                        name="AditionalVendors"
                         id={item.labelId}
                       />
-                      <div className='form-check-labelListContent'>
-                        <span className='darkGrayColor'>{item.title}</span>
-                        <span className='grayColor50'>{item.description}</span>
+                      <div className="form-check-labelListContent">
+                        <span className="darkGrayColor">{item.title}</span>
+                        <span className="grayColor50">{item.description}</span>
                       </div>
                     </label>
                   </div>
@@ -144,11 +408,11 @@ console.log({category})
               </div>
             </div>
 
-            <div className='paintingJobContent-btns mt-3'>
-              <button onClick={prevStep} className='customBtn btn-blackBorder'>
+            <div className="paintingJobContent-btns mt-3">
+              <button onClick={prevStep} className="customBtn btn-blackBorder">
                 Back
               </button>
-              <button onClick={nextStep} className='customBtn btn-bgRed'>
+              <button onClick={nextStep} className="customBtn btn-bgRed">
                 Next
               </button>
             </div>
@@ -158,38 +422,38 @@ console.log({category})
 
       {step === 3 && (
         <JobPostingSec
-          secTitle='Post a Bathroom Fitting job'
-          secDescription='Enter Some Description about your job or upload some images to support your description!'
+          secTitle={`Post a ${matched.name} job`}
+          secDescription="Enter Some Description about your job or upload some images to support your description!"
           rightImg={paintingbannerimg}
         >
-          <div className='bathroomFittinJob'>
-            <div className='input-group mb-4'>
-              <label htmlFor='userName' className='form-label fw-600'>
+          <div className="bathroomFittinJob">
+            <div className="input-group mb-4">
+              <label htmlFor="userName" className="form-label fw-600">
                 Description
               </label>
               <textarea
-                className='form-control'
-                placeholder='Add Description'
+                className="form-control"
+                placeholder="Add Description"
                 rows={3}
-                style={{ resize: 'none' }}
+                style={{ resize: "none" }}
               ></textarea>
             </div>
 
-            <div className='input-group'>
-              <label htmlFor='userName' className='form-label fw-600 mb-0'>
+            <div className="input-group">
+              <label htmlFor="userName" className="form-label fw-600 mb-0">
                 Upload Images
               </label>
-              <div className='form-text mt-0 mb-2'>
+              <div className="form-text mt-0 mb-2">
                 you can upload up to 20 pictures not more than 100 mbs
               </div>
-              <input type='file' className='form-control' id='userName' />
+              <input type="file" className="form-control" id="userName" />
             </div>
 
-            <div className='paintingJobContent-btns mt-5'>
-              <button onClick={prevStep} className='customBtn btn-blackBorder'>
+            <div className="paintingJobContent-btns mt-5">
+              <button onClick={prevStep} className="customBtn btn-blackBorder">
                 Back
               </button>
-              <button onClick={nextStep} className='customBtn btn-bgRed'>
+              <button onClick={nextStep} className="customBtn btn-bgRed">
                 Next
               </button>
             </div>
@@ -199,40 +463,40 @@ console.log({category})
 
       {step === 4 && (
         <JobPostingSec
-          secTitle='Post a Bathroom Fitting job'
-          secDescription='Enter your contact Information'
+          secTitle={`Post a ${matched.name} job`}
+          secDescription="Enter your contact Information"
           rightImg={jobPostingbannerimg}
         >
-          <div className='bathroomFittinJob'>
-            <div className='input-group mb-4'>
-              <label htmlFor='userEmail' className='form-label fw-600'>
+          <div className="bathroomFittinJob">
+            <div className="input-group mb-4">
+              <label htmlFor="userEmail" className="form-label fw-600">
                 Email
               </label>
               <input
-                type='email'
-                className='form-control'
-                id='userEmail'
-                placeholder='info@modernize.com'
+                type="email"
+                className="form-control"
+                id="userEmail"
+                placeholder="info@modernize.com"
               />
             </div>
 
-            <div className='input-group'>
-              <label htmlFor='userPhone' className='form-label fw-600 mb-0'>
+            <div className="input-group">
+              <label htmlFor="userPhone" className="form-label fw-600 mb-0">
                 Phone
               </label>
               <input
-                type='text'
-                className='form-control'
-                id='userPhone'
-                placeholder='+91 12345 65478'
+                type="text"
+                className="form-control"
+                id="userPhone"
+                placeholder="+91 12345 65478"
               />
             </div>
 
-            <div className='paintingJobContent-btns mt-5'>
-              <button onClick={prevStep} className='customBtn btn-blackBorder'>
+            <div className="paintingJobContent-btns mt-5">
+              <button onClick={prevStep} className="customBtn btn-blackBorder">
                 Back
               </button>
-              <button onClick={nextStep} className='customBtn btn-bgRed'>
+              <button onClick={nextStep} className="customBtn btn-bgRed">
                 Next
               </button>
             </div>
@@ -242,32 +506,32 @@ console.log({category})
 
       {step === 5 && (
         <JobPostingSec
-          secTitle='Post a Bathroom Fitting job'
-          secDescription='Verifiy your email address and Phone number'
+          secTitle={`Post a ${matched.name} job`}
+          secDescription="Verifiy your email address and Phone number"
           rightImg={bathroomfittingbanner3}
         >
-          <div className='bathroomFittinJob'>
-            <div className='input-group mb-4'>
-              <label htmlFor='userOTP' className='form-label fw-600'>
+          <div className="bathroomFittinJob">
+            <div className="input-group mb-4">
+              <label htmlFor="userOTP" className="form-label fw-600">
                 OTP Code
               </label>
               <input
-                type='text'
-                className='form-control'
-                id='userOTP'
-                placeholder='******'
+                type="text"
+                className="form-control"
+                id="userOTP"
+                placeholder="******"
               />
-              <p className='darkGrayColor mb-0 mt-2'>
-                code will be able to resent after{' '}
-                <span style={{ color: '#056517' }}>00:59</span>
+              <p className="darkGrayColor mb-0 mt-2">
+                code will be able to resent after{" "}
+                <span style={{ color: "#056517" }}>00:59</span>
               </p>
             </div>
 
-            <div className='paintingJobContent-btns mt-5'>
-              <button onClick={prevStep} className='customBtn btn-blackBorder'>
+            <div className="paintingJobContent-btns mt-5">
+              <button onClick={prevStep} className="customBtn btn-blackBorder">
                 Back
               </button>
-              <button className='customBtn btn-bgRed' onClick={handleSubmit}>
+              <button className="customBtn btn-bgRed" onClick={handleSubmit}>
                 Next
               </button>
             </div>

@@ -85,66 +85,82 @@ const categoryData = [
   {
     icon: DesignAnplainingicon,
     name: "Design An plaining",
+    value: "Design-An-plaining",
   },
   {
     icon: GardenAndOutdoorIcon,
     name: "Garden & Outdoor",
+    value: "Garden-And-Outdoor",
   },
   {
     icon: ProjectManagementIcon,
     name: "Project Management",
+    value: "Project-Management",
   },
   {
     icon: OutdoorAndLandscapingIcon,
     name: "Outdoor & Landscaping",
+    value: "Outdoor-And-Landscaping",
   },
   {
     icon: MediaAndCreativeIcon,
     name: "Media & Creative",
+    value: "Media-And-Creative",
   },
   {
     icon: RentalAndEquipmentIcon,
-    name: "Rental & Equipment",
+    name: "Rental & Equipment", 
+    value: "Rental-And-Equipment",
   },
   {
     icon: BusinessAndFacilityServicesIcon,
     name: "Business & Facility Services",
+    value: "Business-And-Facility-Services",
   },
   {
     icon: HomeAndComfortIcon,
     name: "Home & Comfort",
+    value: "Home-And-Comfort",
   },
   {
     icon: MaintenanceAndRepairingIcon,
     name: "Maintenance & Repairing",
+    value: "Maintenance-And-Repairing",
   },
   {
     icon: TechnicalAndConstructionIcon,
     name: "Technical & Construction",
+    value: "Technical-And-Construction",
   },
   {
     icon: AdministrativeAndPermitsIcon,
     name: "Administrative & Permits",
+    value: "Administrative-And-Permits",
   },
   {
     icon: DigitalAndTechIcon,
     name: "Digital & Tech",
+    value: "Digital-And-Tech",
   },
   {
     icon: CleaningServicesIcon,
     name: "Cleaning Services",
+    value: "Cleaning-Services",
   },
   {
     icon: InteriorAndFinishingIcon,
     name: "Interior & Finishing",
+    value: "Interior-And-Finishing",
   },
   {
     icon: TransportAndMovingIcon,
     name: "Transport & Moving",
+    value: "Transport-And-Moving",
   },
   {
     icon: TechnicalAndInstallationIcon,
     name: "Technical & Installation",
+    value: "Technical-And-Installation",
   },
 ];
 
@@ -190,7 +206,16 @@ const FindProfessional = () => {
                       <option value={""} disabled>
                         Select Category
                       </option>
-                      <option value="Painting-job">Painting</option>
+                      {categoryData.map((item, index) => (
+                     
+                        <option
+                          value={item.value}
+                          key={index}
+                        >
+                          {item.name}
+                        </option>
+                      ))}
+                      {/* <option value="Painting-job">Painting</option>
                       <option value="Home-repairing">Home Repairing</option>
                       <option value="Gardening">Gardening</option>
                       <option value="Electrician">Electrician</option>
@@ -204,7 +229,7 @@ const FindProfessional = () => {
                         Architectural Services
                       </option>
                       <option value="Chimney">Chimney</option>
-                      <option value="Brick-Laying">Brick Laying</option>
+                      <option value="Brick-Laying">Brick Laying</option> */}
                     </select>
                   </div>
                   <div className="mostRecentCategories">
@@ -212,7 +237,7 @@ const FindProfessional = () => {
                     <div className="mostRecentCategories_boxes">
                       {categoryData.map((item, index) => (
                         <Link
-                          to={"/painting-job"}
+                          to={`/post-a-job/${item.value}`}
                           className="mostRecentCategories_box"
                           key={index}
                         >
