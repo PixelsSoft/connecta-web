@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import DefaultLayout2 from "../../components/Layouts/DefaultLayout2";
 import JobPostingSec from "../../components/JobPostingSec";
@@ -11,10 +11,14 @@ import RoomIcon4 from "../../assets/images/4-room-icon.png";
 import paintingbannerimg from "../../assets/images/painting-banner-img.png";
 import jobPostingbannerimg from "../../assets/images/jobPosting-banner-img.png";
 import bathroomfittingbanner3 from "../../assets/images/bathroom-fitting-banner-3.png";
+import CustomModal from "../../components/CustomModal";
+import { Col, Row } from "react-bootstrap";
 
 const PostaJob = () => {
   const [step, setStep] = useState(1);
+  const [showModal, setShowModal] = useState(false);
   const { category } = useParams();
+  const [choice, setChoice] = React.useState("have");
 
   const navigate = useNavigate();
 
@@ -25,246 +29,234 @@ const PostaJob = () => {
     navigate("/recruiter/posted-jobs");
   };
 
- // Replace the icon imports/variables with your actual icon references.
-const categoryData = [
-  {
-   
-    name: "Design & Planning",
-    value: "Design-And-Planning",
-    subcategories: [
-      "Architect",
-      "Structural Designer / Bouwkundige",
-      "Land Surveyor",
-      "Permit Consultant",
-      "Energy Advisor",
-      "Interior Designer",
-      "3D Renderings & Visualizations",
-    ],
-  },
-  {
-    
-    name: "Garden & Outdoor",
-    value: "Garden-And-Outdoor",
-    subcategories: [
-      "Gardener",
-      "Landscaper",
-      "Lawn Mowing",
-      "Tree Cutting & Pruning",
-      "Swimming Pool Construction – kopen of laten installeren",
-      "Jacuzzi / Hot Tub Installation – kopen of laten installeren",
-    ],
-  },
-  {
-   
-    name: "Project Management",
-    value: "Project-Management",
-    subcategories: [
-      "General Contractor",
-      "Project Manager",
-      "Construction Inspector",
-    ],
-  },
-  {
+  useEffect(() => {
+  setTimeout(() => {
+    setShowModal(true);
+  }, 2000);
+  }, [])
   
-    name: "Outdoor & Landscaping",
-    value: "Outdoor-And-Landscaping",
-    subcategories: [
-      "Paver / Stoneworker",
-      "Landscape Designer",
-      "Fence & Gate Builder – kopen of laten installeren",
-      "Garden Architect",
-      "Paving & Stonework",
-      "Deck / Terrace Construction",
-    ],
-  },
-  {
-    
-    name: "Media & Creative",
-    value: "Media-And-Creative",
-    subcategories: [
-      "Drone Services",
-      "Real Estate Photography",
-      "Video Production",
-      "3D Scanning / Lidar",
-      "Company Videos / Animations",
-      "Graphic Design for Signs / Vehicles",
-    ],
-  },
-  {
-    
-    name: "Rental & Equipment",
-    value: "Rental-And-Equipment",
-    subcategories: [
-      "Scaffold Rental",
-      "Construction Tool Rental",
-      "Container (Waste) Rental",
-      "Mobile Toilet Rental",
-      "Mini Excavator with Operator",
-      "Lift/Hoist Services",
-      "Generator Rental – kopen of laten installeren",
-    ],
-  },
-  {
-  
-    name: "Business & Facility Services",
-    value: "Business-And-Facility-Services",
-    subcategories: [
-      "Office Renovation",
-      "Office IT Setup & Cabling",
-      "Facility Management",
-      "Coffee Machine Maintenance",
-      "Industrial Cleaning",
-      "Archive Digitization",
-    ],
-  },
-  {
-   
-    name: "Home & Comfort",
-    value: "Home-And-Comfort",
-    subcategories: [
-      "Smart Home Installation",
-      "Home Theater Setup – kopen of laten installeren",
-      "WiFi & Network Setup",
-      "Curtain / Blind Installation – kopen of laten installeren",
-      "TV Wall Mounting – kopen of laten installeren",
-      "Babyproofing Services",
-      "Indoor Air Quality Check – kopen of laten installeren",
-      "Furniture Restoration / Repair – kopen of laten installeren",
-    ],
-  },
-  {
- 
-    name: "Maintenance & Repairing",
-    value: "Maintenance-And-Repairing",
-    subcategories: [
-      "Handyman",
-      "Appliance Repair",
-      "Furniture Assembly – kopen of laten installeren",
-      "Locksmith",
-      "Window & Door Installation – kopen of laten installeren",
-      "Roller Shutter Repair",
-      "Chimney Sweep",
-      "Heating System Maintenance",
-      "Light Fixture / Switch Installation",
-      "Curtain Rail / Blind Mounting – kopen of laten installeren",
-      "Silicone Sealing / Kit Replacement",
-      "Painter / Decorator",
-      "Plasterer / Drywall Finisher",
-      "Tile Setter / Floor Layer",
-    ],
-  },
-  {
-  
-    name: "Technical & Construction",
-    value: "Technical-And-Construction",
-    subcategories: [
-      "Electrician",
-      "Plumber",
-      "Carpenter",
-      "Mason / Bricklayer",
-      "Painter & Decorator",
-      "Steel Fixer",
-      "Roofer",
-      "HVAC Technician",
-      "Floor Installation & Tiling",
-      "Drywall Installer (Plastering)",
-      "Insulation Specialist",
-      "Solar Panel Installer",
-      "Scaffolder",
-      "Site Supervisor",
-      "General Laborer",
-      "Kitchen Installation – kopen of laten installeren",
-      "Security System Installation",
-      "Bathroom Installation / Renovation",
-      "Toilet Renovation",
-      "Staircase Builder / Renovation",
-      "Concrete / Foundation Work",
-      "Gutter Installer / Repair",
-      "Soundproofing Specialist",
-      "Groundworker",
-      "Foundation Specialist / Concrete Worker",
-      "Bricklayer / Masonry Contractor",
-      "Rough Construction Carpenter",
-      "Staircase Builder",
-      "Glazier / Window Installer – kopen of laten installeren",
-    ],
-  },
-  {
-  
-    name: "Administrative & Permits",
-    value: "Administrative-And-Permits",
-    subcategories: [
-      "Building Permit Assistance",
-      "Insurance Claim Support",
-      "On-site Project Management",
-      "Safety Checks & Reports",
-    ],
-  },
-  {
-   
-    name: "Digital & Tech",
-    value: "Digital-And-Tech",
-    subcategories: [
-      "Website for Contractors",
-      "Accounting Software Setup",
-      "Online Planning Tools",
-      "Customer Portal Development",
-      "SEO & Google Business Optimization",
-    ],
-  },
-  {
-   
-    name: "Cleaning Services",
-    value: "Cleaning-Services",
-    subcategories: [
-      "General Cleaning",
-      "Deep Cleaning",
-      "Office Cleaning",
-      "Window Cleaning – kopen of laten installeren",
-      "Post-Construction Cleaning",
-      "Carpet & Upholstery Cleaning",
-      "Gutter Cleaning",
-      "Graffiti Removal",
-      "End-of-Rental Cleaning",
-      "Facade Cleaning",
-    ],
-  },
-  {
-   
-    name: "Interior & Finishing",
-    value: "Interior-And-Finishing",
-    subcategories: [
-      "Kitchen Builder – kopen of laten installeren",
-      "Cabinetmaker / Furniture Maker – kopen of laten installeren",
-      "Interior Decorator",
-      "Lighting Installer",
-    ],
-  },
-  {
-  
-    name: "Transport & Moving",
-    value: "Transport-And-Moving",
-    subcategories: [
-      "Moving Services",
-      "Packing & Unpacking",
-      "Furniture Transport – kopen of laten installeren",
-      "Junk Removal",
-      "Van with Driver",
-      "Small Delivery Tasks",
-      "Piano Transport",
-    ],
-  },
-  {
-   
-    name: "Technical & Installation",
-    value: "Technical-And-Installation",
-    subcategories: [
-      "Solar Panel Specialist",
-      "Security System Installer",
-    ],
-  },
-];
- const matched = categoryData.find((c) => c.value === category);
+
+  // Replace the icon imports/variables with your actual icon references.
+  const categoryData = [
+    {
+      name: "Design & Planning",
+      value: "Design-And-Planning",
+      subcategories: [
+        "Architect",
+        "Structural Designer / Bouwkundige",
+        "Land Surveyor",
+        "Permit Consultant",
+        "Energy Advisor",
+        "Interior Designer",
+        "3D Renderings & Visualizations",
+      ],
+    },
+    {
+      name: "Garden & Outdoor",
+      value: "Garden-And-Outdoor",
+      subcategories: [
+        "Gardener",
+        "Landscaper",
+        "Lawn Mowing",
+        "Tree Cutting & Pruning",
+        "Swimming Pool Construction – kopen of laten installeren",
+        "Jacuzzi / Hot Tub Installation – kopen of laten installeren",
+      ],
+    },
+    {
+      name: "Project Management",
+      value: "Project-Management",
+      subcategories: [
+        "General Contractor",
+        "Project Manager",
+        "Construction Inspector",
+      ],
+    },
+    {
+      name: "Outdoor & Landscaping",
+      value: "Outdoor-And-Landscaping",
+      subcategories: [
+        "Paver / Stoneworker",
+        "Landscape Designer",
+        "Fence & Gate Builder – kopen of laten installeren",
+        "Garden Architect",
+        "Paving & Stonework",
+        "Deck / Terrace Construction",
+      ],
+    },
+    {
+      name: "Media & Creative",
+      value: "Media-And-Creative",
+      subcategories: [
+        "Drone Services",
+        "Real Estate Photography",
+        "Video Production",
+        "3D Scanning / Lidar",
+        "Company Videos / Animations",
+        "Graphic Design for Signs / Vehicles",
+      ],
+    },
+    {
+      name: "Rental & Equipment",
+      value: "Rental-And-Equipment",
+      subcategories: [
+        "Scaffold Rental",
+        "Construction Tool Rental",
+        "Container (Waste) Rental",
+        "Mobile Toilet Rental",
+        "Mini Excavator with Operator",
+        "Lift/Hoist Services",
+        "Generator Rental – kopen of laten installeren",
+      ],
+    },
+    {
+      name: "Business & Facility Services",
+      value: "Business-And-Facility-Services",
+      subcategories: [
+        "Office Renovation",
+        "Office IT Setup & Cabling",
+        "Facility Management",
+        "Coffee Machine Maintenance",
+        "Industrial Cleaning",
+        "Archive Digitization",
+      ],
+    },
+    {
+      name: "Home & Comfort",
+      value: "Home-And-Comfort",
+      subcategories: [
+        "Smart Home Installation",
+        "Home Theater Setup – kopen of laten installeren",
+        "WiFi & Network Setup",
+        "Curtain / Blind Installation – kopen of laten installeren",
+        "TV Wall Mounting – kopen of laten installeren",
+        "Babyproofing Services",
+        "Indoor Air Quality Check – kopen of laten installeren",
+        "Furniture Restoration / Repair – kopen of laten installeren",
+      ],
+    },
+    {
+      name: "Maintenance & Repairing",
+      value: "Maintenance-And-Repairing",
+      subcategories: [
+        "Handyman",
+        "Appliance Repair",
+        "Furniture Assembly – kopen of laten installeren",
+        "Locksmith",
+        "Window & Door Installation – kopen of laten installeren",
+        "Roller Shutter Repair",
+        "Chimney Sweep",
+        "Heating System Maintenance",
+        "Light Fixture / Switch Installation",
+        "Curtain Rail / Blind Mounting – kopen of laten installeren",
+        "Silicone Sealing / Kit Replacement",
+        "Painter / Decorator",
+        "Plasterer / Drywall Finisher",
+        "Tile Setter / Floor Layer",
+      ],
+    },
+    {
+      name: "Technical & Construction",
+      value: "Technical-And-Construction",
+      subcategories: [
+        "Electrician",
+        "Plumber",
+        "Carpenter",
+        "Mason / Bricklayer",
+        "Painter & Decorator",
+        "Steel Fixer",
+        "Roofer",
+        "HVAC Technician",
+        "Floor Installation & Tiling",
+        "Drywall Installer (Plastering)",
+        "Insulation Specialist",
+        "Solar Panel Installer",
+        "Scaffolder",
+        "Site Supervisor",
+        "General Laborer",
+        "Kitchen Installation – kopen of laten installeren",
+        "Security System Installation",
+        "Bathroom Installation / Renovation",
+        "Toilet Renovation",
+        "Staircase Builder / Renovation",
+        "Concrete / Foundation Work",
+        "Gutter Installer / Repair",
+        "Soundproofing Specialist",
+        "Groundworker",
+        "Foundation Specialist / Concrete Worker",
+        "Bricklayer / Masonry Contractor",
+        "Rough Construction Carpenter",
+        "Staircase Builder",
+        "Glazier / Window Installer – kopen of laten installeren",
+      ],
+    },
+    {
+      name: "Administrative & Permits",
+      value: "Administrative-And-Permits",
+      subcategories: [
+        "Building Permit Assistance",
+        "Insurance Claim Support",
+        "On-site Project Management",
+        "Safety Checks & Reports",
+      ],
+    },
+    {
+      name: "Digital & Tech",
+      value: "Digital-And-Tech",
+      subcategories: [
+        "Website for Contractors",
+        "Accounting Software Setup",
+        "Online Planning Tools",
+        "Customer Portal Development",
+        "SEO & Google Business Optimization",
+      ],
+    },
+    {
+      name: "Cleaning Services",
+      value: "Cleaning-Services",
+      subcategories: [
+        "General Cleaning",
+        "Deep Cleaning",
+        "Office Cleaning",
+        "Window Cleaning – kopen of laten installeren",
+        "Post-Construction Cleaning",
+        "Carpet & Upholstery Cleaning",
+        "Gutter Cleaning",
+        "Graffiti Removal",
+        "End-of-Rental Cleaning",
+        "Facade Cleaning",
+      ],
+    },
+    {
+      name: "Interior & Finishing",
+      value: "Interior-And-Finishing",
+      subcategories: [
+        "Kitchen Builder – kopen of laten installeren",
+        "Cabinetmaker / Furniture Maker – kopen of laten installeren",
+        "Interior Decorator",
+        "Lighting Installer",
+      ],
+    },
+    {
+      name: "Transport & Moving",
+      value: "Transport-And-Moving",
+      subcategories: [
+        "Moving Services",
+        "Packing & Unpacking",
+        "Furniture Transport – kopen of laten installeren",
+        "Junk Removal",
+        "Van with Driver",
+        "Small Delivery Tasks",
+        "Piano Transport",
+      ],
+    },
+    {
+      name: "Technical & Installation",
+      value: "Technical-And-Installation",
+      subcategories: ["Solar Panel Specialist", "Security System Installer"],
+    },
+  ];
+  const matched = categoryData.find((c) => c.value === category);
 
   if (!matched) {
     return <div>Unknown category: {category}</div>;
@@ -288,7 +280,7 @@ const categoryData = [
               defaultValue=""
             >
               <option value={""} disabled>
-                Select {matched.name}  Category
+                Select {matched.name} Category
               </option>
               {matched.subcategories.map((item, index) => (
                 <option value={item} key={index}>
@@ -538,8 +530,93 @@ const categoryData = [
           </div>
         </JobPostingSec>
       )}
+      <CustomModal show={showModal} handleClose={() => setShowModal(false)}>
+        <div className="p-3">
+          <div className="sec-head text-center my-5">
+            <h2> Follow Up Question</h2>
+          </div>
+
+          <p className="fw-400 text-dark mt-3">
+            Q1: Do you already have the product, or should the service provider
+            supply it as well?
+          </p>
+          <div className="paintingBoxRadioList">
+            {[
+              {
+                labelId: "yes",
+                title: "I already have it – installation only",
+              },
+              {
+                labelId: "no",
+                title: "Please supply and install",
+              },
+            ].map((item, index) => (
+              <div className="form-check " key={index}>
+                <label className="form-check-label" htmlFor={item.labelId}>
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="AditionalVendors"
+                    id={item.labelId}
+                  />
+                  <div className="form-check-labelListContent">
+                    <span className="darkGrayColor">{item.title}</span>
+                  </div>
+                </label>
+              </div>
+            ))}
+          </div>
+          <Row className="d-flex justify-content-center mt-5">
+            <Col lg={6} className="d-flex justify-content-center">
+              <button
+                onClick={() => setShowModal(false)}
+                className="customBtn btn-blackBorder w-75"
+              >
+                Cancel
+              </button>
+            </Col>
+            <Col lg={6} className="d-flex justify-content-center">
+              <button
+                onClick={() => setShowModal(false)}
+                className="customBtn btn-bgRed w-75"
+              >
+                Submit
+              </button>
+            </Col>
+          </Row>
+        </div>
+      </CustomModal>
     </DefaultLayout2>
   );
+};
+const styles = {
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 12,
+  },
+  label: {
+    display: "flex",
+    alignItems: "flex-start",
+    gap: 10,
+    cursor: "pointer",
+    fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
+    fontSize: 14,
+    lineHeight: 1.3,
+    position: "relative",
+    padding: "6px 0",
+  },
+  radio: {
+    marginTop: 4,
+    flexShrink: 0,
+    width: 16,
+    height: 16,
+    cursor: "pointer",
+  },
+  text: {
+    display: "block",
+    color: "#222",
+  },
 };
 
 export default PostaJob;
