@@ -45,22 +45,19 @@ const HomeFooter = () => {
                       </Link>
                     </div>
                     <p className='homeFooter-about-description'>
-                      Since 2024, Connecta24 has helped individuals and
-                      businesses book trusted local professionals for home,
-                      personal, and on-site services — fast, reliable, and
-                      hassle-free.
+                      {t('common:home.footerDescription')}
                     </p>
                     <div className='homeFooter-stores'>
                       {[
                         {
                           icon: appleIcon,
-                          description: 'Download on',
-                          name: 'App Store',
+                          description: t('common:home.downloadOn'),
+                          name: t('common:home.appStore'),
                         },
                         {
                           icon: playstoreIcon,
-                          description: 'Get it on',
-                          name: 'Google Play',
+                          description: t('common:home.getItOn'),
+                          name: t('common:home.googlePlay'),
                         },
                       ].map((item, index) => (
                         <a
@@ -84,11 +81,11 @@ const HomeFooter = () => {
                   <div className='row'>
                     <div className='col-md-3 col-6 mb-md-0 mb-3'>
                       <div className='footer-links'>
-                        <h2 className='footer-title'>Quick Links</h2>
+                        <h2 className='footer-title'>{t('common:navigation.quickLinks')}</h2>
                         <ul className='footer-links'>
                           <li>
                             <Link to={'/'} className='footerLink'>
-                              Home
+                              {t('common:navigation.home')}
                             </Link>
                           </li>
                           <li>
@@ -102,12 +99,12 @@ const HomeFooter = () => {
                                 el?.scrollIntoView({ behavior: 'smooth' });
                               }}
                             >
-                              About Us
+                              {t('common:navigation.aboutUs')}
                             </a>
                           </li>
                           <li>
                             <Link to={''} className='footerLink'>
-                              Contact
+                              {t('common:navigation.contactUs')}
                             </Link>
                           </li>
                         </ul>
@@ -115,11 +112,11 @@ const HomeFooter = () => {
                     </div>
                     <div className='col-md-3 col-6 mb-md-0 mb-3'>
                       <div className='footer-links'>
-                        <h2 className='footer-title'>Support</h2>
+                        <h2 className='footer-title'>{t('common:navigation.support')}</h2>
                         <ul className='footer-links'>
                           <li>
                             <Link to={'/'} className='footerLink'>
-                              How It Works
+                              {t('common:navigation.howItWorks')}
                             </Link>
                           </li>
                           <li>
@@ -127,17 +124,17 @@ const HomeFooter = () => {
                               to={'/find-professionals'}
                               className='footerLink'
                             >
-                              Book a Service
+                              {t('common:buttons.bookService')}
                             </Link>
                           </li>
                           <li>
                             <Link to={'/sign-up'} className='footerLink'>
-                              Become A Provider
+                              {t('common:buttons.signUpProfessional')}
                             </Link>
                           </li>
                           <li>
                             <Link to={''} className='footerLink'>
-                              FAQs
+                              {t('common:navigation.faqs')}
                             </Link>
                           </li>
                         </ul>
@@ -145,16 +142,16 @@ const HomeFooter = () => {
                     </div>
                     <div className='col-md-3 col-6 mb-md-0 mb-3'>
                       <div className='footer-links'>
-                        <h2 className='footer-title'>Terms & Conditions</h2>
+                        <h2 className='footer-title'>{t('common:navigation.termsConditions')}</h2>
                         <ul className='footer-links'>
                           <li>
                             <Link to={''} className='footerLink'>
-                              Terms & Conditions
+                              {t('common:navigation.termsConditions')}
                             </Link>
                           </li>
                           <li>
                             <Link to={''} className='footerLink'>
-                              Privacy Policy
+                              {t('common:navigation.privacyPolicy')}
                             </Link>
                           </li>
                         </ul>
@@ -162,46 +159,46 @@ const HomeFooter = () => {
                     </div>
                     <div className='col-md-3 col-6 mb-md-0 mb-3'>
                       <div className='footer-links'>
-                        <h2 className='footer-title'>Select Language</h2>
+                        <h2 className='footer-title'>{t('common:home.selectLanguage')}</h2>
                         <ul className='footer-links'>
                           <li>
                             <button
                               className='footerLink'
                               onClick={() =>
-                                handleLanguageChange('en', 'English')
+                                handleLanguageChange('en', t('common:home.english'))
                               }
                             >
-                              English
+                              {t('common:home.english')}
                             </button>
                           </li>
                           <li>
                             <button
                               className='footerLink'
                               onClick={() =>
-                                handleLanguageChange('de', 'German')
+                                handleLanguageChange('de', t('common:home.german'))
                               }
                             >
-                              German
+                              {t('common:home.german')}
                             </button>
                           </li>
                           <li>
                             <button
                               className='footerLink'
                               onClick={() =>
-                                handleLanguageChange('fr', 'French')
+                                handleLanguageChange('fr', t('common:home.french'))
                               }
                             >
-                              French
+                              {t('common:home.french')}
                             </button>
                           </li>
                           <li>
                             <button
                               className='footerLink'
                               onClick={() =>
-                                handleLanguageChange('it', 'Italian')
+                                handleLanguageChange('it', t('common:home.italian'))
                               }
                             >
-                              Italian
+                              {t('common:home.italian')}
                             </button>
                           </li>
                         </ul>
@@ -222,13 +219,12 @@ const HomeFooter = () => {
                 <div className='col-md-12'>
                   <div className='footerCopyright__content'>
                     <p>
-                      Copyright © 2025{' '}
-                      <span style={{ color: '#26472B' }}>Connecta24</span> All
-                      rights reserved.
+                      {t('common:home.copyright')}{' '}
+                      <span style={{ color: '#26472B' }}>Connecta24</span> {t('common:home.allRightsReserved')}
                     </p>
 
                     <div className='footerSocial'>
-                      <p>Follow Us On:</p>
+                      <p>{t('common:home.followUsOn')}</p>
                       <div className='footerSocial_links'>
                         <a href='javascript:;'>
                           <img src={facebookIcon} alt='' />
@@ -252,10 +248,10 @@ const HomeFooter = () => {
       <CustomModal
         show={showLangModal}
         handleClose={() => setShowLangModal(false)}
-        title={t('languageModal.title')} // Optional title
+        title={t('common:languageModal.title')} // Optional title
         size='sm'
       >
-        <p>{t('languageModal.message', { lang: selectedLang })}</p>
+        <p>{t('common:languageModal.message', { lang: selectedLang })}</p>
       </CustomModal>
     </>
   );

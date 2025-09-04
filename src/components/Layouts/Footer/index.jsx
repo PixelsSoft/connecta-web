@@ -1,26 +1,28 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import footerContentIcon1 from '../../../assets/images/footerContentIcon-1.png';
 import footerContentIcon2 from '../../../assets/images/footerContentIcon-2.png';
 import footerContentIcon3 from '../../../assets/images/footerContentIcon-3.png';
 
-const footerContentData = [
-  {
-    icon: footerContentIcon1,
-    description: 'Get Started Now - Post Your Job for Free',
-  },
-  {
-    icon: footerContentIcon2,
-    description: 'Over 237,000 Verified Professionals at Your Service',
-  },
-  {
-    icon: footerContentIcon3,
-    description:
-      '825,000+ Satisfied Clients trust Connect24 for quality service',
-  },
-];
-
 const Footer = () => {
+  const { t } = useTranslation('common');
+
+  const footerContentData = [
+    {
+      icon: footerContentIcon1,
+      description: t('footer.getStartedNow'),
+    },
+    {
+      icon: footerContentIcon2,
+      description: t('footer.verifiedProfessionals'),
+    },
+    {
+      icon: footerContentIcon3,
+      description: t('footer.satisfiedClients'),
+    },
+  ];
+
   return (
     <section className='footer-sec'>
       <div className='container'>

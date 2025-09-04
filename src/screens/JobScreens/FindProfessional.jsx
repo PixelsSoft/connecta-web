@@ -1,5 +1,6 @@
 import React from "react";
 import DefaultLayout2 from "../../components/Layouts/DefaultLayout2";
+import { useTranslation } from "react-i18next";
 
 import paintingicon from "../../assets/images/painting-icon.png";
 import homeRepairingicon from "../../assets/images/homeRepairing-icon.png";
@@ -84,8 +85,8 @@ import TechnicalAndInstallationIcon from "../../assets/images/category-icons/Tec
 const categoryData = [
   {
     icon: DesignAnplainingicon,
-    name: "Design An plaining",
-    value: "Design-An-plaining",
+    name: "Design and Planning",
+    value: "Design-And-Planning",
   },
   {
     icon: GardenAndOutdoorIcon,
@@ -166,6 +167,7 @@ const categoryData = [
 
 const FindProfessional = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation('common');
 
   const handleSelectChange = (e) => {
     const selectedValue = e.target.value;
@@ -185,16 +187,15 @@ const FindProfessional = () => {
             <div className="col-lg-7">
               <div className="jobPosting__content">
                 <div className="sec-head">
-                  <h1>Find Top Rated Professional for your job</h1>
+                  <h1>{t('jobPosting.findTopRatedProfessional')}</h1>
                   <p>
-                    In which Category you want to post your job here we have
-                    some common categories.
+                    {t('jobPosting.whichCategory')}
                   </p>
                 </div>
                 <div className="findProfessionalContent">
                   <div className="inputGroup">
                     <label htmlFor="selectCategory" className="form-label">
-                      What would you like to have done?
+                      {t('jobPosting.whatWouldYouLikeDone')}
                     </label>
                     <select
                       id="selectCategory"
@@ -204,7 +205,7 @@ const FindProfessional = () => {
                       defaultValue=""
                     >
                       <option value={""} disabled>
-                        Select Category
+                        {t('jobPosting.selectCategory')}
                       </option>
                       {categoryData.map((item, index) => (
                      
@@ -233,7 +234,7 @@ const FindProfessional = () => {
                     </select>
                   </div>
                   <div className="mostRecentCategories">
-                    <h4>Most recent Categories</h4>
+                    <h4>{t('jobPosting.mostRecentCategories')}</h4>
                     <div className="mostRecentCategories_boxes">
                       {categoryData.map((item, index) => (
                         <Link

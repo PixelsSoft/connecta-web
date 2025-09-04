@@ -14,25 +14,25 @@ import bannerIconImg6 from '../../assets/images/banner-icon-img6.png';
 import COLXXL10 from '../COLXXL10';
 
 const MainBanner = () => {
-  const { t } = useTranslation('home');
+  const { t } = useTranslation();
   return (
     <section className='main-banner'>
       <div className='container position-relative'>
         <div className='row justify-content-center'>
           <COLXXL10>
             <div className='main__banner-content'>
-              <h1>{t('banner.title')}</h1>
-              <p>{t('banner.description')}</p>
+              <h1>{t('home:banner.title')}</h1>
+              <p>{t('home:banner.description')}</p>
               <div className='main__banner-btns'>
                 <Link
                   to={'/find-professionals'}
                   className='customBtn btn-bgRed btn__witchIcon '
                 >
-                  <span>Book a Service</span>
+                  <span>{t('common:buttons.bookService')}</span>
                   <img src={servicearrowicon} alt='Icon' />
                 </Link>
                 <Link to={'/sign-up'} className='customBtn btn-bgWhite'>
-                  Offer Your Services
+                  {t('common:buttons.offerServices')}
                 </Link>
               </div>
             </div>

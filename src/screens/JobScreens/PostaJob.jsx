@@ -2,6 +2,7 @@ import React, { use, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import DefaultLayout2 from "../../components/Layouts/DefaultLayout2";
 import JobPostingSec from "../../components/JobPostingSec";
+import { useTranslation } from "react-i18next";
 
 import RoomIcon1 from "../../assets/images/1-room-icon.png";
 import RoomIcon2 from "../../assets/images/2-room-icon.png";
@@ -19,6 +20,7 @@ const PostaJob = () => {
   const [showModal, setShowModal] = useState(false);
   const { category } = useParams();
   const [choice, setChoice] = React.useState("have");
+  const { t } = useTranslation('common');
 
   const navigate = useNavigate();
 
@@ -39,7 +41,7 @@ const PostaJob = () => {
   // Replace the icon imports/variables with your actual icon references.
   const categoryData = [
     {
-      name: "Design & Planning",
+      name: "Design and Planning",
       value: "Design-And-Planning",
       subcategories: [
         "Architect",
@@ -59,8 +61,8 @@ const PostaJob = () => {
         "Landscaper",
         "Lawn Mowing",
         "Tree Cutting & Pruning",
-        "Swimming Pool Construction – kopen of laten installeren",
-        "Jacuzzi / Hot Tub Installation – kopen of laten installeren",
+        "Swimming Pool Construction",
+        "Jacuzzi / Hot Tub Installation",
       ],
     },
     {
@@ -78,7 +80,7 @@ const PostaJob = () => {
       subcategories: [
         "Paver / Stoneworker",
         "Landscape Designer",
-        "Fence & Gate Builder – kopen of laten installeren",
+        "Fence & Gate Builder",
         "Garden Architect",
         "Paving & Stonework",
         "Deck / Terrace Construction",
@@ -106,7 +108,7 @@ const PostaJob = () => {
         "Mobile Toilet Rental",
         "Mini Excavator with Operator",
         "Lift/Hoist Services",
-        "Generator Rental – kopen of laten installeren",
+        "Generator Rental",
       ],
     },
     {
@@ -126,13 +128,13 @@ const PostaJob = () => {
       value: "Home-And-Comfort",
       subcategories: [
         "Smart Home Installation",
-        "Home Theater Setup – kopen of laten installeren",
+        "Home Theater Setup",
         "WiFi & Network Setup",
-        "Curtain / Blind Installation – kopen of laten installeren",
-        "TV Wall Mounting – kopen of laten installeren",
+        "Curtain / Blind Installation",
+        "TV Wall Mounting",
         "Babyproofing Services",
-        "Indoor Air Quality Check – kopen of laten installeren",
-        "Furniture Restoration / Repair – kopen of laten installeren",
+        "Indoor Air Quality Check",
+        "Furniture Restoration / Repair",
       ],
     },
     {
@@ -141,14 +143,14 @@ const PostaJob = () => {
       subcategories: [
         "Handyman",
         "Appliance Repair",
-        "Furniture Assembly – kopen of laten installeren",
+        "Furniture Assembly",
         "Locksmith",
-        "Window & Door Installation – kopen of laten installeren",
+        "Window & Door Installation",
         "Roller Shutter Repair",
         "Chimney Sweep",
         "Heating System Maintenance",
         "Light Fixture / Switch Installation",
-        "Curtain Rail / Blind Mounting – kopen of laten installeren",
+        "Curtain Rail / Blind Mounting",
         "Silicone Sealing / Kit Replacement",
         "Painter / Decorator",
         "Plasterer / Drywall Finisher",
@@ -174,7 +176,7 @@ const PostaJob = () => {
         "Scaffolder",
         "Site Supervisor",
         "General Laborer",
-        "Kitchen Installation – kopen of laten installeren",
+        "Kitchen Installation",
         "Security System Installation",
         "Bathroom Installation / Renovation",
         "Toilet Renovation",
@@ -187,7 +189,7 @@ const PostaJob = () => {
         "Bricklayer / Masonry Contractor",
         "Rough Construction Carpenter",
         "Staircase Builder",
-        "Glazier / Window Installer – kopen of laten installeren",
+        "Glazier / Window Installer",
       ],
     },
     {
@@ -218,7 +220,7 @@ const PostaJob = () => {
         "General Cleaning",
         "Deep Cleaning",
         "Office Cleaning",
-        "Window Cleaning – kopen of laten installeren",
+        "Window Cleaning",
         "Post-Construction Cleaning",
         "Carpet & Upholstery Cleaning",
         "Gutter Cleaning",
@@ -231,8 +233,8 @@ const PostaJob = () => {
       name: "Interior & Finishing",
       value: "Interior-And-Finishing",
       subcategories: [
-        "Kitchen Builder – kopen of laten installeren",
-        "Cabinetmaker / Furniture Maker – kopen of laten installeren",
+        "Kitchen Builder",
+        "Cabinetmaker / Furniture Maker",
         "Interior Decorator",
         "Lighting Installer",
       ],
@@ -243,7 +245,7 @@ const PostaJob = () => {
       subcategories: [
         "Moving Services",
         "Packing & Unpacking",
-        "Furniture Transport – kopen of laten installeren",
+        "Furniture Transport",
         "Junk Removal",
         "Van with Driver",
         "Small Delivery Tasks",
@@ -265,13 +267,13 @@ const PostaJob = () => {
     <DefaultLayout2>
       {step === 1 && (
         <JobPostingSec
-          secTitle={`Post a ${matched.name} job`}
-          secDescription="Get responses from Connecta24 screened and reviewed Professional People near you"
+          secTitle={`${t('jobPosting.postJob')} ${matched.name} job`}
+          secDescription={t('jobPosting.getResponses')}
           rightImg={paintingbannerimg}
         >
           <div className="inputGroup">
             <label htmlFor="selectCategory" className="form-label">
-              What would you like to have done?
+              {t('jobPosting.whatWouldYouLikeDone')}
             </label>
             <select
               id="selectCategory"
@@ -280,7 +282,7 @@ const PostaJob = () => {
               defaultValue=""
             >
               <option value={""} disabled>
-                Select {matched.name} Category
+                {t('jobPosting.selectCategory')} {matched.name}
               </option>
               {matched.subcategories.map((item, index) => (
                 <option value={item} key={index}>
@@ -292,14 +294,14 @@ const PostaJob = () => {
           <div className="paintingJobContent mt-3">
             <div className="input-group">
               <label className="form-label fw-600">
-                How many room do you want to cover in this services?
+                {t('jobPosting.howManyRooms')}
               </label>
               <div className="paintingBoxRadioButtons">
                 {[
-                  { labelId: "for1Room", title: "1 Room", icon: RoomIcon1 },
-                  { labelId: "for2Room", title: "2 Room", icon: RoomIcon2 },
-                  { labelId: "for3Room", title: "3 Room", icon: RoomIcon3 },
-                  { labelId: "for4Room", title: "4 Room", icon: RoomIcon4 },
+                  { labelId: "for1Room", title: t('jobPosting.oneRoom'), icon: RoomIcon1 },
+                  { labelId: "for2Room", title: t('jobPosting.twoRoom'), icon: RoomIcon2 },
+                  { labelId: "for3Room", title: t('jobPosting.threeRoom'), icon: RoomIcon3 },
+                  { labelId: "for4Room", title: t('jobPosting.fourRoom'), icon: RoomIcon4 },
                 ].map((item, index) => (
                   <div className="form-check paintJobRadio" key={index}>
                     <label className="form-check-label" htmlFor={item.labelId}>
@@ -320,11 +322,11 @@ const PostaJob = () => {
                 <div className="form-check paintJobRadio">
                   <label className="form-check-label" htmlFor="paintingOther">
                     <div className="form-check-labelContent">
-                      <span>Other</span>
+                      <span>{t('jobPosting.other')}</span>
                       <input
                         type="text"
                         className="forn-control"
-                        placeholder="No of rooms"
+                        placeholder={t('jobPosting.noOfRooms')}
                       />
                     </div>
                     <input
@@ -340,7 +342,7 @@ const PostaJob = () => {
 
             <div className="paintingJobContent-btns mt-3">
               <button onClick={nextStep} className="customBtn btn-bgRed">
-                Next
+                {t('buttons.next')}
               </button>
             </div>
           </div>
@@ -349,37 +351,36 @@ const PostaJob = () => {
 
       {step === 2 && (
         <JobPostingSec
-          secTitle={`Post a ${matched.name} job`}
-          secDescription="Get responses from Connecta24 screened and reviewed Professional People near you"
+          secTitle={`${t('jobPosting.postJob')} ${matched.name} job`}
+          secDescription={t('jobPosting.getResponses')}
           rightImg={paintingbannerimg}
         >
           <div className="paintingJobContent">
             <div className="input-group">
               <label className="form-label fw-600">
-                What type of painting do you need?
+                {t('jobPosting.whatTypeOfPainting')}
               </label>
               <div className="paintingBoxRadioList">
                 {[
                   {
                     labelId: "for1Room",
-                    title: "In house decoration",
-                    description: "Completely change a home color",
+                    title: t('jobPosting.inHouseDecoration'),
+                    description: t('jobPosting.inHouseDecorationDesc'),
                   },
                   {
                     labelId: "for2Room",
-                    title: "Wallpaper work",
-                    description:
-                      "E.g. replace wall color with different wallpapers",
+                    title: t('jobPosting.wallpaperWork'),
+                    description: t('jobPosting.wallpaperWorkDesc'),
                   },
                   {
                     labelId: "for3Room",
-                    title: "Touching",
-                    description: "Need some touching for fresh look",
+                    title: t('jobPosting.touching'),
+                    description: t('jobPosting.touchingDesc'),
                   },
                   {
                     labelId: "for4Room",
-                    title: "Tiling",
-                    description: "E.g. Color with tiles",
+                    title: t('jobPosting.tiling'),
+                    description: t('jobPosting.tilingDesc'),
                   },
                 ].map((item, index) => (
                   <div className="form-check paintRadioListItem" key={index}>
@@ -402,10 +403,10 @@ const PostaJob = () => {
 
             <div className="paintingJobContent-btns mt-3">
               <button onClick={prevStep} className="customBtn btn-blackBorder">
-                Back
+                {t('buttons.back')}
               </button>
               <button onClick={nextStep} className="customBtn btn-bgRed">
-                Next
+                {t('buttons.next')}
               </button>
             </div>
           </div>
@@ -414,18 +415,18 @@ const PostaJob = () => {
 
       {step === 3 && (
         <JobPostingSec
-          secTitle={`Post a ${matched.name} job`}
-          secDescription="Enter Some Description about your job or upload some images to support your description!"
+          secTitle={`${t('jobPosting.postJob')} ${matched.name} job`}
+          secDescription={t('jobPosting.enterDescription')}
           rightImg={paintingbannerimg}
         >
           <div className="bathroomFittinJob">
             <div className="input-group mb-4">
               <label htmlFor="userName" className="form-label fw-600">
-                Description
+                {t('forms.description')}
               </label>
               <textarea
                 className="form-control"
-                placeholder="Add Description"
+                placeholder={t('jobPosting.addDescription')}
                 rows={3}
                 style={{ resize: "none" }}
               ></textarea>
@@ -433,20 +434,20 @@ const PostaJob = () => {
 
             <div className="input-group">
               <label htmlFor="userName" className="form-label fw-600 mb-0">
-                Upload Images
+                {t('forms.uploadImages')}
               </label>
               <div className="form-text mt-0 mb-2">
-                you can upload up to 20 pictures not more than 100 mbs
+                {t('jobPosting.youCanUpload')}
               </div>
               <input type="file" className="form-control" id="userName" />
             </div>
 
             <div className="paintingJobContent-btns mt-5">
               <button onClick={prevStep} className="customBtn btn-blackBorder">
-                Back
+                {t('buttons.back')}
               </button>
               <button onClick={nextStep} className="customBtn btn-bgRed">
-                Next
+                {t('buttons.next')}
               </button>
             </div>
           </div>
@@ -455,14 +456,14 @@ const PostaJob = () => {
 
       {step === 4 && (
         <JobPostingSec
-          secTitle={`Post a ${matched.name} job`}
-          secDescription="Enter your contact Information"
+          secTitle={`${t('jobPosting.postJob')} ${matched.name} job`}
+          secDescription={t('jobPosting.enterContactInfo')}
           rightImg={jobPostingbannerimg}
         >
           <div className="bathroomFittinJob">
             <div className="input-group mb-4">
               <label htmlFor="userEmail" className="form-label fw-600">
-                Email
+                {t('forms.email')}
               </label>
               <input
                 type="email"
@@ -474,7 +475,7 @@ const PostaJob = () => {
 
             <div className="input-group">
               <label htmlFor="userPhone" className="form-label fw-600 mb-0">
-                Phone
+                {t('forms.phone')}
               </label>
               <input
                 type="text"
@@ -486,10 +487,10 @@ const PostaJob = () => {
 
             <div className="paintingJobContent-btns mt-5">
               <button onClick={prevStep} className="customBtn btn-blackBorder">
-                Back
+                {t('buttons.back')}
               </button>
               <button onClick={nextStep} className="customBtn btn-bgRed">
-                Next
+                {t('buttons.next')}
               </button>
             </div>
           </div>
@@ -498,14 +499,14 @@ const PostaJob = () => {
 
       {step === 5 && (
         <JobPostingSec
-          secTitle={`Post a ${matched.name} job`}
-          secDescription="Verifiy your email address and Phone number"
+          secTitle={`${t('jobPosting.postJob')} ${matched.name} job`}
+          secDescription={t('jobPosting.verifyEmailPhone')}
           rightImg={bathroomfittingbanner3}
         >
           <div className="bathroomFittinJob">
             <div className="input-group mb-4">
               <label htmlFor="userOTP" className="form-label fw-600">
-                OTP Code
+                {t('forms.otpCode')}
               </label>
               <input
                 type="text"
@@ -514,17 +515,17 @@ const PostaJob = () => {
                 placeholder="******"
               />
               <p className="darkGrayColor mb-0 mt-2">
-                code will be able to resent after{" "}
+                {t('jobPosting.codeWillBeResent')}{" "}
                 <span style={{ color: "#056517" }}>00:59</span>
               </p>
             </div>
 
             <div className="paintingJobContent-btns mt-5">
               <button onClick={prevStep} className="customBtn btn-blackBorder">
-                Back
+                {t('buttons.back')}
               </button>
               <button className="customBtn btn-bgRed" onClick={handleSubmit}>
-                Next
+                {t('buttons.next')}
               </button>
             </div>
           </div>
@@ -533,22 +534,21 @@ const PostaJob = () => {
       <CustomModal show={showModal} handleClose={() => setShowModal(false)}>
         <div className="p-3">
           <div className="sec-head text-center my-5">
-            <h2> Follow Up Question</h2>
+            <h2>{t('jobPosting.followUpQuestion')}</h2>
           </div>
 
           <p className="fw-400 text-dark mt-3">
-            Q1: Do you already have the product, or should the service provider
-            supply it as well?
+            {t('jobPosting.doYouHaveProduct')}
           </p>
           <div className="paintingBoxRadioList">
             {[
               {
                 labelId: "yes",
-                title: "I already have it – installation only",
+                title: t('jobPosting.alreadyHaveIt'),
               },
               {
                 labelId: "no",
-                title: "Please supply and install",
+                title: t('jobPosting.pleaseSupplyInstall'),
               },
             ].map((item, index) => (
               <div className="form-check " key={index}>
@@ -572,7 +572,7 @@ const PostaJob = () => {
                 onClick={() => setShowModal(false)}
                 className="customBtn btn-blackBorder w-75"
               >
-                Cancel
+                {t('buttons.cancel')}
               </button>
             </Col>
             <Col lg={6} className="d-flex justify-content-center">
@@ -580,7 +580,7 @@ const PostaJob = () => {
                 onClick={() => setShowModal(false)}
                 className="customBtn btn-bgRed w-75"
               >
-                Submit
+                {t('buttons.submit')}
               </button>
             </Col>
           </Row>

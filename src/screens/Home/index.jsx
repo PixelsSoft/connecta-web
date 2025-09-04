@@ -38,161 +38,153 @@ import MainBanner from '../../components/MainBanner';
 import COLXXL10 from '../../components/COLXXL10';
 import { useTranslation } from 'react-i18next';
 
-const whyChooseData = [
+const whyChooseData = (t) => [
   {
     icon: whyChooseIcon1,
-    name: 'Reliable Professionals',
-    description:
-      'Only verified service experts are available for your requests.',
+    name: t('home.reliableProfessionals'),
+    description: t('home.reliableProfessionalsDesc'),
   },
   {
     icon: whyChooseIcon2,
-    name: 'Fast Booking Process',
-    description:
-      'Skip the job search and get help instantly—no CVs, no back-and-forth.',
+    name: t('home.fastBookingProcess'),
+    description: t('home.fastBookingProcessDesc'),
   },
   {
     icon: whyChooseIcon3,
-    name: 'Custom Solutions',
-    description:
-      'Book for one-time needs or recurring tasks, based on your schedule.',
+    name: t('home.customSolutions'),
+    description: t('home.customSolutionsDesc'),
   },
 ];
 
-const industrySecData = [
+const industrySecData = (t) => [
   {
     icon: industryicon1,
-    name: 'Handyman',
-    description: '2853 Staffs',
+    name: t('home.handyman'),
+    description: '2853 Staff',
   },
   {
     icon: industryicon2,
-    name: 'Cleaning Services',
-    description: '2256 Staffs',
+    name: t('home.cleaningServices'),
+    description: '2256 Staff',
   },
   {
     icon: industryicon3,
-    name: 'IT Support',
-    description: '1408 Staffs',
+    name: t('home.itSupport'),
+    description: '1408 Staff',
   },
   {
     icon: industryicon4,
-    name: 'Electrician',
-    description: '1740 Staffs',
+    name: t('home.electrician'),
+    description: '1740 Staff',
   },
   {
     icon: industryicon5,
-    name: 'Personal Services',
-    description: '3948 Staffs',
+    name: t('home.personalServices'),
+    description: '3948 Staff',
   },
   {
     icon: industryicon6,
-    name: 'General Labor',
-    description: '2984 Staffs',
+    name: t('home.generalLabor'),
+    description: '2984 Staff',
   },
   {
     icon: industryicon7,
-    name: 'Gardening',
-    description: '4509 Staffs',
+    name: t('home.gardening'),
+    description: '4509 Staff',
   },
   {
     icon: industryicon8,
-    name: 'Painting & Decor',
-    description: '1039 Staffs',
+    name: t('home.paintingDecor'),
+    description: '1039 Staff',
   },
   // ========================================================
   {
     icon: industryicon1,
-    name: 'Handyman',
-    description: '2853 Staffs',
+    name: t('home.handyman'),
+    description: '2853 Staff',
   },
   {
     icon: industryicon2,
-    name: 'Cleaning Services',
-    description: '2256 Staffs',
+    name: t('home.cleaningServices'),
+    description: '2256 Staff',
   },
   {
     icon: industryicon3,
-    name: 'IT Support',
-    description: '1408 Staffs',
+    name: t('home.itSupport'),
+    description: '1408 Staff',
   },
   {
     icon: industryicon4,
-    name: 'Electrician',
-    description: '1740 Staffs',
+    name: t('home.electrician'),
+    description: '1740 Staff',
   },
   {
     icon: industryicon5,
-    name: 'Personal Services',
-    description: '3948 Staffs',
+    name: t('home.personalServices'),
+    description: '3948 Staff',
   },
   {
     icon: industryicon6,
-    name: 'General Labor',
-    description: '2984 Staffs',
+    name: t('home.generalLabor'),
+    description: '2984 Staff',
   },
   {
     icon: industryicon7,
-    name: 'Gardening',
-    description: '4509 Staffs',
+    name: t('home.gardening'),
+    description: '4509 Staff',
   },
   {
     icon: industryicon8,
-    name: 'Painting & Decor',
-    description: '1039 Staffs',
+    name: t('home.paintingDecor'),
+    description: '1039 Staff',
   },
 ];
 
-const getStartedForCustomersData = [
+const getStartedForCustomersData = (t) => [
   {
     number: 1,
-    name: 'Post a Job',
-    description:
-      'Describe your task, add photos, and set your location—it only takes a minute.',
+    name: t('home.postJob'),
+    description: t('home.postJobDesc'),
   },
   {
     number: 2,
-    name: 'Compare Offers',
-    description:
-      'Professionals will send offers. Chat with up to 6 who’ve unlocked your job.',
+    name: t('home.compareOffers'),
+    description: t('home.compareOffersDesc'),
   },
   {
     number: 3,
-    name: 'Hire & Review',
-    description:
-      'Choose the right expert. Once the job is done, mark it complete and leave a review.',
+    name: t('home.hireReview'),
+    description: t('home.hireReviewDesc'),
   },
 ];
-const getStartedForBusinessData = [
+const getStartedForBusinessData = (t) => [
   {
     number: 1,
-    name: 'Browse Services',
-    description: 'View posted jobs that match your skills and location.',
+    name: t('home.browseServices'),
+    description: t('home.browseServicesDesc'),
   },
   {
     number: 2,
-    name: 'Get Booked Instantly',
-    description:
-      'Pay to unlock job details. Submit your offer and wait for customer engagement.',
+    name: t('home.getBookedInstantly'),
+    description: t('home.getBookedInstantlyDesc'),
   },
   {
     number: 3,
-    name: 'Respond to Requests',
-    description:
-      'Professionals will send offers. Chat with up to 6 who’ve unlocked your job.',
+    name: t('home.respondToRequests'),
+    description: t('home.respondToRequestsDesc'),
   },
 ];
 
 const Home = () => {
   // const aboutRef = useRef(null);
-  const { t } = useTranslation();
+  const { t } = useTranslation('common');
 
   const [showAll, setShowAll] = useState(false);
 
   const initialCount = 8;
   const displayedItems = showAll
-    ? industrySecData
-    : industrySecData.slice(0, initialCount);
+    ? industrySecData(t)
+    : industrySecData(t).slice(0, initialCount);
 
   const handleToggle = () => setShowAll((prev) => !prev);
 
@@ -218,20 +210,18 @@ const Home = () => {
                   <div className='col-lg-6'>
                     <div className='home__aboutSec-content'>
                       <div className='sec-head'>
-                        <p className='sec-tag'>About us</p>
+                        <p className='sec-tag'>{t('home.aboutUs')}</p>
                         <h2>
-                          Your Trusted Service{' '}
-                          <span className='greenColor'>Platform</span>
+                          {t('home.yourTrustedPlatform').split(' ').slice(0, -1).join(' ')}{' '}
+                          <span className='greenColor'>{t('home.yourTrustedPlatform').split(' ').slice(-1)}</span>
                         </h2>
                         <p className='sec-description'>
-                          At Connecta24, we connect customers with verified
-                          professionals for home and personal services—like
-                          repairs, cleaning, electrical work, and more.
+                          {t('home.aboutDescription')}
                         </p>
                         <div className='check-list-group'>
                           {[
-                            'Tailored services designed to meet your needs',
-                            'Scalable, flexible solutions for every task',
+                            t('home.tailoredServices'),
+                            t('home.scalableSolutions'),
                           ].map((item, index) => (
                             <div className='check-list-group-item' key={index}>
                               <div className='check-list-group-item-icon'>
@@ -253,19 +243,19 @@ const Home = () => {
                       {[
                         {
                           head: '12K',
-                          description: 'Trusted Professionals',
+                          description: t('home.trustedProfessionals'),
                         },
                         {
                           head: '95%',
-                          description: 'Jobs Fulfillment Rate',
+                          description: t('home.jobsFulfillmentRate'),
                         },
                         {
                           head: '12K',
-                          description: 'Jobs Filled',
+                          description: t('home.jobsFilled'),
                         },
                         {
                           head: '825+',
-                          description: 'Satisfied Businesses',
+                          description: t('home.satisfiedBusinesses'),
                         },
                       ].map((item, index) => (
                         <div className='textBoxe' key={index}>
@@ -290,11 +280,11 @@ const Home = () => {
                 <div className='row'>
                   <div className='col-md-12'>
                     <div className='sec-head'>
-                      <p className='sec-tag'>Why Us</p>
-                      <h2>Why Choose Us</h2>
+                      <p className='sec-tag'>{t('home.whyUs')}</p>
+                      <h2>{t('home.whyChooseUs')}</h2>
                     </div>
                   </div>
-                  {whyChooseData.map((item, index) => (
+                  {whyChooseData(t).map((item, index) => (
                     <div className='col-lg-4 mb-lg-0 mb-3' key={index}>
                       <WhyChooseBox
                         icon={item.icon}
@@ -316,8 +306,8 @@ const Home = () => {
                 <div className='row'>
                   <div className='col-md-12'>
                     <div className='sec-head'>
-                      <p className='sec-tag sec-tag-white'>Category</p>
-                      <h2>Need Help with a Task? We’ve Got You Covered</h2>
+                      <p className='sec-tag sec-tag-white'>{t('home.category')}</p>
+                      <h2>{t('home.needHelpWithTask')}</h2>
                     </div>
                   </div>
                 </div>
@@ -334,11 +324,9 @@ const Home = () => {
                   <div className='col-lg-6 mb-lg-0 mb-3'>
                     <div className='category-card'>
                       <div className='category-card-content'>
-                        <h4>Book Trusted Services Fast</h4>
+                        <h4>{t('home.bookTrustedServices')}</h4>
                         <p>
-                          Browse our service categories and connect instantly
-                          with reliable local experts for cleaning, repairs, IT
-                          help, and more.
+                          {t('home.bookTrustedServicesDesc')}
                         </p>
                       </div>
                       <div className='category-card-img'>
@@ -346,7 +334,7 @@ const Home = () => {
                           to={'/find-professionals'}
                           className='customBtn btn-bgRed'
                         >
-                          Book a Service
+                          {t('buttons.bookService')}
                         </Link>
                         <img
                           src={categoryimg1}
@@ -359,15 +347,14 @@ const Home = () => {
                   <div className='col-lg-6 mb-lg-0 mb-3'>
                     <div className='category-card'>
                       <div className='category-card-content'>
-                        <h4>Offer Your Skills & Get Booked</h4>
+                        <h4>{t('home.offerYourSkills')}</h4>
                         <p>
-                          Join Connecta24 and start receiving real-time requests
-                          from local customers — grow your business with ease.
+                          {t('home.offerYourSkillsDesc')}
                         </p>
                       </div>
                       <div className='category-card-img'>
                         <Link to={'/sign-up'} className='customBtn btn-bgGreen'>
-                          Start Offering Services
+                          {t('buttons.offerServices')}
                         </Link>
                         <img
                           src={categoryimg2}
@@ -390,8 +377,8 @@ const Home = () => {
                 <div className='row'>
                   <div className='col-md-12'>
                     <div className='sec-head'>
-                      <p className='sec-tag'>Industries</p>
-                      <h2>Industries Served</h2>
+                      <p className='sec-tag'>{t('home.industries')}</p>
+                      <h2>{t('home.industriesServed')}</h2>
                     </div>
                   </div>
                   <div className='col-md-12'>
@@ -416,7 +403,7 @@ const Home = () => {
                         className='customBtn btn-bgGreen'
                         onClick={handleToggle}
                       >
-                        {showAll ? 'Show Less' : 'View All Categories'}
+                        {showAll ? t('buttons.showLess') : t('buttons.viewAll')}
                       </button>
                     </div>
                   </div>
@@ -433,7 +420,7 @@ const Home = () => {
                 <div className='row'>
                   <div className='col-md-12'>
                     <div className='sec-head'>
-                      <h2>Getting Started</h2>
+                      <h2>{t('home.gettingStarted')}</h2>
                     </div>
                   </div>
 
@@ -451,13 +438,13 @@ const Home = () => {
                           <>
                             <div className='btn__witchIcon'>
                               <FaRegUser />
-                              For Customers
+                              {t('home.forCustomers')}
                             </div>
                           </>
                         }
                       >
                         <div className='row'>
-                          {getStartedForCustomersData.map((item, index) => (
+                          {getStartedForCustomersData(t).map((item, index) => (
                             <div className='col-lg-4 mb-lg-0 mb-3' key={index}>
                               <div className='getStarted__box'>
                                 <div className='getStarted__box-counter'>
@@ -479,13 +466,13 @@ const Home = () => {
                           <>
                             <div className='btn__witchIcon'>
                               <FaBusinessTime />
-                              For Business
+                              {t('home.forBusiness')}
                             </div>
                           </>
                         }
                       >
                         <div className='row'>
-                          {getStartedForBusinessData.map((item, index) => (
+                          {getStartedForBusinessData(t).map((item, index) => (
                             <div className='col-lg-4 mb-lg-0 mb-3' key={index}>
                               <div className='getStarted__box'>
                                 <div className='getStarted__box-counter'>
@@ -513,22 +500,22 @@ const Home = () => {
             <div className='row justify-content-center'>
               <COLXXL10>
                 <div className='newsletterSec__content'>
-                  <h2>Subscribe Newsletter</h2>
+                  <h2>{t('home.subscribeNewsletter')}</h2>
                   <div className='newsletterSec__content-form'>
                     <form>
                       <InputGroup>
-                        <Form.Control placeholder='Email Address' />
+                        <Form.Control placeholder={t('home.emailAddress')} />
                         <Button
                           variant=''
                           className='customBtn btn-bgRed'
                           id='button-addon2'
                         >
-                          Subscribe
+                          {t('buttons.subscribe')}
                         </Button>
                       </InputGroup>
                     </form>
                   </div>
-                  <p>You can unsubscribe at any time.</p>
+                  <p>{t('home.unsubscribeAnytime')}</p>
                 </div>
               </COLXXL10>
             </div>

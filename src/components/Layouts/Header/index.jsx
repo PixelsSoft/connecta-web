@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import logo from '../../../assets/images/logo.png';
 import arrowIcon from '../../../assets/images/arrow-icon.png';
@@ -12,6 +13,8 @@ import profileSettingIcon from '../../../assets/images/profile-setting-icon.png'
 import logoutIcon from '../../../assets/images/logout-icon.png';
 
 const Header = (props) => {
+  const { t } = useTranslation('common');
+  
   return (
     <Navbar expand='lg' className='main-navbar'>
       <Container>
@@ -28,7 +31,7 @@ const Header = (props) => {
               to='/find-professionals'
               className='header__postJob-icon'
             >
-              Post A job
+              {t('buttons.postJob')}
             </Nav.Link>
 
             {/* Logged in user button */}
@@ -49,7 +52,7 @@ const Header = (props) => {
                 className='loggedInUser-textIcon'
               >
                 <img src={chatIcon} alt='' />
-                <span>Chat</span>
+                <span>{t('home.chat')}</span>
               </NavDropdown.Item>
               <NavDropdown.Item
                 as={Link}
@@ -57,7 +60,7 @@ const Header = (props) => {
                 className='loggedInUser-textIcon'
               >
                 <img src={profileSettingIcon} alt='' />
-                <span>Profile Settings</span>
+                <span>{t('home.profileSettings')}</span>
               </NavDropdown.Item>
               {/* <NavDropdown.Divider /> */}
               <NavDropdown.Item
@@ -66,7 +69,7 @@ const Header = (props) => {
                 className='loggedInUser-textIcon'
               >
                 <img src={logoutIcon} alt='' />
-                <span>Logout</span>
+                <span>{t('home.logout')}</span>
               </NavDropdown.Item>
             </NavDropdown>
 
@@ -76,7 +79,7 @@ const Header = (props) => {
               className='header__login headerLink'
             >
               <div className='header__btnWith-icon'>
-                <span>Log In</span>
+                <span>{t('buttons.login')}</span>
                 <img src={arrowIcon} alt='Arrow Icon' />
               </div>
             </Nav.Link>
@@ -85,7 +88,7 @@ const Header = (props) => {
               className='header__signUp headerLink'
               to='/sign-up'
             >
-              Sign up as a Professional
+              {t('buttons.signUpProfessional')}
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

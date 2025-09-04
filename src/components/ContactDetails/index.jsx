@@ -1,9 +1,12 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import whitePhoneIcon from '../../assets/images/white-phone-icon.png';
 import emailPhoneIcon from '../../assets/images/white-email-icon.png';
 
 const ContactDetails = ({ phone, email, onInterestedClick }) => {
+  const { t } = useTranslation('common');
+  
   // Masking phone and email
   const maskedPhone = phone?.slice(0, 7) + '******';
   const maskedEmail = email
@@ -16,7 +19,7 @@ const ContactDetails = ({ phone, email, onInterestedClick }) => {
 
   return (
     <div className='savedLeadContact-Detail'>
-      <h5 className='mb-3'>Contact Details</h5>
+      <h5 className='mb-3'>{t('home.contactDetails')}</h5>
 
       <div className='savedLeadContact-DetailIocnText'>
         <img src={whitePhoneIcon} alt='' />
@@ -29,12 +32,11 @@ const ContactDetails = ({ phone, email, onInterestedClick }) => {
       </div>
 
       <p>
-        It will appear once client shortlisted you. For now, press interest to
-        get in client list.
+        {t('home.contactDescription')}
       </p>
 
       <button className='customBtn btn-bgRed w-100' onClick={onInterestedClick}>
-        Interested
+        {t('home.interested')}
       </button>
     </div>
   );

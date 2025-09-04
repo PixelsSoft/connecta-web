@@ -1,9 +1,11 @@
 import React from 'react';
 import DefaultLayout2 from '../../components/Layouts/DefaultLayout2';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Login = (e) => {
   const navigate = useNavigate();
+  const { t } = useTranslation('common');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,64 +18,63 @@ const Login = (e) => {
           <div className='row justify-content-center'>
             <div className='col-12'>
               <div className='auth-content'>
-                <h2>Login</h2>
+                <h2>{t('buttons.login')}</h2>
                 <form onSubmit={handleSubmit}>
                   <div className='auth-contentForm'>
-                    <div class='inputGroup'>
-                      <label for='userName' class='form-label'>
-                        Username
+                    <div className='inputGroup'>
+                      <label htmlFor='userName' className='form-label'>
+                        {t('forms.username')}
                       </label>
                       <input
                         type='email'
-                        class='form-control'
+                        className='form-control'
                         id='userName'
                         placeholder='info@wrappixel.com'
                       />
                     </div>
-                    <div class='inputGroup'>
-                      <label for='userPassword' class='form-label'>
-                        Password
+                    <div className='inputGroup'>
+                      <label htmlFor='userPassword' className='form-label'>
+                        {t('forms.password')}
                       </label>
                       <input
                         type='password'
-                        class='form-control'
+                        className='form-control'
                         id='userPassword'
-                        placeholder='Password'
+                        placeholder={t('forms.password')}
                       />
                     </div>
                     <div className='forgotDiv'>
-                      <div class='form-check'>
+                      <div className='form-check'>
                         <input
-                          class='form-check-input'
+                          className='form-check-input'
                           type='checkbox'
                           value=''
                           id='rememberMe'
                         />
-                        <label class='form-check-label' for='rememberMe'>
-                          Remember me
+                        <label className='form-check-label' htmlFor='rememberMe'>
+                          {t('forms.rememberMe')}
                         </label>
                       </div>
                       <Link to={''} className='forgotText'>
-                        Forgot Password ?
+                        {t('forms.forgotPassword')}
                       </Link>
                     </div>
                     <button
                       type='submit'
                       className='customBtn btn-bgRed w-100'
-                      // onClick={handleSubmit}
                     >
-                      Sign In
+                      {t('buttons.signIn')}
                     </button>
-                    <p className='m-0 text-center'>or</p>
+                    <p className='m-0 text-center'>{t('home.or')}</p>
                     <div className='authBottom-btns'>
                       <Link
                         to={'/find-professionals'}
                         className='customBtn btn-bgBlack'
                       >
-                        Post a Job
+                        {t('buttons.postJob')}
                       </Link>
                       <Link to={'/sign-up'} className='customBtn btn-bgGreen'>
-                        Sign Up as Professional
+                        {t('buttons.signUpProfessional')}
                       </Link>
                     </div>
                   </div>
