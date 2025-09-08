@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 // import postedjobicon from '../../../assets/images/posted-job-icon.png';
 import postedjobicon from '../../../../assets/images/posted-job-icon.png';
@@ -32,6 +33,7 @@ const headerData = [
 ];
 
 const RecruiterHeader = () => {
+  const { t } = useTranslation('common');
   const location = useLocation();
 
   const isActive = (path) => location.pathname.startsWith(path);
@@ -59,7 +61,7 @@ const RecruiterHeader = () => {
                   >
                     <div className={`btn__witchIcon`}>
                       <img src={postedjobicon} alt='' />
-                      <span>Posted Jobs</span>
+                      <span>{t('recruiter.postedJobs')}</span>
                     </div>
                   </Link>
 
@@ -69,7 +71,7 @@ const RecruiterHeader = () => {
                   >
                     <div className={`btn__witchIcon `}>
                       <img src={chaticon} alt='' />
-                      <span>Chat</span>
+                      <span>{t('recruiter.chat')}</span>
                     </div>
                   </Link>
 
@@ -81,7 +83,7 @@ const RecruiterHeader = () => {
                   >
                     <div className={`btn__witchIcon`}>
                       <img src={accountsettingicon} alt='' />
-                      <span>Account Settings</span>
+                      <span>{t('recruiter.accountSettings')}</span>
                     </div>
                   </Link>
 
@@ -93,7 +95,7 @@ const RecruiterHeader = () => {
                   >
                     <div className={`btn__witchIcon `}>
                       <img src={callicon} alt='' />
-                      <span>Contact Center</span>
+                      <span>{t('recruiter.contactCenter')}</span>
                     </div>
                   </Link>
                 </div>

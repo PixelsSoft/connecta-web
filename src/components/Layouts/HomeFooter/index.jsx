@@ -15,7 +15,7 @@ import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
 
 const HomeFooter = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(['common', 'home']);
 
   const [showLangModal, setShowLangModal] = useState(false);
   const [selectedLang, setSelectedLang] = useState('');
@@ -45,19 +45,19 @@ const HomeFooter = () => {
                       </Link>
                     </div>
                     <p className='homeFooter-about-description'>
-                      {t('common:home.footerDescription')}
+                      {t('home.footerDescription')}
                     </p>
                     <div className='homeFooter-stores'>
                       {[
                         {
                           icon: appleIcon,
-                          description: t('common:home.downloadOn'),
-                          name: t('common:home.appStore'),
+                          description: t('home.downloadOn'),
+                          name: t('home.appStore'),
                         },
                         {
                           icon: playstoreIcon,
-                          description: t('common:home.getItOn'),
-                          name: t('common:home.googlePlay'),
+                          description: t('home.getItOn'),
+                          name: t('home.googlePlay'),
                         },
                       ].map((item, index) => (
                         <a
@@ -81,11 +81,11 @@ const HomeFooter = () => {
                   <div className='row'>
                     <div className='col-md-3 col-6 mb-md-0 mb-3'>
                       <div className='footer-links'>
-                        <h2 className='footer-title'>{t('common:navigation.quickLinks')}</h2>
+                        <h2 className='footer-title'>{t('navigation.quickLinks')}</h2>
                         <ul className='footer-links'>
                           <li>
                             <Link to={'/'} className='footerLink'>
-                              {t('common:navigation.home')}
+                              {t('navigation.home')}
                             </Link>
                           </li>
                           <li>
@@ -99,12 +99,12 @@ const HomeFooter = () => {
                                 el?.scrollIntoView({ behavior: 'smooth' });
                               }}
                             >
-                              {t('common:navigation.aboutUs')}
+                              {t('navigation.aboutUs')}
                             </a>
                           </li>
                           <li>
                             <Link to={''} className='footerLink'>
-                              {t('common:navigation.contactUs')}
+                              {t('navigation.contactUs')}
                             </Link>
                           </li>
                         </ul>
@@ -112,11 +112,11 @@ const HomeFooter = () => {
                     </div>
                     <div className='col-md-3 col-6 mb-md-0 mb-3'>
                       <div className='footer-links'>
-                        <h2 className='footer-title'>{t('common:navigation.support')}</h2>
+                        <h2 className='footer-title'>{t('navigation.support')}</h2>
                         <ul className='footer-links'>
                           <li>
                             <Link to={'/'} className='footerLink'>
-                              {t('common:navigation.howItWorks')}
+                              {t('navigation.howItWorks')}
                             </Link>
                           </li>
                           <li>
@@ -124,17 +124,17 @@ const HomeFooter = () => {
                               to={'/find-professionals'}
                               className='footerLink'
                             >
-                              {t('common:buttons.bookService')}
+                              {t('buttons.bookService')}
                             </Link>
                           </li>
                           <li>
                             <Link to={'/sign-up'} className='footerLink'>
-                              {t('common:buttons.signUpProfessional')}
+                              {t('buttons.signUpProfessional')}
                             </Link>
                           </li>
                           <li>
                             <Link to={''} className='footerLink'>
-                              {t('common:navigation.faqs')}
+                              {t('navigation.faqs')}
                             </Link>
                           </li>
                         </ul>
@@ -142,16 +142,16 @@ const HomeFooter = () => {
                     </div>
                     <div className='col-md-3 col-6 mb-md-0 mb-3'>
                       <div className='footer-links'>
-                        <h2 className='footer-title'>{t('common:navigation.termsConditions')}</h2>
+                        <h2 className='footer-title'>{t('navigation.termsConditions')}</h2>
                         <ul className='footer-links'>
                           <li>
                             <Link to={''} className='footerLink'>
-                              {t('common:navigation.termsConditions')}
+                              {t('navigation.termsConditions')}
                             </Link>
                           </li>
                           <li>
                             <Link to={''} className='footerLink'>
-                              {t('common:navigation.privacyPolicy')}
+                              {t('navigation.privacyPolicy')}
                             </Link>
                           </li>
                         </ul>
@@ -159,46 +159,46 @@ const HomeFooter = () => {
                     </div>
                     <div className='col-md-3 col-6 mb-md-0 mb-3'>
                       <div className='footer-links'>
-                        <h2 className='footer-title'>{t('common:home.selectLanguage')}</h2>
+                        <h2 className='footer-title'>{t('home.selectLanguage')}</h2>
                         <ul className='footer-links'>
                           <li>
                             <button
                               className='footerLink'
                               onClick={() =>
-                                handleLanguageChange('en', t('common:home.english'))
+                                handleLanguageChange('en', t('home.english'))
                               }
                             >
-                              {t('common:home.english')}
+                              {t('home.english')}
                             </button>
                           </li>
                           <li>
                             <button
                               className='footerLink'
                               onClick={() =>
-                                handleLanguageChange('de', t('common:home.german'))
+                                handleLanguageChange('de', t('home.german'))
                               }
                             >
-                              {t('common:home.german')}
+                              {t('home.german')}
                             </button>
                           </li>
                           <li>
                             <button
                               className='footerLink'
                               onClick={() =>
-                                handleLanguageChange('fr', t('common:home.french'))
+                                handleLanguageChange('fr', t('home.french'))
                               }
                             >
-                              {t('common:home.french')}
+                              {t('home.french')}
                             </button>
                           </li>
                           <li>
                             <button
                               className='footerLink'
                               onClick={() =>
-                                handleLanguageChange('it', t('common:home.italian'))
+                                handleLanguageChange('it', t('home.italian'))
                               }
                             >
-                              {t('common:home.italian')}
+                              {t('home.italian')}
                             </button>
                           </li>
                         </ul>
@@ -219,12 +219,12 @@ const HomeFooter = () => {
                 <div className='col-md-12'>
                   <div className='footerCopyright__content'>
                     <p>
-                      {t('common:home.copyright')}{' '}
-                      <span style={{ color: '#26472B' }}>Connecta24</span> {t('common:home.allRightsReserved')}
+                      {t('home.copyright')}{' '}
+                      <span style={{ color: '#26472B' }}>Connecta24</span> {t('home.allRightsReserved')}
                     </p>
 
                     <div className='footerSocial'>
-                      <p>{t('common:home.followUsOn')}</p>
+                      <p>{t('home.followUsOn')}</p>
                       <div className='footerSocial_links'>
                         <a href='javascript:;'>
                           <img src={facebookIcon} alt='' />

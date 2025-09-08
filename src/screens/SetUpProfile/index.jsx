@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
 import DefaultLayout2 from '../../components/Layouts/DefaultLayout2';
+import { useTranslation } from 'react-i18next';
 
 import redcheckicon from '../../assets/images/red-check-icon.png';
 
@@ -23,6 +24,7 @@ import profileCompletedIcon from '../../assets/images/profile-completed-icon.png
 
 import { BiSearch } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
+import { getAllCategories } from '../../data/categoriesData';
 
 // categories new icon
 import DesignAnplainingicon from '../../assets/images/category-icons/DesignAnplaining-icon.png';
@@ -42,111 +44,36 @@ import InteriorAndFinishingIcon from '../../assets/images/category-icons/Interio
 import TransportAndMovingIcon from '../../assets/images/category-icons/TransportAndMoving-icon.png';
 import TechnicalAndInstallationIcon from '../../assets/images/category-icons/TechnicalAndInstallation-icon.png';
 
-// const servicesCheckBoxes = [
-//   { label: 'Painting', value: 'painting', icon: paintingIcon },
-//   { label: 'Home Repairing', value: 'home_repairing', icon: homeRepairingIcon },
-//   { label: 'Gardening', value: 'gardening', icon: gardeningIcon },
-//   { label: 'Electrician', value: 'electrician', icon: electricianIcon },
-//   { label: 'Cleaning', value: 'cleaning', icon: cleaningIcon },
-//   {
-//     label: 'Kitchen Repairing',
-//     value: 'kitchen_repairing',
-//     icon: kitchenRepairingIcon,
-//   },
-//   { label: 'Plumbing', value: 'plumbing', icon: plumbingIcon },
-//   {
-//     label: 'Architectural Services',
-//     value: 'architectural',
-//     icon: architecturalServicesIcon,
-//   },
-//   { label: 'Chimney', value: 'chimney', icon: chimneyIcon },
-//   { label: 'Brick Laying', value: 'brick_laying', icon: brickLayingIcon },
-// ];
+// Icon mapping for categories (same as in FindProfessional)
+const iconMapping = {
+  "Cleaning Services": CleaningServicesIcon,
+  "Technical & Construction": TechnicalAndConstructionIcon,
+  "Garden & Outdoor": GardenAndOutdoorIcon,
+  "Home & Comfort": HomeAndComfortIcon,
+  "Design & Planning": DesignAnplainingicon,
+  "Maintenance & Repairs": MaintenanceAndRepairingIcon,
+  "Digital & Tech": DigitalAndTechIcon,
+  "Media & Creative": MediaAndCreativeIcon,
+  "Business & Facility Services": BusinessAndFacilityServicesIcon,
+  "Transport & Moving": TransportAndMovingIcon,
+  "Rental & Equipment": RentalAndEquipmentIcon,
+  "Project Management": ProjectManagementIcon,
+  "Administrative & Permits": AdministrativeAndPermitsIcon,
+  "Outdoor & Landscaping": OutdoorAndLandscapingIcon,
+  "Interior & Finishing": InteriorAndFinishingIcon,
+  "Technical & Installation": TechnicalAndInstallationIcon,
+  "Specialist Services": DesignAnplainingicon, // Default icon
+};
 
-const servicesCheckBoxes = [
-  {
-    label: 'Design An plaining',
-    value: 'Design_An_plaining',
-    icon: DesignAnplainingicon,
-  },
-  {
-    label: 'Garden & Outdoor',
-    value: 'Garden_&_Outdoor',
-    icon: GardenAndOutdoorIcon,
-  },
-  {
-    label: 'Project Management',
-    value: 'Project_Management',
-    icon: ProjectManagementIcon,
-  },
-  {
-    label: 'Outdoor & Landscaping',
-    value: 'Outdoor_&_Landscaping',
-    icon: OutdoorAndLandscapingIcon,
-  },
-  {
-    label: 'Media & Creative',
-    value: 'Media_&_Creative',
-    icon: MediaAndCreativeIcon,
-  },
-  {
-    label: 'Rental & Equipment',
-    value: 'Rental_&_Equipment',
-    icon: RentalAndEquipmentIcon,
-  },
-  {
-    label: 'Business & Facility Services',
-    value: 'Business_&_Facility_Services',
-    icon: BusinessAndFacilityServicesIcon,
-  },
-  {
-    label: 'Home & Comfort',
-    value: 'Home_&_Comfort',
-    icon: HomeAndComfortIcon,
-  },
-  {
-    label: 'Maintenance & Repairing',
-    value: 'Maintenance_&_Repairing',
-    icon: MaintenanceAndRepairingIcon,
-  },
-  {
-    label: 'Technical & Construction',
-    value: 'Technical_&_Construction',
-    icon: TechnicalAndConstructionIcon,
-  },
-  {
-    label: 'Administrative & Permits',
-    value: 'Administrative_&_Permits',
-    icon: AdministrativeAndPermitsIcon,
-  },
-  {
-    label: 'Digital & Tech',
-    value: 'Digital_&_Tech',
-    icon: DigitalAndTechIcon,
-  },
-  {
-    label: 'Cleaning Services',
-    value: 'Cleaning_Services',
-    icon: CleaningServicesIcon,
-  },
-  {
-    label: 'Interior & Finishing',
-    value: 'Interior_&_Finishing',
-    icon: InteriorAndFinishingIcon,
-  },
-  {
-    label: 'Transport & Moving',
-    value: 'Transport_&_Moving',
-    icon: TransportAndMovingIcon,
-  },
-  {
-    label: 'Technical & Installation',
-    value: 'Technical_&_Installation',
-    icon: TechnicalAndInstallationIcon,
-  },
-];
+// Get dynamic category data (same as in FindProfessional)
+const servicesCheckBoxes = getAllCategories().map(category => ({
+  label: category.name,
+  value: category.name.replace(/\s+/g, '-'),
+  icon: iconMapping[category.name] || DesignAnplainingicon,
+}));
 
 const SetUpProfile = () => {
+  const { t } = useTranslation('common');
   const [formData, setFormData] = useState({
     selectedServices: [],
   });
@@ -213,21 +140,21 @@ const SetUpProfile = () => {
     <div className='steps'>
       <div className='step-labelContent'>
         <div className={`step ${step >= 1 ? 'active' : ''}`}>1</div>
-        <span>Personal Details</span>
+        <span>{t('setupProfile.personalDetails')}</span>
       </div>
       <div className='step-labelContent'>
         <div className={`step ${step >= 2 ? 'active' : ''}`}>
           2{/* {subStep ? `.${subStep}` : ''} */}
         </div>
-        <span>Professional Skills</span>
+        <span>{t('setupProfile.professionalSkills')}</span>
       </div>
       <div className='step-labelContent'>
         <div className={`step ${step >= 3 ? 'active' : ''}`}>3</div>
-        <span>Banking Details</span>
+        <span>{t('setupProfile.bankingDetails')}</span>
       </div>
       <div className='step-labelContent'>
         <div className={`step ${step >= 4 ? 'active' : ''}`}>4</div>
-        <span>Complete</span>
+        <span>{t('setupProfile.complete')}</span>
       </div>
       {/* <div className={`step ${step >= 5 ? 'active' : ''}`}>5</div> */}
     </div>
@@ -249,7 +176,7 @@ const SetUpProfile = () => {
                           <div className='step-1-content'>
                             <div className='sec-head'>
                               <h3>
-                                We need some information about your company
+                                {t('setupProfile.companyInfoHeading')}
                               </h3>
                             </div>
                             <div className='row'>
@@ -259,12 +186,12 @@ const SetUpProfile = () => {
                                     htmlFor='companyName'
                                     className='form-label'
                                   >
-                                    Company Name
+                                    {t('setupProfile.companyName')}
                                   </label>
                                   <input
                                     type='text'
                                     className='form-control'
-                                    placeholder='Company Name'
+                                    placeholder={t('setupProfile.companyName')}
                                     id='companyName'
                                     name='companyName'
                                     onChange={handleChanges}
@@ -277,12 +204,12 @@ const SetUpProfile = () => {
                                     htmlFor='UIDMWSTNumber'
                                     className='form-label'
                                   >
-                                    UID/MWST Number
+                                    {t('setupProfile.uidMwstNumber')}
                                   </label>
                                   <input
                                     type='text'
                                     className='form-control'
-                                    placeholder='Type number here'
+                                    placeholder={t('setupProfile.typeNumberHere')}
                                     id='UIDMWSTNumber'
                                     name='UIDMWSTNumber'
                                     onChange={handleChanges}
@@ -295,12 +222,12 @@ const SetUpProfile = () => {
                                     htmlFor='emailAddress'
                                     className='form-label'
                                   >
-                                    Email Address
+                                    {t('forms.email')}
                                   </label>
                                   <input
                                     type='email'
                                     className='form-control'
-                                    placeholder='Email'
+                                    placeholder={t('forms.email')}
                                     id='emailAddress'
                                     name='emailAddress'
                                     onChange={handleChanges}
@@ -313,12 +240,12 @@ const SetUpProfile = () => {
                                     htmlFor='companyPhoneNo'
                                     className='form-label'
                                   >
-                                    Company Phone No
+                                    {t('setupProfile.companyPhoneNo')}
                                   </label>
                                   <input
                                     type='text'
                                     className='form-control'
-                                    placeholder='Company Phone No'
+                                    placeholder={t('setupProfile.companyPhoneNo')}
                                     id='companyPhoneNo'
                                     name='companyPhoneNo'
                                     onChange={handleChanges}
@@ -331,12 +258,12 @@ const SetUpProfile = () => {
                                     htmlFor='companyAddress'
                                     className='form-label'
                                   >
-                                    Company Address
+                                    {t('setupProfile.companyAddress')}
                                   </label>
                                   <input
                                     type='text'
                                     className='form-control'
-                                    placeholder='Company Address'
+                                    placeholder={t('setupProfile.companyAddress')}
                                     id='companyAddress'
                                     name='companyAddress'
                                     onChange={handleChanges}
@@ -349,12 +276,12 @@ const SetUpProfile = () => {
                                     htmlFor='postalCode'
                                     className='form-label'
                                   >
-                                    Postal Code
+                                    {t('setupProfile.postalCode')}
                                   </label>
                                   <input
                                     type='text'
                                     className='form-control'
-                                    placeholder='Postal Code'
+                                    placeholder={t('setupProfile.postalCode')}
                                     id='postalCode'
                                     name='postalCode'
                                     onChange={handleChanges}
@@ -367,12 +294,12 @@ const SetUpProfile = () => {
                                     htmlFor='companywebsite'
                                     className='form-label'
                                   >
-                                    Company website (optional)
+                                    {t('setupProfile.companyWebsiteOptional')}
                                   </label>
                                   <input
                                     type='text'
                                     className='form-control'
-                                    placeholder='Company website'
+                                    placeholder={t('setupProfile.companyWebsite')}
                                     id='companywebsite'
                                     name='companywebsite'
                                     onChange={handleChanges}
@@ -385,7 +312,7 @@ const SetUpProfile = () => {
                                     htmlFor='totalWorker'
                                     className='form-label'
                                   >
-                                    How many workers do you have
+                                    {t('setupProfile.howManyWorkers')}
                                   </label>
                                   <select
                                     className='form-control form-select'
@@ -395,7 +322,7 @@ const SetUpProfile = () => {
                                     defaultValue=''
                                   >
                                     <option value='' disabled>
-                                      Select Total Workers
+                                      {t('setupProfile.selectTotalWorkers')}
                                     </option>
                                     <option value='1 to 10'>1 to 10</option>
                                     <option value='1 to 50'>1 to 50</option>
@@ -416,7 +343,7 @@ const SetUpProfile = () => {
                                   htmlFor='totalWorker'
                                   className='form-label'
                                 >
-                                  What skills do you have?
+                                  {t('setupProfile.whatSkillsDoYouHave')}
                                 </label>
                                 <select
                                   className='form-control form-select'
@@ -426,29 +353,16 @@ const SetUpProfile = () => {
                                   defaultValue=''
                                 >
                                   <option value='' disabled>
-                                    Select Category
+                                    {t('setupProfile.selectCategory')}
                                   </option>
-                                  <option value='Bathroom Fitting'>
-                                    Bathroom Fitting
-                                  </option>
-                                  <option value='Electrical Services'>
-                                    Electrical Services
-                                  </option>
-                                  <option value='Carpentry Services'>
-                                    Carpentry Services
-                                  </option>
-                                  <option value='Painting and Decorating'>
-                                    Painting and Decorating
-                                  </option>
-                                  <option value='Tiling and Flooring'>
-                                    Tiling and Flooring
-                                  </option>
-                                  <option value='Roofing Services'>
-                                    Roofing Services
-                                  </option>
-                                  <option value='Landscaping and Gardening'>
-                                    Landscaping and Gardening
-                                  </option>
+                                  {servicesCheckBoxes.map((category, index) => (
+                                    <option
+                                      value={category.value}
+                                      key={index}
+                                    >
+                                      {category.label}
+                                    </option>
+                                  ))}
                                 </select>
                               </div>
                             </div>
@@ -491,13 +405,10 @@ const SetUpProfile = () => {
                             <div className='travelForWork'>
                               <div className='travelForWork-head'>
                                 <h5>
-                                  How far can you travel for work from your
-                                  area?
+                                  {t('setupProfile.howFarCanYouTravel')}
                                 </h5>
                                 <p>
-                                  Search your area below pin your location and
-                                  set maximum distance you are willing to travel
-                                  from your Location.
+                                  {t('setupProfile.travelDescription')}
                                 </p>
                               </div>
 
@@ -513,7 +424,7 @@ const SetUpProfile = () => {
                                   <input
                                     type='text'
                                     className='form-control'
-                                    placeholder='Search Location'
+                                    placeholder={t('setupProfile.searchLocation')}
                                   />
                                 </div>
                               </div>
@@ -542,14 +453,14 @@ const SetUpProfile = () => {
                                     class='form-check-label'
                                     for='wordThroughoutUk'
                                   >
-                                    I work throughout the UK
+                                    {t('setupProfile.workThroughoutUk')}
                                   </label>
                                 </div>
                               </div>
 
                               <div className='trave__limit'>
                                 <div className='trave__limit-head'>
-                                  <h5>Set your Travel Limit here.</h5>
+                                  <h5>{t('setupProfile.setTravelLimit')}</h5>
                                 </div>
 
                                 <input
@@ -573,7 +484,7 @@ const SetUpProfile = () => {
                                         distance === mile ? 'active' : ''
                                       }`}
                                     >
-                                      {mile.toString().padStart(2, '0')} miles
+                                      {mile.toString().padStart(2, '0')} {t('setupProfile.miles')}
                                     </button>
                                   ))}
                                 </div>
@@ -586,12 +497,9 @@ const SetUpProfile = () => {
                           <div className='step-content-3'>
                             <div className='bankingInfo'>
                               <div className='bankingInfo-head'>
-                                <h3>Banking info</h3>
+                                <h3>{t('setupProfile.bankingInfo')}</h3>
                                 <p>
-                                  We use identity verification to ensure your
-                                  security and keep Connecta24 safe. Your ID
-                                  will be handled securely and will never be
-                                  shared with anyone.
+                                  {t('setupProfile.bankingDescription')}
                                 </p>
                               </div>
 
@@ -639,12 +547,12 @@ const SetUpProfile = () => {
                                           htmlFor='cardHolderName'
                                           className='form-label'
                                         >
-                                          Card Holder Name
+                                          {t('setupProfile.cardHolderName')}
                                         </label>
                                         <input
                                           type='text'
                                           className='form-control'
-                                          placeholder='Jon Doe'
+                                          placeholder={t('setupProfile.cardHolderName')}
                                           id='cardHolderName'
                                           name='cardHolderName'
                                           onChange={handleChanges}
@@ -657,7 +565,7 @@ const SetUpProfile = () => {
                                           htmlFor='cardNumber'
                                           className='form-label'
                                         >
-                                          Card Number
+                                          {t('setupProfile.cardNumber')}
                                         </label>
                                         <input
                                           type='text'
@@ -675,7 +583,7 @@ const SetUpProfile = () => {
                                           htmlFor='cardExpDate'
                                           className='form-label'
                                         >
-                                          Expiry Date
+                                          {t('setupProfile.expiryDate')}
                                         </label>
                                         <input
                                           type='text'
@@ -693,7 +601,7 @@ const SetUpProfile = () => {
                                           htmlFor='cardExpDate'
                                           className='form-label'
                                         >
-                                          CVV
+                                          {t('setupProfile.cvv')}
                                         </label>
                                         <input
                                           type='text'
@@ -718,7 +626,7 @@ const SetUpProfile = () => {
                                           htmlFor='visaCardHolderName'
                                           className='form-label'
                                         >
-                                          Card Holder Name
+                                          {t('setupProfile.cardHolderName')}
                                         </label>
                                         <input
                                           type='text'
@@ -736,7 +644,7 @@ const SetUpProfile = () => {
                                           htmlFor='visaCardNumber'
                                           className='form-label'
                                         >
-                                          Card Number
+                                          {t('setupProfile.cardNumber')}
                                         </label>
                                         <input
                                           type='text'
@@ -754,7 +662,7 @@ const SetUpProfile = () => {
                                           htmlFor='visaExpDate'
                                           className='form-label'
                                         >
-                                          Expiry Date
+                                          {t('setupProfile.expiryDate')}
                                         </label>
                                         <input
                                           type='text'
@@ -772,7 +680,7 @@ const SetUpProfile = () => {
                                           htmlFor='visaCvv'
                                           className='form-label'
                                         >
-                                          CVV
+                                          {t('setupProfile.cvv')}
                                         </label>
                                         <input
                                           type='text'
@@ -797,7 +705,7 @@ const SetUpProfile = () => {
                                           htmlFor='twintPhone'
                                           className='form-label'
                                         >
-                                          TWINT Phone Number
+                                          {t('setupProfile.twintPhoneNumber')}
                                         </label>
                                         <input
                                           type='tel'
@@ -819,12 +727,12 @@ const SetUpProfile = () => {
                           <div className='step-content-4'>
                             <div className='profileSetUpCompleted'>
                               <img src={profileCompletedIcon} alt='' />
-                              <h4>Profile setup completed!</h4>
+                              <h4>{t('setupProfile.profileSetupCompleted')}</h4>
                               <button
                                 className='customBtn btn-bgRed'
                                 onClick={() => navigate('/user/saved-leads')}
                               >
-                                Browse Leads
+                                {t('setupProfile.browseLeads')}
                               </button>
                             </div>
                           </div>
@@ -852,7 +760,7 @@ const SetUpProfile = () => {
                     <div className='step-buttons'>
                       {step > 1 && step < 4 && (
                         <button onClick={handleBack} className='customBtn'>
-                          Back
+                          {t('buttons.back')}
                         </button>
                       )}
                       {step < 4 && (
@@ -860,7 +768,7 @@ const SetUpProfile = () => {
                           onClick={handleNext}
                           className='customBtn btn-bgRed'
                         >
-                          Next
+                          {t('buttons.next')}
                         </button>
                       )}
                     </div>

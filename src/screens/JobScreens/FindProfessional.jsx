@@ -1,6 +1,7 @@
 import React from "react";
 import DefaultLayout2 from "../../components/Layouts/DefaultLayout2";
 import { useTranslation } from "react-i18next";
+import { getAllCategories } from "../../data/categoriesData";
 
 import paintingicon from "../../assets/images/painting-icon.png";
 import homeRepairingicon from "../../assets/images/homeRepairing-icon.png";
@@ -82,88 +83,33 @@ import TechnicalAndInstallationIcon from "../../assets/images/category-icons/Tec
 //   },
 // ];
 
-const categoryData = [
-  {
-    icon: DesignAnplainingicon,
-    name: "Design and Planning",
-    value: "Design-And-Planning",
-  },
-  {
-    icon: GardenAndOutdoorIcon,
-    name: "Garden & Outdoor",
-    value: "Garden-And-Outdoor",
-  },
-  {
-    icon: ProjectManagementIcon,
-    name: "Project Management",
-    value: "Project-Management",
-  },
-  {
-    icon: OutdoorAndLandscapingIcon,
-    name: "Outdoor & Landscaping",
-    value: "Outdoor-And-Landscaping",
-  },
-  {
-    icon: MediaAndCreativeIcon,
-    name: "Media & Creative",
-    value: "Media-And-Creative",
-  },
-  {
-    icon: RentalAndEquipmentIcon,
-    name: "Rental & Equipment", 
-    value: "Rental-And-Equipment",
-  },
-  {
-    icon: BusinessAndFacilityServicesIcon,
-    name: "Business & Facility Services",
-    value: "Business-And-Facility-Services",
-  },
-  {
-    icon: HomeAndComfortIcon,
-    name: "Home & Comfort",
-    value: "Home-And-Comfort",
-  },
-  {
-    icon: MaintenanceAndRepairingIcon,
-    name: "Maintenance & Repairing",
-    value: "Maintenance-And-Repairing",
-  },
-  {
-    icon: TechnicalAndConstructionIcon,
-    name: "Technical & Construction",
-    value: "Technical-And-Construction",
-  },
-  {
-    icon: AdministrativeAndPermitsIcon,
-    name: "Administrative & Permits",
-    value: "Administrative-And-Permits",
-  },
-  {
-    icon: DigitalAndTechIcon,
-    name: "Digital & Tech",
-    value: "Digital-And-Tech",
-  },
-  {
-    icon: CleaningServicesIcon,
-    name: "Cleaning Services",
-    value: "Cleaning-Services",
-  },
-  {
-    icon: InteriorAndFinishingIcon,
-    name: "Interior & Finishing",
-    value: "Interior-And-Finishing",
-  },
-  {
-    icon: TransportAndMovingIcon,
-    name: "Transport & Moving",
-    value: "Transport-And-Moving",
-  },
-  {
-    icon: TechnicalAndInstallationIcon,
-    name: "Technical & Installation",
-    value: "Technical-And-Installation",
-  },
-];
+// Icon mapping for categories
+const iconMapping = {
+  "Design & Planning": DesignAnplainingicon,
+  "Garden & Outdoor": GardenAndOutdoorIcon,
+  "Project Management": ProjectManagementIcon,
+  "Outdoor & Landscaping": OutdoorAndLandscapingIcon,
+  "Media & Creative": MediaAndCreativeIcon,
+  "Rental & Equipment": RentalAndEquipmentIcon,
+  "Business & Facility Services": BusinessAndFacilityServicesIcon,
+  "Home & Comfort": HomeAndComfortIcon,
+  "Maintenance & Repairs": MaintenanceAndRepairingIcon,
+  "Technical & Construction": TechnicalAndConstructionIcon,
+  "Administrative & Permits": AdministrativeAndPermitsIcon,
+  "Digital & Tech": DigitalAndTechIcon,
+  "Cleaning Services": CleaningServicesIcon,
+  "Interior & Finishing": InteriorAndFinishingIcon,
+  "Transport & Moving": TransportAndMovingIcon,
+  "Technical & Installation": TechnicalAndInstallationIcon,
+  "Specialist Services": DesignAnplainingicon, // Default icon
+};
+
+// Get dynamic category data
+const categoryData = getAllCategories().map(category => ({
+  icon: iconMapping[category.name] || DesignAnplainingicon,
+  name: category.name,
+  value: category.name.replace(/\s+/g, '-'),
+}));
 
 const FindProfessional = () => {
   const navigate = useNavigate();

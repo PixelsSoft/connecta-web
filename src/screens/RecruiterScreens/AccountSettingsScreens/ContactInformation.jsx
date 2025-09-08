@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import RecruiterAccountSettingLayout from '../../../components/Layouts/RecruiterLayout/RecruiterAccountSettingLayout';
+import { useTranslation } from 'react-i18next';
 
 const ContactInformation = () => {
+  const { t } = useTranslation('common');
   const [formData, setFormData] = useState({});
 
   const handleChanges = (event) => {
@@ -24,12 +26,12 @@ const ContactInformation = () => {
           <div className='col-lg-6 mb-md-4 mb-3'>
             <div className='inputGroup'>
               <label htmlFor='userName' className='form-label'>
-                Name
+                {t('forms.fullName')}
               </label>
               <input
                 type='text'
                 className='form-control'
-                placeholder='Name'
+                placeholder={t('forms.fullName')}
                 id='userName'
                 name='userName'
                 onChange={handleChanges}
@@ -39,12 +41,12 @@ const ContactInformation = () => {
           <div className='col-lg-6 mb-md-4 mb-3'>
             <div className='inputGroup'>
               <label htmlFor='address' className='form-label'>
-                Address
+                {t('recruiter.address')}
               </label>
               <input
                 type='text'
                 className='form-control'
-                placeholder='Address'
+                placeholder={t('recruiter.address')}
                 id='address'
                 name='address'
                 onChange={handleChanges}
@@ -54,12 +56,12 @@ const ContactInformation = () => {
           <div className='col-lg-6 mb-md-4 mb-3'>
             <div className='inputGroup'>
               <label htmlFor='email' className='form-label'>
-                Email
+                {t('forms.email')}
               </label>
               <input
                 type='text'
                 className='form-control'
-                placeholder='Email'
+                placeholder={t('forms.email')}
                 id='email'
                 name='email'
                 onChange={handleChanges}
@@ -69,12 +71,12 @@ const ContactInformation = () => {
           <div className='col-lg-6 mb-md-4 mb-3'>
             <div className='inputGroup'>
               <label htmlFor='phone' className='form-label'>
-                Phone
+                {t('forms.phone')}
               </label>
               <input
                 type='text'
                 className='form-control'
-                placeholder='Phone'
+                placeholder={t('forms.phone')}
                 id='phone'
                 name='phone'
                 onChange={handleChanges}
@@ -83,7 +85,7 @@ const ContactInformation = () => {
           </div>
           <div className='col-md-12'>
             <button type='submit' className='customBtn btn-bgRed'>
-              Update{' '}
+              {t('buttons.update')}
             </button>
           </div>
         </div>

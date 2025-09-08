@@ -1,25 +1,27 @@
 import { Link, NavLink } from 'react-router-dom';
 import RecruiterLayout from '../index';
 import COLXXL10 from '../../../COLXXL10';
-
-const sidebarLinks = [
-  {
-    path: '/recruiter/account-setting/contact-info',
-    label: 'Contact information',
-  },
-  {
-    path: '/recruiter/account-setting/manage-account',
-    label: 'Manage account',
-  },
-  { path: '/recruiter/account-setting/notifications', label: 'Notifications' },
-  { path: '/recruiter/account-setting/previous-jobs', label: 'Previous Jobs' },
-  {
-    path: '/recruiter/account-setting/change-password',
-    label: 'Change Password',
-  },
-];
+import { useTranslation } from 'react-i18next';
 
 const RecruiterAccountSettingLayout = (props) => {
+  const { t } = useTranslation('common');
+  
+  const sidebarLinks = [
+    {
+      path: '/recruiter/account-setting/contact-info',
+      label: t('recruiter.contactInformation'),
+    },
+    {
+      path: '/recruiter/account-setting/manage-account',
+      label: t('recruiter.manageAccount'),
+    },
+    { path: '/recruiter/account-setting/notifications', label: t('recruiter.notifications') },
+    { path: '/recruiter/account-setting/previous-jobs', label: t('recruiter.previousJobs') },
+    {
+      path: '/recruiter/account-setting/change-password',
+      label: t('recruiter.changePassword'),
+    },
+  ];
   return (
     <RecruiterLayout>
       <section className='accountSettings-sec'>
@@ -29,7 +31,7 @@ const RecruiterAccountSettingLayout = (props) => {
               <div className='row'>
                 <div className='col-md-12'>
                   <div className='sec-head'>
-                    <h2>Account Setting</h2>
+                    <h2>{t('recruiter.accountSetting')}</h2>
                   </div>
                 </div>
                 <div className='col-lg-3 col-md-4 col-sm-4'>

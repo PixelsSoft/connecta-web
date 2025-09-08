@@ -2,8 +2,11 @@ import { LuPhone } from 'react-icons/lu';
 import COLXXL10 from '../../../components/COLXXL10';
 import RecruiterLayout from '../../../components/Layouts/RecruiterLayout';
 import { FaRegEnvelope } from 'react-icons/fa6';
+import { useTranslation } from 'react-i18next';
 
 const ContactCenter = () => {
+  const { t } = useTranslation('common');
+  
   return (
     <RecruiterLayout>
       <section className='contact__center-sec'>
@@ -13,7 +16,7 @@ const ContactCenter = () => {
               <div className='row'>
                 <div className='col-md-12'>
                   <div className='sec-head'>
-                    <h2>Contact Center</h2>
+                    <h2>{t('recruiter.contactCenter')}</h2>
                   </div>
                 </div>
 
@@ -23,13 +26,13 @@ const ContactCenter = () => {
                       <div className='contact__center-box-header-icon'>
                         <LuPhone />
                       </div>
-                      <h4>Call</h4>
+                      <h4>{t('recruiter.call')}</h4>
                     </div>
                     <div className='contact__center-box-content'>
                       <h5>
                         <a href='tel:+44 225 25148'>+44 225 25148</a>
                       </h5>
-                      <p>you can call us 24/7 for instant assistant</p>
+                      <p>{t('recruiter.callDescription')}</p>
                     </div>
                   </div>
                 </div>
@@ -40,7 +43,7 @@ const ContactCenter = () => {
                       <div className='contact__center-box-header-icon'>
                         <FaRegEnvelope />
                       </div>
-                      <h4>Email Sales</h4>
+                      <h4>{t('recruiter.emailSales')}</h4>
                     </div>
                     <div className='contact__center-box-content'>
                       <h5>
@@ -49,7 +52,7 @@ const ContactCenter = () => {
                         </a>
                       </h5>
                       <p>
-                        any query about admin and platform you can email us 24/7
+                        {t('recruiter.emailSalesDescription')}
                       </p>
                     </div>
                   </div>
@@ -61,7 +64,7 @@ const ContactCenter = () => {
                       <div className='contact__center-box-header-icon'>
                         <FaRegEnvelope />
                       </div>
-                      <h4>Email Admin</h4>
+                      <h4>{t('recruiter.emailAdmin')}</h4>
                     </div>
                     <div className='contact__center-box-content'>
                       <h5>
@@ -70,7 +73,7 @@ const ContactCenter = () => {
                         </a>
                       </h5>
                       <p>
-                        any query about admin and platform you can email us 24/7
+                        {t('recruiter.emailAdminDescription')}
                       </p>
                     </div>
                   </div>

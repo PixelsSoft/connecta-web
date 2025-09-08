@@ -4,10 +4,88 @@
   }
 }
 @media (max-width: 1199px) {
+  /* Footer responsive styles */
+  .footer-title {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    line-height: 1.3;
+  }
+  .footer-links ul li .footerLink {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
+  .homeFooter-about-description {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.4;
+  }
 }
 @media (max-width: 991px) {
+  /* Footer responsive styles for tablets */
+  .footer-title {
+    font-size: 16px;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .footer-links ul li {
+    margin-bottom: 8px;
+  }
+  .footer-links ul li .footerLink {
+    font-size: 14px;
+    padding: 4px 0;
+    display: block;
+    width: 100%;
+  }
+  .homeFooter-about-description {
+    font-size: 14px;
+    line-height: 1.3;
+  }
 }
 @media (max-width: 767px) {
+  /* Footer responsive styles for mobile */
+  .footer-title {
+    font-size: 15px;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .footer-links ul li .footerLink {
+    font-size: 13px;
+    padding: 3px 0;
+  }
+  .homeFooter-about-description {
+    font-size: 13px;
+    line-height: 1.3;
+    text-align: center;
+  }
+  .homeFooter-stores {
+    justify-content: center;
+    gap: 10px;
+  }
 }
 @media (max-width: 575px) {
+  /* Footer responsive styles for small mobile */
+  .footer-title {
+    font-size: 14px;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .footer-links ul li .footerLink {
+    font-size: 12px;
+    padding: 2px 0;
+  }
+  .homeFooter-about-description {
+    font-size: 12px;
+    line-height: 1.2;
+  }
+  .homeFooter-store {
+    padding: 12px 20px;
+  }
+  .homeFooter-store-content h4 {
+    font-size: 14px;
+  }
+  .homeFooter-store-content p {
+    font-size: 12px;
+  }
 }

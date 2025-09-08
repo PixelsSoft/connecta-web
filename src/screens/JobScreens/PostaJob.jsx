@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import DefaultLayout2 from "../../components/Layouts/DefaultLayout2";
 import JobPostingSec from "../../components/JobPostingSec";
 import { useTranslation } from "react-i18next";
+import { categoriesData, getSubcategories, getQuestions } from "../../data/categoriesData";
 
 import RoomIcon1 from "../../assets/images/1-room-icon.png";
 import RoomIcon2 from "../../assets/images/2-room-icon.png";
@@ -20,6 +21,9 @@ const PostaJob = () => {
   const [showModal, setShowModal] = useState(false);
   const { category } = useParams();
   const [choice, setChoice] = React.useState("have");
+  const [selectedSubcategory, setSelectedSubcategory] = useState("");
+  const [questions, setQuestions] = useState([]);
+  const [questionAnswers, setQuestionAnswers] = useState({});
   const { t } = useTranslation('common');
 
   const navigate = useNavigate();
@@ -31,238 +35,39 @@ const PostaJob = () => {
     navigate("/recruiter/posted-jobs");
   };
 
-  useEffect(() => {
-  setTimeout(() => {
-    setShowModal(true);
-  }, 2000);
-  }, [])
-  
+  // Get category data dynamically
+  const categoryData = Object.values(categoriesData).map(cat => ({
+    name: cat.name,
+    value: cat.name.replace(/\s+/g, '-'),
+    subcategories: Object.values(cat.subcategories).map(sub => sub.name)
+  }));
 
-  // Replace the icon imports/variables with your actual icon references.
-  const categoryData = [
-    {
-      name: "Design and Planning",
-      value: "Design-And-Planning",
-      subcategories: [
-        "Architect",
-        "Structural Designer / Bouwkundige",
-        "Land Surveyor",
-        "Permit Consultant",
-        "Energy Advisor",
-        "Interior Designer",
-        "3D Renderings & Visualizations",
-      ],
-    },
-    {
-      name: "Garden & Outdoor",
-      value: "Garden-And-Outdoor",
-      subcategories: [
-        "Gardener",
-        "Landscaper",
-        "Lawn Mowing",
-        "Tree Cutting & Pruning",
-        "Swimming Pool Construction",
-        "Jacuzzi / Hot Tub Installation",
-      ],
-    },
-    {
-      name: "Project Management",
-      value: "Project-Management",
-      subcategories: [
-        "General Contractor",
-        "Project Manager",
-        "Construction Inspector",
-      ],
-    },
-    {
-      name: "Outdoor & Landscaping",
-      value: "Outdoor-And-Landscaping",
-      subcategories: [
-        "Paver / Stoneworker",
-        "Landscape Designer",
-        "Fence & Gate Builder",
-        "Garden Architect",
-        "Paving & Stonework",
-        "Deck / Terrace Construction",
-      ],
-    },
-    {
-      name: "Media & Creative",
-      value: "Media-And-Creative",
-      subcategories: [
-        "Drone Services",
-        "Real Estate Photography",
-        "Video Production",
-        "3D Scanning / Lidar",
-        "Company Videos / Animations",
-        "Graphic Design for Signs / Vehicles",
-      ],
-    },
-    {
-      name: "Rental & Equipment",
-      value: "Rental-And-Equipment",
-      subcategories: [
-        "Scaffold Rental",
-        "Construction Tool Rental",
-        "Container (Waste) Rental",
-        "Mobile Toilet Rental",
-        "Mini Excavator with Operator",
-        "Lift/Hoist Services",
-        "Generator Rental",
-      ],
-    },
-    {
-      name: "Business & Facility Services",
-      value: "Business-And-Facility-Services",
-      subcategories: [
-        "Office Renovation",
-        "Office IT Setup & Cabling",
-        "Facility Management",
-        "Coffee Machine Maintenance",
-        "Industrial Cleaning",
-        "Archive Digitization",
-      ],
-    },
-    {
-      name: "Home & Comfort",
-      value: "Home-And-Comfort",
-      subcategories: [
-        "Smart Home Installation",
-        "Home Theater Setup",
-        "WiFi & Network Setup",
-        "Curtain / Blind Installation",
-        "TV Wall Mounting",
-        "Babyproofing Services",
-        "Indoor Air Quality Check",
-        "Furniture Restoration / Repair",
-      ],
-    },
-    {
-      name: "Maintenance & Repairing",
-      value: "Maintenance-And-Repairing",
-      subcategories: [
-        "Handyman",
-        "Appliance Repair",
-        "Furniture Assembly",
-        "Locksmith",
-        "Window & Door Installation",
-        "Roller Shutter Repair",
-        "Chimney Sweep",
-        "Heating System Maintenance",
-        "Light Fixture / Switch Installation",
-        "Curtain Rail / Blind Mounting",
-        "Silicone Sealing / Kit Replacement",
-        "Painter / Decorator",
-        "Plasterer / Drywall Finisher",
-        "Tile Setter / Floor Layer",
-      ],
-    },
-    {
-      name: "Technical & Construction",
-      value: "Technical-And-Construction",
-      subcategories: [
-        "Electrician",
-        "Plumber",
-        "Carpenter",
-        "Mason / Bricklayer",
-        "Painter & Decorator",
-        "Steel Fixer",
-        "Roofer",
-        "HVAC Technician",
-        "Floor Installation & Tiling",
-        "Drywall Installer (Plastering)",
-        "Insulation Specialist",
-        "Solar Panel Installer",
-        "Scaffolder",
-        "Site Supervisor",
-        "General Laborer",
-        "Kitchen Installation",
-        "Security System Installation",
-        "Bathroom Installation / Renovation",
-        "Toilet Renovation",
-        "Staircase Builder / Renovation",
-        "Concrete / Foundation Work",
-        "Gutter Installer / Repair",
-        "Soundproofing Specialist",
-        "Groundworker",
-        "Foundation Specialist / Concrete Worker",
-        "Bricklayer / Masonry Contractor",
-        "Rough Construction Carpenter",
-        "Staircase Builder",
-        "Glazier / Window Installer",
-      ],
-    },
-    {
-      name: "Administrative & Permits",
-      value: "Administrative-And-Permits",
-      subcategories: [
-        "Building Permit Assistance",
-        "Insurance Claim Support",
-        "On-site Project Management",
-        "Safety Checks & Reports",
-      ],
-    },
-    {
-      name: "Digital & Tech",
-      value: "Digital-And-Tech",
-      subcategories: [
-        "Website for Contractors",
-        "Accounting Software Setup",
-        "Online Planning Tools",
-        "Customer Portal Development",
-        "SEO & Google Business Optimization",
-      ],
-    },
-    {
-      name: "Cleaning Services",
-      value: "Cleaning-Services",
-      subcategories: [
-        "General Cleaning",
-        "Deep Cleaning",
-        "Office Cleaning",
-        "Window Cleaning",
-        "Post-Construction Cleaning",
-        "Carpet & Upholstery Cleaning",
-        "Gutter Cleaning",
-        "Graffiti Removal",
-        "End-of-Rental Cleaning",
-        "Facade Cleaning",
-      ],
-    },
-    {
-      name: "Interior & Finishing",
-      value: "Interior-And-Finishing",
-      subcategories: [
-        "Kitchen Builder",
-        "Cabinetmaker / Furniture Maker",
-        "Interior Decorator",
-        "Lighting Installer",
-      ],
-    },
-    {
-      name: "Transport & Moving",
-      value: "Transport-And-Moving",
-      subcategories: [
-        "Moving Services",
-        "Packing & Unpacking",
-        "Furniture Transport",
-        "Junk Removal",
-        "Van with Driver",
-        "Small Delivery Tasks",
-        "Piano Transport",
-      ],
-    },
-    {
-      name: "Technical & Installation",
-      value: "Technical-And-Installation",
-      subcategories: ["Solar Panel Specialist", "Security System Installer"],
-    },
-  ];
+  // Find matched category
   const matched = categoryData.find((c) => c.value === category);
+
+  // Handle subcategory selection
+  const handleSubcategoryChange = (subcategoryName) => {
+    setSelectedSubcategory(subcategoryName);
+    const categoryName = matched?.name;
+    if (categoryName) {
+      const subcategoryQuestions = getQuestions(categoryName, subcategoryName);
+      setQuestions(subcategoryQuestions);
+      setQuestionAnswers({});
+    }
+  };
+
+  // Handle question answer change
+  const handleQuestionAnswer = (questionIndex, answer) => {
+    setQuestionAnswers(prev => ({
+      ...prev,
+      [questionIndex]: answer
+    }));
+  };
 
   if (!matched) {
     return <div>Unknown category: {category}</div>;
   }
+
   return (
     <DefaultLayout2>
       {step === 1 && (
@@ -279,7 +84,8 @@ const PostaJob = () => {
               id="selectCategory"
               className="form-select form-control"
               aria-label="Select job category"
-              defaultValue=""
+              value={selectedSubcategory}
+              onChange={(e) => handleSubcategoryChange(e.target.value)}
             >
               <option value={""} disabled>
                 {t('jobPosting.selectCategory')} {matched.name}
@@ -291,6 +97,28 @@ const PostaJob = () => {
               ))}
             </select>
           </div>
+
+          {/* Dynamic Questions Section - Only show if subcategory is selected */}
+          {selectedSubcategory && questions.length > 0 && (
+            <div className="dynamic-questions mt-4">
+              <h5 className="mb-3">{t('jobPosting.additionalQuestions')}</h5>
+              {questions.map((question, index) => (
+                <div className="inputGroup mb-3" key={index}>
+                  <label className="form-label fw-600">
+                    {question}
+                  </label>
+                  <textarea
+                    className="form-control"
+                    rows="2"
+                    placeholder={t('jobPosting.pleaseDescribe')}
+                    value={questionAnswers[index] || ''}
+                    onChange={(e) => handleQuestionAnswer(index, e.target.value)}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+
           <div className="paintingJobContent mt-3">
             <div className="input-group">
               <label className="form-label fw-600">
@@ -339,284 +167,274 @@ const PostaJob = () => {
                 </div>
               </div>
             </div>
+          </div>
 
-            <div className="paintingJobContent-btns mt-3">
-              <button onClick={nextStep} className="customBtn btn-bgRed">
-                {t('buttons.next')}
-              </button>
+          <div className="inputGroup mt-3">
+            <label className="form-label fw-600">
+              {t('jobPosting.whenDoYouNeed')}
+            </label>
+            <div className="paintingBoxRadioButtons">
+              {[
+                { labelId: "asap", title: t('jobPosting.asap') },
+                { labelId: "thisWeek", title: t('jobPosting.thisWeek') },
+                { labelId: "nextWeek", title: t('jobPosting.nextWeek') },
+                { labelId: "flexible", title: t('jobPosting.flexible') },
+              ].map((item, index) => (
+                <div className="form-check paintJobRadio" key={index}>
+                  <label className="form-check-label" htmlFor={item.labelId}>
+                    <span>{item.title}</span>
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="timing"
+                      id={item.labelId}
+                    />
+                  </label>
+                </div>
+              ))}
             </div>
+          </div>
+
+          <div className="inputGroup mt-3">
+            <label className="form-label fw-600">
+              {t('jobPosting.budgetRange')}
+            </label>
+            <div className="paintingBoxRadioButtons">
+              {[
+                { labelId: "budget1", title: t('jobPosting.budget1') },
+                { labelId: "budget2", title: t('jobPosting.budget2') },
+                { labelId: "budget3", title: t('jobPosting.budget3') },
+                { labelId: "budget4", title: t('jobPosting.budget4') },
+              ].map((item, index) => (
+                <div className="form-check paintJobRadio" key={index}>
+                  <label className="form-check-label" htmlFor={item.labelId}>
+                    <span>{item.title}</span>
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="budget"
+                      id={item.labelId}
+                    />
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="inputGroup mt-3">
+            <label className="form-label fw-600">
+              {t('jobPosting.additionalDetails')}
+            </label>
+            <textarea
+              className="form-control"
+              rows="4"
+              placeholder={t('jobPosting.describeYourProject')}
+            />
+          </div>
+
+          <div className="inputGroup mt-3">
+            <label className="form-label fw-600">
+              {t('jobPosting.uploadImages')}
+            </label>
+            <input
+              type="file"
+              className="form-control"
+              multiple
+              accept="image/*"
+            />
+            <small className="form-text text-muted">
+              {t('jobPosting.uploadHelpText')}
+            </small>
+          </div>
+
+          <div className="d-flex justify-content-end mt-4">
+            <button
+              className="btn btn-primary px-4 py-2"
+              onClick={nextStep}
+            >
+              {t('buttons.next')}
+            </button>
           </div>
         </JobPostingSec>
       )}
 
       {step === 2 && (
         <JobPostingSec
-          secTitle={`${t('jobPosting.postJob')} ${matched.name} job`}
-          secDescription={t('jobPosting.getResponses')}
-          rightImg={paintingbannerimg}
+          secTitle={t('jobPosting.contactDetails')}
+          secDescription={t('jobPosting.contactDescription')}
+          rightImg={jobPostingbannerimg}
         >
-          <div className="paintingJobContent">
-            <div className="input-group">
-              <label className="form-label fw-600">
-                {t('jobPosting.whatTypeOfPainting')}
-              </label>
-              <div className="paintingBoxRadioList">
-                {[
-                  {
-                    labelId: "for1Room",
-                    title: t('jobPosting.inHouseDecoration'),
-                    description: t('jobPosting.inHouseDecorationDesc'),
-                  },
-                  {
-                    labelId: "for2Room",
-                    title: t('jobPosting.wallpaperWork'),
-                    description: t('jobPosting.wallpaperWorkDesc'),
-                  },
-                  {
-                    labelId: "for3Room",
-                    title: t('jobPosting.touching'),
-                    description: t('jobPosting.touchingDesc'),
-                  },
-                  {
-                    labelId: "for4Room",
-                    title: t('jobPosting.tiling'),
-                    description: t('jobPosting.tilingDesc'),
-                  },
-                ].map((item, index) => (
-                  <div className="form-check paintRadioListItem" key={index}>
-                    <label className="form-check-label" htmlFor={item.labelId}>
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="AditionalVendors"
-                        id={item.labelId}
-                      />
-                      <div className="form-check-labelListContent">
-                        <span className="darkGrayColor">{item.title}</span>
-                        <span className="grayColor50">{item.description}</span>
-                      </div>
-                    </label>
-                  </div>
-                ))}
+          <Row>
+            <Col md={6}>
+              <div className="inputGroup">
+                <label className="form-label fw-600">
+                  {t('forms.fullName')}
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder={t('forms.fullName')}
+                />
               </div>
-            </div>
+            </Col>
+            <Col md={6}>
+              <div className="inputGroup">
+                <label className="form-label fw-600">
+                  {t('forms.email')}
+                </label>
+                <input
+                  type="email"
+                  className="form-control"
+                  placeholder={t('forms.email')}
+                />
+              </div>
+            </Col>
+          </Row>
 
-            <div className="paintingJobContent-btns mt-3">
-              <button onClick={prevStep} className="customBtn btn-blackBorder">
-                {t('buttons.back')}
-              </button>
-              <button onClick={nextStep} className="customBtn btn-bgRed">
-                {t('buttons.next')}
-              </button>
-            </div>
+          <Row className="mt-3">
+            <Col md={6}>
+              <div className="inputGroup">
+                <label className="form-label fw-600">
+                  {t('forms.phone')}
+                </label>
+                <input
+                  type="tel"
+                  className="form-control"
+                  placeholder={t('forms.phone')}
+                />
+              </div>
+            </Col>
+            <Col md={6}>
+              <div className="inputGroup">
+                <label className="form-label fw-600">
+                  {t('jobPosting.preferredContact')}
+                </label>
+                <select className="form-control">
+                  <option>{t('jobPosting.phone')}</option>
+                  <option>{t('jobPosting.email')}</option>
+                  <option>{t('jobPosting.both')}</option>
+                </select>
+              </div>
+            </Col>
+          </Row>
+
+          <div className="inputGroup mt-3">
+            <label className="form-label fw-600">
+              {t('jobPosting.address')}
+            </label>
+            <textarea
+              className="form-control"
+              rows="3"
+              placeholder={t('jobPosting.enterAddress')}
+            />
+          </div>
+
+          <div className="d-flex justify-content-between mt-4">
+            <button
+              className="btn btn-outline-primary px-4 py-2"
+              onClick={prevStep}
+            >
+              {t('buttons.back')}
+            </button>
+            <button
+              className="btn btn-primary px-4 py-2"
+              onClick={nextStep}
+            >
+              {t('buttons.next')}
+            </button>
           </div>
         </JobPostingSec>
       )}
 
       {step === 3 && (
         <JobPostingSec
-          secTitle={`${t('jobPosting.postJob')} ${matched.name} job`}
-          secDescription={t('jobPosting.enterDescription')}
-          rightImg={paintingbannerimg}
-        >
-          <div className="bathroomFittinJob">
-            <div className="input-group mb-4">
-              <label htmlFor="userName" className="form-label fw-600">
-                {t('forms.description')}
-              </label>
-              <textarea
-                className="form-control"
-                placeholder={t('jobPosting.addDescription')}
-                rows={3}
-                style={{ resize: "none" }}
-              ></textarea>
-            </div>
-
-            <div className="input-group">
-              <label htmlFor="userName" className="form-label fw-600 mb-0">
-                {t('forms.uploadImages')}
-              </label>
-              <div className="form-text mt-0 mb-2">
-                {t('jobPosting.youCanUpload')}
-              </div>
-              <input type="file" className="form-control" id="userName" />
-            </div>
-
-            <div className="paintingJobContent-btns mt-5">
-              <button onClick={prevStep} className="customBtn btn-blackBorder">
-                {t('buttons.back')}
-              </button>
-              <button onClick={nextStep} className="customBtn btn-bgRed">
-                {t('buttons.next')}
-              </button>
-            </div>
-          </div>
-        </JobPostingSec>
-      )}
-
-      {step === 4 && (
-        <JobPostingSec
-          secTitle={`${t('jobPosting.postJob')} ${matched.name} job`}
-          secDescription={t('jobPosting.enterContactInfo')}
-          rightImg={jobPostingbannerimg}
-        >
-          <div className="bathroomFittinJob">
-            <div className="input-group mb-4">
-              <label htmlFor="userEmail" className="form-label fw-600">
-                {t('forms.email')}
-              </label>
-              <input
-                type="email"
-                className="form-control"
-                id="userEmail"
-                placeholder="info@modernize.com"
-              />
-            </div>
-
-            <div className="input-group">
-              <label htmlFor="userPhone" className="form-label fw-600 mb-0">
-                {t('forms.phone')}
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="userPhone"
-                placeholder="+91 12345 65478"
-              />
-            </div>
-
-            <div className="paintingJobContent-btns mt-5">
-              <button onClick={prevStep} className="customBtn btn-blackBorder">
-                {t('buttons.back')}
-              </button>
-              <button onClick={nextStep} className="customBtn btn-bgRed">
-                {t('buttons.next')}
-              </button>
-            </div>
-          </div>
-        </JobPostingSec>
-      )}
-
-      {step === 5 && (
-        <JobPostingSec
-          secTitle={`${t('jobPosting.postJob')} ${matched.name} job`}
-          secDescription={t('jobPosting.verifyEmailPhone')}
+          secTitle={t('jobPosting.reviewAndSubmit')}
+          secDescription={t('jobPosting.reviewDescription')}
           rightImg={bathroomfittingbanner3}
         >
-          <div className="bathroomFittinJob">
-            <div className="input-group mb-4">
-              <label htmlFor="userOTP" className="form-label fw-600">
+          <div className="review-section">
+            <h5 className="mb-3">{t('jobPosting.jobDetails')}</h5>
+            <div className="review-item">
+              <strong>{t('jobPosting.category')}:</strong> {matched.name}
+            </div>
+            {selectedSubcategory && (
+              <div className="review-item">
+                <strong>{t('jobPosting.subcategory')}:</strong> {selectedSubcategory}
+              </div>
+            )}
+            
+            {questions.length > 0 && (
+              <div className="review-questions mt-3">
+                <h6>{t('jobPosting.answers')}</h6>
+                {questions.map((question, index) => (
+                  <div className="review-item" key={index}>
+                    <strong>{question}:</strong>
+                    <p>{questionAnswers[index] || t('jobPosting.notAnswered')}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="d-flex justify-content-between mt-4">
+              <button
+                className="btn btn-outline-primary px-4 py-2"
+                onClick={prevStep}
+              >
+                {t('buttons.back')}
+              </button>
+              <button
+                className="btn btn-success px-4 py-2"
+                onClick={handleSubmit}
+              >
+                {t('buttons.submit')}
+              </button>
+            </div>
+          </div>
+        </JobPostingSec>
+      )}
+
+      {/* Modal only shows when showModal is true - removed auto-opening */}
+      <CustomModal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        title={t('jobPosting.verificationRequired')}
+        body={
+          <div>
+            <p>{t('jobPosting.verificationText')}</p>
+            <div className="inputGroup mt-3">
+              <label className="form-label fw-600">
                 {t('forms.otpCode')}
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="userOTP"
-                placeholder="******"
+                placeholder={t('forms.otpCode')}
               />
-              <p className="darkGrayColor mb-0 mt-2">
-                {t('jobPosting.codeWillBeResent')}{" "}
-                <span style={{ color: "#056517" }}>00:59</span>
-              </p>
             </div>
-
-            <div className="paintingJobContent-btns mt-5">
-              <button onClick={prevStep} className="customBtn btn-blackBorder">
-                {t('buttons.back')}
-              </button>
-              <button className="customBtn btn-bgRed" onClick={handleSubmit}>
-                {t('buttons.next')}
-              </button>
-            </div>
+            <p className="text-muted small mt-2">
+              {t('jobPosting.otpHelpText')}
+            </p>
           </div>
-        </JobPostingSec>
-      )}
-      <CustomModal show={showModal} handleClose={() => setShowModal(false)}>
-        <div className="p-3">
-          <div className="sec-head text-center my-5">
-            <h2>{t('jobPosting.followUpQuestion')}</h2>
+        }
+        footer={
+          <div className="d-flex justify-content-end gap-2">
+            <button
+              className="btn btn-outline-secondary"
+              onClick={() => setShowModal(false)}
+            >
+              {t('buttons.cancel')}
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={() => setShowModal(false)}
+            >
+              {t('buttons.verify')}
+            </button>
           </div>
-
-          <p className="fw-400 text-dark mt-3">
-            {t('jobPosting.doYouHaveProduct')}
-          </p>
-          <div className="paintingBoxRadioList">
-            {[
-              {
-                labelId: "yes",
-                title: t('jobPosting.alreadyHaveIt'),
-              },
-              {
-                labelId: "no",
-                title: t('jobPosting.pleaseSupplyInstall'),
-              },
-            ].map((item, index) => (
-              <div className="form-check " key={index}>
-                <label className="form-check-label" htmlFor={item.labelId}>
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="AditionalVendors"
-                    id={item.labelId}
-                  />
-                  <div className="form-check-labelListContent">
-                    <span className="darkGrayColor">{item.title}</span>
-                  </div>
-                </label>
-              </div>
-            ))}
-          </div>
-          <Row className="d-flex justify-content-center mt-5">
-            <Col lg={6} className="d-flex justify-content-center">
-              <button
-                onClick={() => setShowModal(false)}
-                className="customBtn btn-blackBorder w-75"
-              >
-                {t('buttons.cancel')}
-              </button>
-            </Col>
-            <Col lg={6} className="d-flex justify-content-center">
-              <button
-                onClick={() => setShowModal(false)}
-                className="customBtn btn-bgRed w-75"
-              >
-                {t('buttons.submit')}
-              </button>
-            </Col>
-          </Row>
-        </div>
-      </CustomModal>
+        }
+      />
     </DefaultLayout2>
   );
-};
-const styles = {
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 12,
-  },
-  label: {
-    display: "flex",
-    alignItems: "flex-start",
-    gap: 10,
-    cursor: "pointer",
-    fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
-    fontSize: 14,
-    lineHeight: 1.3,
-    position: "relative",
-    padding: "6px 0",
-  },
-  radio: {
-    marginTop: 4,
-    flexShrink: 0,
-    width: 16,
-    height: 16,
-    cursor: "pointer",
-  },
-  text: {
-    display: "block",
-    color: "#222",
-  },
 };
 
 export default PostaJob;

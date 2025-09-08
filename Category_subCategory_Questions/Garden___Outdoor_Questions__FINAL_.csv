@@ -1,0 +1,66 @@
+Main Category,Subcategory,Question
+Garden & Outdoor,3.1 Gardener,What type of gardening work is required?
+Garden & Outdoor,3.1 Gardener,How large is the garden (m²)?
+Garden & Outdoor,3.1 Gardener,Do you need regular maintenance or one-time service?
+Garden & Outdoor,3.1 Gardener,Do you have specific plants or trees to care for?
+Garden & Outdoor,3.1 Gardener,When would you like the work to start?
+Garden & Outdoor,3.2 Landscaper,Do you have a design or concept already?
+Garden & Outdoor,3.2 Landscaper,What is the size of the area to landscape?
+Garden & Outdoor,3.2 Landscaper,"What features should be included? (e.g., paths, grass, pond)"
+Garden & Outdoor,3.2 Landscaper,Do you need help with material selection?
+Garden & Outdoor,3.2 Landscaper,When should the landscaping begin?
+Garden & Outdoor,3.3 Lawn Mowing,How large is the lawn (m²)?
+Garden & Outdoor,3.3 Lawn Mowing,Is this a one-time or recurring service?
+Garden & Outdoor,3.3 Lawn Mowing,Do you need trimming along edges as well?
+Garden & Outdoor,3.3 Lawn Mowing,Is the terrain flat or sloped?
+Garden & Outdoor,3.3 Lawn Mowing,When would you like the mowing done?
+Garden & Outdoor,3.4 Tree Cutting & Pruning,How many trees need cutting or pruning?
+Garden & Outdoor,3.4 Tree Cutting & Pruning,What is the approximate height of the trees?
+Garden & Outdoor,3.4 Tree Cutting & Pruning,Do you want removal of the waste included?
+Garden & Outdoor,3.4 Tree Cutting & Pruning,Is there easy access to the trees?
+Garden & Outdoor,3.4 Tree Cutting & Pruning,When do you want the work done?
+Garden & Outdoor,3.5 Pool Maintenance,"What type of pool do you have? (e.g., in-ground, above-ground)"
+Garden & Outdoor,3.5 Pool Maintenance,"Do you need cleaning, chemical treatment, or both?"
+Garden & Outdoor,3.5 Pool Maintenance,How often do you need maintenance?
+Garden & Outdoor,3.5 Pool Maintenance,What is the pool size (m³ or dimensions)?
+Garden & Outdoor,3.5 Pool Maintenance,Do you provide materials or should they be included?
+Garden & Outdoor,3.6 Snow Removal,"What area needs to be cleared? (e.g., driveway, walkway, roof)"
+Garden & Outdoor,3.6 Snow Removal,How large is the area?
+Garden & Outdoor,3.6 Snow Removal,Do you need regular service during snowfall season?
+Garden & Outdoor,3.6 Snow Removal,"What type of surface is it? (e.g., gravel, concrete)"
+Garden & Outdoor,3.6 Snow Removal,When should snow removal begin?
+Garden & Outdoor,3.7 Fence Builder,Do you already have the fence or need to purchase one?
+Garden & Outdoor,3.7 Fence Builder,"What type of fence do you want? (e.g., wood, metal, wire)"
+Garden & Outdoor,3.7 Fence Builder,What is the total length required (meters)?
+Garden & Outdoor,3.7 Fence Builder,Should the old fence be removed?
+Garden & Outdoor,3.7 Fence Builder,When should the work start?
+Garden & Outdoor,3.8 Paving & Stonework,What area needs paving or stonework?
+Garden & Outdoor,3.8 Paving & Stonework,"What materials do you prefer? (e.g., bricks, tiles, concrete)"
+Garden & Outdoor,3.8 Paving & Stonework,Do you already have the materials?
+Garden & Outdoor,3.8 Paving & Stonework,What is the total area (m²)?
+Garden & Outdoor,3.8 Paving & Stonework,When should the work be completed?
+Garden & Outdoor,3.9 Deck / Terrace Construction,"What type of deck/terrace do you want? (e.g., wood, composite)"
+Garden & Outdoor,3.9 Deck / Terrace Construction,What is the approximate size (m²)?
+Garden & Outdoor,3.9 Deck / Terrace Construction,Do you have a design or should one be provided?
+Garden & Outdoor,3.9 Deck / Terrace Construction,Will it be elevated or ground-level?
+Garden & Outdoor,3.9 Deck / Terrace Construction,When do you want construction to begin?
+Garden & Outdoor,3.10 Garden House / Shed Installation,Do you already have a garden house/shed or need to purchase one?
+Garden & Outdoor,3.10 Garden House / Shed Installation,What size should it be?
+Garden & Outdoor,3.10 Garden House / Shed Installation,"What material do you prefer? (e.g., wood, metal)"
+Garden & Outdoor,3.10 Garden House / Shed Installation,Do you need a foundation or base built?
+Garden & Outdoor,3.10 Garden House / Shed Installation,When should the installation take place?
+Garden & Outdoor,3.11 Irrigation System Installer,What type of irrigation system do you need?
+Garden & Outdoor,3.11 Irrigation System Installer,How large is the garden or area?
+Garden & Outdoor,3.11 Irrigation System Installer,Do you want automatic or manual controls?
+Garden & Outdoor,3.11 Irrigation System Installer,Do you already have materials or need advice?
+Garden & Outdoor,3.11 Irrigation System Installer,When should installation happen?
+Garden & Outdoor,3.12 Swimming Pool Construction,"What type of pool do you want? (e.g., in-ground, above-ground, natural)"
+Garden & Outdoor,3.12 Swimming Pool Construction,What are the desired dimensions?
+Garden & Outdoor,3.12 Swimming Pool Construction,Do you need excavation included?
+Garden & Outdoor,3.12 Swimming Pool Construction,Do you want filtration and heating systems?
+Garden & Outdoor,3.12 Swimming Pool Construction,When should construction begin?
+Garden & Outdoor,3.13 Jacuzzi / Hot Tub Installation,Do you already have a jacuzzi or want to purchase one?
+Garden & Outdoor,3.13 Jacuzzi / Hot Tub Installation,Is it for indoor or outdoor use?
+Garden & Outdoor,3.13 Jacuzzi / Hot Tub Installation,What is the size or capacity?
+Garden & Outdoor,3.13 Jacuzzi / Hot Tub Installation,Do you have electricity and water connections ready?
+Garden & Outdoor,3.13 Jacuzzi / Hot Tub Installation,When should installation take place?

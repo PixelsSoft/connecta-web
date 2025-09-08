@@ -8,6 +8,7 @@ import nojobicon from '../../../assets/images/no-job-icon.png';
 
 import JobBox from '../../../components/JobBox';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const postedJobsData = [
   {
@@ -37,6 +38,7 @@ const postedJobsData = [
 ];
 
 const PostedJobs = () => {
+  const { t } = useTranslation('common');
   const [jobs, setJobs] = useState([]);
 
   const handleClick = () => {
@@ -52,9 +54,9 @@ const PostedJobs = () => {
               <div className='col-md-12'>
                 <div className='no__job-posted-content'>
                   <img src={nojobicon} alt='' />
-                  <h4>No Job Posted Yet!</h4>
+                  <h4>{t('recruiter.noJobPostedYet')}</h4>
                   <button className='customBtn' onClick={() => handleClick()}>
-                    Refresh
+                    {t('recruiter.refresh')}
                   </button>
                 </div>
               </div>
@@ -70,7 +72,7 @@ const PostedJobs = () => {
                   <JobBox
                     icon={item.icon}
                     title={item.title}
-                    headerRightLabel='Interested'
+                    headerRightLabel={t('recruiter.interested')}
                     position={item.possition}
                     description={item.description}
                     date={item.date}

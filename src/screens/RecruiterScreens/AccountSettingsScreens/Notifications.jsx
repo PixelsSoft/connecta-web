@@ -6,8 +6,10 @@ import messageIcon from '../../../assets/images/message-icon.png';
 import emailNotificationIcon from '../../../assets/images/email-notification-icon.png';
 
 import Form from 'react-bootstrap/Form';
+import { useTranslation } from 'react-i18next';
 
 const Notifications = () => {
+  const { t } = useTranslation('common');
   const [formData, setFormData] = useState({});
 
   const handleChanges = (event) => {
@@ -29,18 +31,16 @@ const Notifications = () => {
         <div className='row'>
           <div className='col-md-12'>
             <div className='notification-preference-head'>
-              <h3>Notification Preferences</h3>
+              <h3>{t('recruiter.notificationPreferences')}</h3>
               <p>
-                Select the notificaitons ou would like to receive via email.
-                Please note that you cannot opt out of receving service
-                messages, such as payment, security or legal notifications.
+                {t('recruiter.notificationPreferencesDescription')}
               </p>
             </div>
           </div>
           <div className='col-md-12 mb-4'>
             <div className='inputGroup'>
               <label htmlFor='emailAddress' className='form-label'>
-                Email Address*
+                {t('recruiter.emailAddressRequired')}
               </label>
               <input
                 type='text'
@@ -50,7 +50,7 @@ const Notifications = () => {
                 name='emailAddress'
                 onChange={handleChanges}
               />
-              <p className='text-muted'>Required for notificaitons.</p>
+              <p className='text-muted'>{t('recruiter.requiredForNotifications')}</p>
             </div>
           </div>
           <div className='col-md-12'>
@@ -61,8 +61,8 @@ const Notifications = () => {
                     <img src={newsletterIcon} alt='' />
                   </div>
                   <div className='account__manageBox-content-withIcon-content'>
-                    <h5>Our newsletter</h5>
-                    <p>We will always let you know about important changes</p>
+                    <h5>{t('recruiter.ourNewsletter')}</h5>
+                    <p>{t('recruiter.newsletterDescription')}</p>
                   </div>
                 </div>
                 {/* <button className='customBtn btn-bgRed'>Verify</button> */}
@@ -79,8 +79,8 @@ const Notifications = () => {
                     <img src={messageIcon} alt='' />
                   </div>
                   <div className='account__manageBox-content-withIcon-content'>
-                    <h5>Message</h5>
-                    <p>You will be notified once the order is delivered</p>
+                    <h5>{t('recruiter.message')}</h5>
+                    <p>{t('recruiter.messageDescription')}</p>
                   </div>
                 </div>
                 {/* <button className='customBtn btn-bgRed'>Verify</button> */}
@@ -97,9 +97,9 @@ const Notifications = () => {
                     <img src={emailNotificationIcon} alt='' />
                   </div>
                   <div className='account__manageBox-content-withIcon-content'>
-                    <h5>Email Notification</h5>
+                    <h5>{t('recruiter.emailNotification')}</h5>
                     <p>
-                      Turn on email notificaiton to get updates through email
+                      {t('recruiter.emailNotificationDescription')}
                     </p>
                   </div>
                 </div>

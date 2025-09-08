@@ -1,0 +1,146 @@
+Main Category,Subcategory,Question
+Technical & Construction,2.1 Electrician,What type of electrical work is required?
+Technical & Construction,2.1 Electrician,Is it a new installation or repair?
+Technical & Construction,2.1 Electrician,"How many switches, lights, or sockets are involved?"
+Technical & Construction,2.1 Electrician,Do you provide materials or should the professional bring them?
+Technical & Construction,2.1 Electrician,When do you need the work done?
+Technical & Construction,2.2 Plumber,What plumbing task is required?
+Technical & Construction,2.2 Plumber,Where is the problem located?
+Technical & Construction,2.2 Plumber,Is it an emergency service?
+Technical & Construction,2.2 Plumber,Do you already have the parts?
+Technical & Construction,2.2 Plumber,When do you want the work completed?
+Technical & Construction,2.3 Carpenter,What type of work is required?
+Technical & Construction,2.3 Carpenter,How large is the project (m² or number of rooms)?
+Technical & Construction,2.3 Carpenter,Do you already have materials?
+Technical & Construction,2.3 Carpenter,Do you need a permit or plan?
+Technical & Construction,2.3 Carpenter,When do you want the work done?
+Technical & Construction,2.4 Mason / Bricklayer,What type of work is required?
+Technical & Construction,2.4 Mason / Bricklayer,How large is the project (m² or number of rooms)?
+Technical & Construction,2.4 Mason / Bricklayer,Do you already have materials?
+Technical & Construction,2.4 Mason / Bricklayer,Do you need a permit or plan?
+Technical & Construction,2.4 Mason / Bricklayer,When do you want the work done?
+Technical & Construction,2.5 Painter & Decorator,What type of work is required?
+Technical & Construction,2.5 Painter & Decorator,How large is the project (m² or number of rooms)?
+Technical & Construction,2.5 Painter & Decorator,Do you already have materials?
+Technical & Construction,2.5 Painter & Decorator,Do you need a permit or plan?
+Technical & Construction,2.5 Painter & Decorator,When do you want the work done?
+Technical & Construction,2.6 Steel Fixer,What type of structure needs this work?
+Technical & Construction,2.6 Steel Fixer,What materials are required?
+Technical & Construction,2.6 Steel Fixer,How large is the area (approx. m²)?
+Technical & Construction,2.6 Steel Fixer,Do you have plans or blueprints available?
+Technical & Construction,2.6 Steel Fixer,What is the preferred start date?
+Technical & Construction,2.7 Roofer,What type of structure needs this work?
+Technical & Construction,2.7 Roofer,What materials are required?
+Technical & Construction,2.7 Roofer,How large is the area (approx. m²)?
+Technical & Construction,2.7 Roofer,Do you have plans or blueprints available?
+Technical & Construction,2.7 Roofer,What is the preferred start date?
+Technical & Construction,2.8 HVAC Technician,What type of HVAC/heating system do you need serviced or installed?
+Technical & Construction,2.8 HVAC Technician,"Is it for heating, cooling, or both?"
+Technical & Construction,2.8 HVAC Technician,Do you already have the unit(s)?
+Technical & Construction,2.8 HVAC Technician,What is the size of the space (m²)?
+Technical & Construction,2.8 HVAC Technician,When should the work be carried out?
+Technical & Construction,2.9 Floor Installation & Tiling,What type of flooring or tiling do you want?
+Technical & Construction,2.9 Floor Installation & Tiling,How many square meters?
+Technical & Construction,2.9 Floor Installation & Tiling,Do you want removal of old floor included?
+Technical & Construction,2.9 Floor Installation & Tiling,Do you already have the tiles/flooring?
+Technical & Construction,2.9 Floor Installation & Tiling,When should the installation begin?
+Technical & Construction,2.10 Drywall Installer (Plastering),Which rooms need drywall or plastering?
+Technical & Construction,2.10 Drywall Installer (Plastering),Is it for installation or repair?
+Technical & Construction,2.10 Drywall Installer (Plastering),What is the total surface area?
+Technical & Construction,2.10 Drywall Installer (Plastering),Do you need painting after plastering?
+Technical & Construction,2.10 Drywall Installer (Plastering),When should the job be done?
+Technical & Construction,2.11 Insulation Specialist,"What area needs insulation? (e.g., walls, roof, floor)"
+Technical & Construction,2.11 Insulation Specialist,What type of insulation do you prefer?
+Technical & Construction,2.11 Insulation Specialist,Is this for a new build or retrofit?
+Technical & Construction,2.11 Insulation Specialist,How many square meters?
+Technical & Construction,2.11 Insulation Specialist,When should the work be done?
+Technical & Construction,2.12 Solar Panel Installer,Do you already have solar panels or want to purchase them?
+Technical & Construction,2.12 Solar Panel Installer,What is the size of your roof or surface area?
+Technical & Construction,2.12 Solar Panel Installer,Do you want battery storage included?
+Technical & Construction,2.12 Solar Panel Installer,Is the building connected to the grid?
+Technical & Construction,2.12 Solar Panel Installer,When should the installation be completed?
+Technical & Construction,2.13 Scaffolder,What structure needs scaffolding?
+Technical & Construction,2.13 Scaffolder,How high is the structure?
+Technical & Construction,2.13 Scaffolder,How long is the scaffolding needed?
+Technical & Construction,2.13 Scaffolder,Is the location accessible?
+Technical & Construction,2.13 Scaffolder,When should it be assembled?
+Technical & Construction,2.14 Site Supervisor,What type of construction project is it?
+Technical & Construction,2.14 Site Supervisor,How long is the project expected to last?
+Technical & Construction,2.14 Site Supervisor,What are the working hours?
+Technical & Construction,2.14 Site Supervisor,How many workers are on-site?
+Technical & Construction,2.14 Site Supervisor,When should supervision begin?
+Technical & Construction,2.15 General Laborer,What type of work is required?
+Technical & Construction,2.15 General Laborer,How large is the project (m² or number of rooms)?
+Technical & Construction,2.15 General Laborer,Do you already have materials?
+Technical & Construction,2.15 General Laborer,Do you need a permit or plan?
+Technical & Construction,2.15 General Laborer,When do you want the work done?
+Technical & Construction,2.16 Kitchen Installation,Do you already have the kitchen or do you need to purchase it?
+Technical & Construction,2.16 Kitchen Installation,What is the size of the kitchen area?
+Technical & Construction,2.16 Kitchen Installation,Do you need removal of the existing kitchen?
+Technical & Construction,2.16 Kitchen Installation,Are electricity and water connections already in place?
+Technical & Construction,2.16 Kitchen Installation,When should the installation be completed?
+Technical & Construction,2.17 Security System Installation,Do you already have the security system or do you want to purchase it?
+Technical & Construction,2.17 Security System Installation,"What type of system do you need? (e.g., camera, alarm, access)"
+Technical & Construction,2.17 Security System Installation,How many devices should be installed?
+Technical & Construction,2.17 Security System Installation,What kind of property is it?
+Technical & Construction,2.17 Security System Installation,When would you like the installation?
+Technical & Construction,2.18 Bathroom Installation / Renovation,What type of work is required?
+Technical & Construction,2.18 Bathroom Installation / Renovation,How large is the project (m² or number of rooms)?
+Technical & Construction,2.18 Bathroom Installation / Renovation,Do you already have materials?
+Technical & Construction,2.18 Bathroom Installation / Renovation,Do you need a permit or plan?
+Technical & Construction,2.18 Bathroom Installation / Renovation,When do you want the work done?
+Technical & Construction,2.19 Toilet Renovation,What type of work is required?
+Technical & Construction,2.19 Toilet Renovation,How large is the project (m² or number of rooms)?
+Technical & Construction,2.19 Toilet Renovation,Do you already have materials?
+Technical & Construction,2.19 Toilet Renovation,Do you need a permit or plan?
+Technical & Construction,2.19 Toilet Renovation,When do you want the work done?
+Technical & Construction,2.20 Staircase Builder / Renovation,What type of work is required?
+Technical & Construction,2.20 Staircase Builder / Renovation,How large is the project (m² or number of rooms)?
+Technical & Construction,2.20 Staircase Builder / Renovation,Do you already have materials?
+Technical & Construction,2.20 Staircase Builder / Renovation,Do you need a permit or plan?
+Technical & Construction,2.20 Staircase Builder / Renovation,When do you want the work done?
+Technical & Construction,2.21 Concrete / Foundation Work,What type of work is required?
+Technical & Construction,2.21 Concrete / Foundation Work,How large is the project (m² or number of rooms)?
+Technical & Construction,2.21 Concrete / Foundation Work,Do you already have materials?
+Technical & Construction,2.21 Concrete / Foundation Work,Do you need a permit or plan?
+Technical & Construction,2.21 Concrete / Foundation Work,When do you want the work done?
+Technical & Construction,2.22 Gutter Installer / Repair,What type of work is required?
+Technical & Construction,2.22 Gutter Installer / Repair,How large is the project (m² or number of rooms)?
+Technical & Construction,2.22 Gutter Installer / Repair,Do you already have materials?
+Technical & Construction,2.22 Gutter Installer / Repair,Do you need a permit or plan?
+Technical & Construction,2.22 Gutter Installer / Repair,When do you want the work done?
+Technical & Construction,2.23 Soundproofing Specialist,What type of work is required?
+Technical & Construction,2.23 Soundproofing Specialist,How large is the project (m² or number of rooms)?
+Technical & Construction,2.23 Soundproofing Specialist,Do you already have materials?
+Technical & Construction,2.23 Soundproofing Specialist,Do you need a permit or plan?
+Technical & Construction,2.23 Soundproofing Specialist,When do you want the work done?
+Technical & Construction,2.24 Groundworker,What type of work is required?
+Technical & Construction,2.24 Groundworker,How large is the project (m² or number of rooms)?
+Technical & Construction,2.24 Groundworker,Do you already have materials?
+Technical & Construction,2.24 Groundworker,Do you need a permit or plan?
+Technical & Construction,2.24 Groundworker,When do you want the work done?
+Technical & Construction,2.25 Foundation Specialist / Concrete Worker,What type of work is required?
+Technical & Construction,2.25 Foundation Specialist / Concrete Worker,How large is the project (m² or number of rooms)?
+Technical & Construction,2.25 Foundation Specialist / Concrete Worker,Do you already have materials?
+Technical & Construction,2.25 Foundation Specialist / Concrete Worker,Do you need a permit or plan?
+Technical & Construction,2.25 Foundation Specialist / Concrete Worker,When do you want the work done?
+Technical & Construction,2.26 Bricklayer / Masonry Contractor,What type of work is required?
+Technical & Construction,2.26 Bricklayer / Masonry Contractor,How large is the project (m² or number of rooms)?
+Technical & Construction,2.26 Bricklayer / Masonry Contractor,Do you already have materials?
+Technical & Construction,2.26 Bricklayer / Masonry Contractor,Do you need a permit or plan?
+Technical & Construction,2.26 Bricklayer / Masonry Contractor,When do you want the work done?
+Technical & Construction,2.27 Rough Construction Carpenter,What type of work is required?
+Technical & Construction,2.27 Rough Construction Carpenter,How large is the project (m² or number of rooms)?
+Technical & Construction,2.27 Rough Construction Carpenter,Do you already have materials?
+Technical & Construction,2.27 Rough Construction Carpenter,Do you need a permit or plan?
+Technical & Construction,2.27 Rough Construction Carpenter,When do you want the work done?
+Technical & Construction,2.28 Staircase Builder,What type of work is required?
+Technical & Construction,2.28 Staircase Builder,How large is the project (m² or number of rooms)?
+Technical & Construction,2.28 Staircase Builder,Do you already have materials?
+Technical & Construction,2.28 Staircase Builder,Do you need a permit or plan?
+Technical & Construction,2.28 Staircase Builder,When do you want the work done?
+Technical & Construction,2.29 Glazier / Window Installer,What type of work is required?
+Technical & Construction,2.29 Glazier / Window Installer,How large is the project (m² or number of rooms)?
+Technical & Construction,2.29 Glazier / Window Installer,Do you already have materials?
+Technical & Construction,2.29 Glazier / Window Installer,Do you need a permit or plan?
+Technical & Construction,2.29 Glazier / Window Installer,When do you want the work done?

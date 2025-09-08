@@ -8,8 +8,10 @@ import checkLgIcon from '../../../assets/images/check-lg-icon.png';
 import deleteLgIcon from '../../../assets/images/delete-lg-icon.png';
 import CustomModal from '../../../components/CustomModal';
 import { Form } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 const ManageAccount = () => {
+  const { t } = useTranslation('common');
   const [showVerifyModal, setShowVerifyModal] = useState(false);
   return (
     <>
@@ -19,17 +21,16 @@ const ManageAccount = () => {
             <div className='account__manageBoxes'>
               {/* Verify Box */}
               <div className='account__manageBox'>
-                <h4>Account Verification</h4>
+                <h4>{t('recruiter.accountVerification')}</h4>
                 <div className='account__manageBox-content'>
                   <div className='account__manageBox-content-withIcon'>
                     <div className='account__manageBox-content-withIcon-icon'>
                       <img src={checkIcon} alt='' />
                     </div>
                     <div className='account__manageBox-content-withIcon-content'>
-                      <h5>Verify Account</h5>
+                      <h5>{t('recruiter.verifyAccount')}</h5>
                       <p>
-                        kindly verify your account with your email or phone no
-                        an otp sent to your email address for verifications
+                        {t('recruiter.verifyAccountDescription')}
                       </p>
                     </div>
                   </div>
@@ -37,28 +38,27 @@ const ManageAccount = () => {
                     className='customBtn btn-bgRed'
                     // onClick={() => setShowVerifyModal(true)}
                   >
-                    Verify
+                    {t('recruiter.verify')}
                   </button>
                 </div>
               </div>
 
               {/* Delete Box */}
               <div className='account__manageBox'>
-                <h4>Delete Account</h4>
+                <h4>{t('recruiter.deleteAccount')}</h4>
                 <div className='account__manageBox-content'>
                   <div className='account__manageBox-content-withIcon'>
                     <div className='account__manageBox-content-withIcon-icon'>
                       <img src={deleteIcon} alt='' />
                     </div>
                     <div className='account__manageBox-content-withIcon-content'>
-                      <h5>Delete Account</h5>
+                      <h5>{t('recruiter.deleteAccount')}</h5>
                       <p>
-                        kindly verify your account with your email or phone no
-                        an otp sent to your email address for verifications
+                        {t('recruiter.deleteAccountDescription')}
                       </p>
                     </div>
                   </div>
-                  <button className='customBtn btn-bgRed'>Delete</button>
+                  <button className='customBtn btn-bgRed'>{t('recruiter.delete')}</button>
                 </div>
               </div>
             </div>
@@ -73,7 +73,7 @@ const ManageAccount = () => {
         size='sm'
       >
         <div className='emailVerificationModal'>
-          <p>Please enter the verification code sent to your email.</p>
+          <p>{t('recruiter.verificationCodeDescription')}</p>
           <div className='row justify-content-center my-3'>
             {[...Array(4)].map((_, i) => (
               <div key={i} className='col-3'>
@@ -81,7 +81,7 @@ const ManageAccount = () => {
               </div>
             ))}
           </div>
-          <button className='w-100 customBtn btn-bgRed'>Verify</button>
+          <button className='w-100 customBtn btn-bgRed'>{t('recruiter.verify')}</button>
         </div>
       </CustomModal>
     </>
