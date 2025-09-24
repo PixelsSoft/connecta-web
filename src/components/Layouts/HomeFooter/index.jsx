@@ -11,8 +11,8 @@ import linkedinIcon from '../../../assets/images/linkedin-icon.png';
 
 import CustomModal from '../../../components/CustomModal';
 
-import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
+import { applyGoogleTranslateLanguage } from '../../../utils/googleTranslate';
 
 const HomeFooter = () => {
   const { t } = useTranslation(['common', 'home']);
@@ -20,11 +20,8 @@ const HomeFooter = () => {
   const [showLangModal, setShowLangModal] = useState(false);
   const [selectedLang, setSelectedLang] = useState('');
 
-  const handleLanguageChange = (langCode, langLabel) => {
-    i18next.changeLanguage(langCode).then(() => {
-      setSelectedLang(langLabel);
-      setShowLangModal(true);
-    });
+  const handleLanguageChange = (lang) => {
+    applyGoogleTranslateLanguage(lang);
   };
 
   const scrollTo = (ref) => {
@@ -164,9 +161,7 @@ const HomeFooter = () => {
                           <li>
                             <button
                               className='footerLink'
-                              onClick={() =>
-                                handleLanguageChange('en', t('home.english'))
-                              }
+                              onClick={() => handleLanguageChange('en')}
                             >
                               {t('home.english')}
                             </button>
@@ -174,9 +169,7 @@ const HomeFooter = () => {
                           <li>
                             <button
                               className='footerLink'
-                              onClick={() =>
-                                handleLanguageChange('de', t('home.german'))
-                              }
+                              onClick={() => handleLanguageChange('de')}
                             >
                               {t('home.german')}
                             </button>
@@ -184,9 +177,7 @@ const HomeFooter = () => {
                           <li>
                             <button
                               className='footerLink'
-                              onClick={() =>
-                                handleLanguageChange('fr', t('home.french'))
-                              }
+                              onClick={() => handleLanguageChange('fr')}
                             >
                               {t('home.french')}
                             </button>
@@ -194,9 +185,7 @@ const HomeFooter = () => {
                           <li>
                             <button
                               className='footerLink'
-                              onClick={() =>
-                                handleLanguageChange('it', t('home.italian'))
-                              }
+                              onClick={() => handleLanguageChange('it')}
                             >
                               {t('home.italian')}
                             </button>
@@ -245,14 +234,7 @@ const HomeFooter = () => {
         </div>
       </section>
 
-      <CustomModal
-        show={showLangModal}
-        handleClose={() => setShowLangModal(false)}
-        title={t('common:languageModal.title')} // Optional title
-        size='sm'
-      >
-        <p>{t('common:languageModal.message', { lang: selectedLang })}</p>
-      </CustomModal>
+      {/* Language modal removed for Google Translate flow */}
     </>
   );
 };

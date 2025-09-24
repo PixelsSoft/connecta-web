@@ -6,6 +6,31 @@
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Connect24</title>
+    <style>
+      .goog-te-banner-frame { display: none !important; }
+      .goog-te-gadget-icon { display: none !important; }
+      .goog-te-gadget { font-size: 0 !important; }
+      .skiptranslate { display: contents !important; }
+      body { top: 0 !important; }
+      /* Hide inline Google overlays/tooltips and feedback */
+      .VIpgJd-ZVi9od-ORHb-OEVmcd, /* original text tooltip */
+      .VIpgJd-ZVi9od-vH1Gmf-ibnC6b, /* rate this translation container */
+      .VIpgJd-ZVi9od-vH1Gmf, /* feedback row */
+      .goog-tooltip, .goog-tooltip:hover {
+        display: none !important;
+        visibility: hidden !important;
+      }
+      /* Explicitly hide Google bottom feedback block */
+      #goog-gt-vt,
+      #goog-gt-vt *,
+      #goog-gt-vt-res,
+      #goog-gt-tt,
+      .goog-te-balloon-frame {
+        display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

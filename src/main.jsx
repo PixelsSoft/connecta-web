@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App.jsx';
 import { Toaster } from 'react-hot-toast';
 
-import './i18n';
+// i18n removed; strings now resolved via shim alias
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
