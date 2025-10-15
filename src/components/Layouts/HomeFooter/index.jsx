@@ -42,8 +42,11 @@ const HomeFooter = () => {
                       </Link>
                     </div>
                     <p className='homeFooter-about-description'>
-                      {t('home.footerDescription')}
+                      {t('home.footerDescription1')}<br />
+                      {t('home.footerDescription2')}<br />
+                      {t('home.footerDescription3')}
                     </p>
+                  
                     <div className='homeFooter-stores'>
                       {[
                         {

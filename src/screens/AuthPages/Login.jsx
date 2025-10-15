@@ -18,7 +18,7 @@ const Login = (e) => {
           <div className='row justify-content-center'>
             <div className='col-12'>
               <div className='auth-content'>
-                <h2>{t('buttons.login')}</h2>
+                <h2>{t('buttons.Title_login')}</h2>
                 <form onSubmit={handleSubmit}>
                   <div className='auth-contentForm'>
                     <div className='inputGroup'>
