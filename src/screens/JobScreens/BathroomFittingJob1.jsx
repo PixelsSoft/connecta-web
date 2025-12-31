@@ -41,7 +41,7 @@ const BathroomFittingJob1 = () => {
                       Upload Images
                     </label>
                     <div class='form-text mt-0 mb-2'>
-                      you can upload up to 20 pictures not more than 100 mbs
+                      You can upload up to 20 pictures, not more than 100 MB
                     </div>
                     <input
                       type='file'

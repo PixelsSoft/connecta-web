@@ -24,33 +24,96 @@ export const categoriesData = {
           "What areas require deep cleaning?",
           "Is there any specific concern (e.g., mold, grease, allergens)?",
           "What is the approximate size of the space (m²)?",
-          "How long has it been since the last deep clean?",
-          "Do you need any special equipment or products?",
-          "When would you like the deep cleaning to be done?"
+          "Is it a residential or commercial space?",
+          "Do you need appliances or furniture cleaned as well?"
         ]
       },
       "Office Cleaning": {
         id: "1.3",
         name: "Office Cleaning",
         questions: [
-          "What type of office space needs cleaning?",
-          "How many employees work in the office?",
-          "What is the size of the office (m²)?",
+          "How big is the office (m²)?",
+          "How many rooms/workstations are there?",
           "Do you need daily, weekly, or monthly cleaning?",
-          "Are there any special requirements (e.g., after-hours cleaning)?",
-          "Do you provide cleaning supplies or should we bring them?"
+          "Are there special cleaning requirements (e.g., electronics, carpets)?",
+          "What are the preferred cleaning hours?"
         ]
       },
-      "Window Cleaning": {
+      "Window Cleaning – kopen of laten installeren": {
         id: "1.4",
-        name: "Window Cleaning",
+        name: "Window Cleaning – kopen of laten installeren",
         questions: [
-          "How many windows need cleaning?",
-          "What type of windows (e.g., ground floor, high-rise)?",
-          "Do you need interior, exterior, or both?",
-          "Are there any hard-to-reach windows?",
-          "How often do you need window cleaning?",
-          "When would you like the service?"
+          "Do you already have the windows or do you want to purchase them?",
+          "How many windows need to be cleaned or installed?",
+          "What is the height/access level of the windows?",
+          "Are the windows accessible from outside or inside?",
+          "Do you want a one-time service or regular maintenance?"
+        ]
+      },
+      "Post-Construction Cleaning": {
+        id: "1.5",
+        name: "Post-Construction Cleaning",
+        questions: [
+          "What type of construction was completed?",
+          "What areas need to be cleaned?",
+          "How large is the total area (m²)?",
+          "Are there any hazardous materials (e.g., dust, paint, debris)?",
+          "Do you have a preferred date for the cleaning?"
+        ]
+      },
+      "Carpet & Upholstery Cleaning": {
+        id: "1.6",
+        name: "Carpet & Upholstery Cleaning",
+        questions: [
+          "What type of carpet or upholstery needs cleaning?",
+          "How many pieces or rooms are affected?",
+          "What material are the items made of?",
+          "Are there any stains or odors to remove?",
+          "Do you need protection or treatment after cleaning?"
+        ]
+      },
+      "Gutter Cleaning": {
+        id: "1.7",
+        name: "Gutter Cleaning",
+        questions: [
+          "How long is the gutter system (in meters)?",
+          "When was the last cleaning done?",
+          "Are there signs of blockage or overflow?",
+          "Do you need downspout cleaning as well?",
+          "Is the gutter easily accessible?"
+        ]
+      },
+      "Graffiti Removal": {
+        id: "1.8",
+        name: "Graffiti Removal",
+        questions: [
+          "What surface is the graffiti on? (e.g., wall, glass, metal)",
+          "How large is the area (approx. m²)?",
+          "How long has the graffiti been there?",
+          "Do you want anti-graffiti coating afterward?",
+          "Do you have photos of the graffiti?"
+        ]
+      },
+      "End-of-Rental Cleaning": {
+        id: "1.9",
+        name: "End-of-Rental Cleaning",
+        questions: [
+          "What is the size of the property (m²)?",
+          "Which rooms need special attention?",
+          "Do you need carpet or appliance cleaning included?",
+          "Is a cleaning checklist from landlord/agency available?",
+          "When is the handover date?"
+        ]
+      },
+      "Facade Cleaning": {
+        id: "1.10",
+        name: "Facade Cleaning",
+        questions: [
+          "What type of building façade is it? (e.g., glass, stone, brick)",
+          "How high is the building?",
+          "Do you have access equipment or should it be provided?",
+          "How large is the area (approx. m²)?",
+          "When would you like the cleaning done?"
         ]
       }
     }

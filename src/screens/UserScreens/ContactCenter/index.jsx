@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
 import COLXXL10 from "../../../components/COLXXL10";
 import { LuPhone } from "react-icons/lu";
@@ -5,6 +6,13 @@ import { FaRegEnvelope } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import UserLayout from "../../../components/Layouts/UserLayout";
 import { useTranslation } from "react-i18next";
+=======
+import React from 'react';
+import COLXXL10 from '../../../components/COLXXL10';
+import { LuPhone } from 'react-icons/lu';
+import { FaRegEnvelope } from 'react-icons/fa6';
+import UserLayout from '../../../components/Layouts/UserLayout';
+>>>>>>> origin/Working-on-flow
 
 const ContactCenter = () => {
   const { t } = useTranslation("common");
@@ -318,6 +326,11 @@ const ContactCenter = () => {
                           </div>
                         )
                       )}
+                    <div className='contact__center-box-content'>
+                      <h5>
+                        <a href='tel:+44 225 25148'>+44 225 25148</a>
+                      </h5>
+                      <p>You can call us 24/7 for instant assistance</p>
                     </div>
                   </div>
                 </div>

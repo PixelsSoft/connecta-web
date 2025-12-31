@@ -1,5 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
-import RecruiterLayout from '../index';
+import UserLayout from '../index';
 import COLXXL10 from '../../../COLXXL10';
 
 const sidebarLinks = [
@@ -11,7 +11,7 @@ const sidebarLinks = [
     path: '/user/account-setting/company-details',
     label: 'Company Details',
   },
-  { path: '/user/account-setting/manage-account', label: 'Manage account' },
+  { path: '/user/account-setting/manage-account', label: 'Manage Account' },
   { path: '/user/account-setting/notifications', label: 'Notifications' },
   {
     path: '/user/account-setting/applied-jobs',
@@ -25,7 +25,7 @@ const sidebarLinks = [
 
 const UserAccountSettingLayout = (props) => {
   return (
-    <RecruiterLayout>
+    <UserLayout>
       <section className='accountSettings-sec'>
         <div className='container'>
           <div className='row justify-content-center'>
@@ -33,7 +33,7 @@ const UserAccountSettingLayout = (props) => {
               <div className='row'>
                 <div className='col-md-12'>
                   <div className='sec-head'>
-                    <h2>Account Setting</h2>
+                    <h2>Account Settings</h2>
                   </div>
                 </div>
                 <div className='col-lg-3 col-md-4 col-sm-4'>
@@ -61,7 +61,7 @@ const UserAccountSettingLayout = (props) => {
           </div>
         </div>
       </section>
-    </RecruiterLayout>
+    </UserLayout>
   );
 };
 

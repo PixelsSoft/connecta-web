@@ -22,8 +22,8 @@ const PaymentMethod = () => {
                   <div className='account__manageBox-content-withIcon-content'>
                     <h5>Connect Payment Method</h5>
                     <p>
-                      kindly verify your account with your email or phone no an
-                      otp sent to your email address for verifications
+                      Kindly verify your account with your email or phone number. An
+                      OTP has been sent to your email address for verification.
                     </p>
                   </div>
                 </div>
