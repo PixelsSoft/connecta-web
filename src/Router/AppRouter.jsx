@@ -1,61 +1,63 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from '../screens/Home';
-import Login from '../screens/AuthPages/Login';
-import SignUP from '../screens/AuthPages/SignUP';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "../screens/Home";
+import Login from "../screens/AuthPages/Login";
+import SignUP from "../screens/AuthPages/SignUP";
 
-import FindProfessional from '../screens/JobScreens/FindProfessional';
+import FindProfessional from "../screens/JobScreens/FindProfessional";
 
-
-import PaintingJob1 from '../screens/JobScreens/PaintingJob1';
-import PaintingJob2 from '../screens/JobScreens/PaintingJob2';
-import BathroomFittingJob1 from '../screens/JobScreens/BathRoomFittingJob1';
-import BathroomFittingJob2 from '../screens/JobScreens/BathroomFittingJob2';
-import BathroomFittingJob3 from '../screens/JobScreens/BathroomFittingJob3';
+import PaintingJob1 from "../screens/JobScreens/PaintingJob1";
+import PaintingJob2 from "../screens/JobScreens/PaintingJob2";
+import BathroomFittingJob1 from "../screens/JobScreens/BathRoomFittingJob1";
+import BathroomFittingJob2 from "../screens/JobScreens/BathroomFittingJob2";
+import BathroomFittingJob3 from "../screens/JobScreens/BathroomFittingJob3";
 
 // Recruiter Screens
-import ContactInformation from '../screens/RecruiterScreens/AccountSettingsScreens/ContactInformation';
-import ManageAccount from '../screens/RecruiterScreens/AccountSettingsScreens/ManageAccount';
-import Notifications from '../screens/RecruiterScreens/AccountSettingsScreens/Notifications';
-import PreviousJobs from '../screens/RecruiterScreens/AccountSettingsScreens/PreviousJobs';
-import ChangePassword from '../screens/RecruiterScreens/AccountSettingsScreens/ChangePassword';
-import ContactCenter from '../screens/RecruiterScreens/ContactCenter';
-import PostedJobs from '../screens/RecruiterScreens/PostedJobs';
-import JobDetail from '../screens/RecruiterScreens/PostedJobs/JobDetail';
+import ContactInformation from "../screens/RecruiterScreens/AccountSettingsScreens/ContactInformation";
+import ManageAccount from "../screens/RecruiterScreens/AccountSettingsScreens/ManageAccount";
+import Notifications from "../screens/RecruiterScreens/AccountSettingsScreens/Notifications";
+import PreviousJobs from "../screens/RecruiterScreens/AccountSettingsScreens/PreviousJobs";
+import PaymentsAndEarnings from "../screens/RecruiterScreens/AccountSettingsScreens/PaymentsAndEarnings";
+import ChangePassword from "../screens/RecruiterScreens/AccountSettingsScreens/ChangePassword";
+import ContactCenter from "../screens/RecruiterScreens/ContactCenter";
+import PostedJobs from "../screens/RecruiterScreens/PostedJobs";
+import JobDetail from "../screens/RecruiterScreens/PostedJobs/JobDetail";
 
 // User Screens
-import ProfileDetails from '../screens/UserScreens/AccountSettingsScreens/ProfileDetails';
-import CompanyDetails from '../screens/UserScreens/AccountSettingsScreens/CompanyDetails';
-import ManageUserAccount from '../screens/UserScreens/AccountSettingsScreens/ManageAccount';
-import UserNotifications from '../screens/UserScreens/AccountSettingsScreens/Notifications';
-import AppliedJobs from '../screens/UserScreens/AccountSettingsScreens/AppliedJobs';
-import PaymentMethod from '../screens/UserScreens/AccountSettingsScreens/PaymentMethod';
-import UserContactCenter from '../screens/UserScreens/ContactCenter';
-import SetUpProfile from '../screens/SetUpProfile';
-import SavedLeads from '../screens/UserScreens/SavedLeads';
-import TopJobForYou from '../screens/UserScreens/TopJobForYou';
+import ProfileDetails from "../screens/UserScreens/AccountSettingsScreens/ProfileDetails";
+import CompanyDetails from "../screens/UserScreens/AccountSettingsScreens/CompanyDetails";
+import ManageUserAccount from "../screens/UserScreens/AccountSettingsScreens/ManageAccount";
+import UserNotifications from "../screens/UserScreens/AccountSettingsScreens/Notifications";
+import AppliedJobs from "../screens/UserScreens/AccountSettingsScreens/AppliedJobs";
+import PaymentMethod from "../screens/UserScreens/AccountSettingsScreens/PaymentMethod";
+import UserContactCenter from "../screens/UserScreens/ContactCenter";
+import SetUpProfile from "../screens/SetUpProfile";
+import SavedLeads from "../screens/UserScreens/SavedLeads";
+import TopJobForYou from "../screens/UserScreens/TopJobForYou";
 
 // User And Recruiter chat Screens share same chat layout component
 // import UserChat from '../screens/UserScreens/UserChat/index.';
 // import RecruiterChat from '../screens/RecruiterScreens/RecruiterChat';
-import ChatPage from '../screens/ChatPage';
-import PostaJob from '../screens/JobScreens/PostaJob';
+import ChatPage from "../screens/ChatPage";
+import PostaJob from "../screens/JobScreens/PostaJob";
+import BookService from "../screens/JobScreens/BookService";
 
 const AppRouter = () => {
   return (
     // <Router basename='/connect24'>
     <Router>
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path="/" element={<Home />} />
 
         {/* Auth Screens */}
-        <Route path='/login' element={<Login />} />
-        <Route path='/sign-up' element={<SignUP />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/sign-up" element={<SignUP />} />
 
-        <Route path='/post-a-job/:category' element={<PostaJob />} />
+        <Route path="/post-a-job/:category" element={<PostaJob />} />
+        <Route path="/book-service/:service" element={<BookService />} />
 
         {/* Find Jobs || Find Professionls */}
-        <Route path='/find-professionals' element={<FindProfessional />} />
+        <Route path="/find-professionals" element={<FindProfessional />} />
 
         {/* <Route path='/painting-job-1' element={<PaintingJob1 />} />
         <Route path='/painting-job-2' element={<PaintingJob2 />} />
@@ -74,65 +76,69 @@ const AppRouter = () => {
 
         {/* Recruiter Screens */}
         <Route
-          path='/recruiter/account-setting/contact-info'
+          path="/recruiter/account-setting/contact-info"
           element={<ContactInformation />}
         />
         <Route
-          path='/recruiter/account-setting/manage-account'
+          path="/recruiter/account-setting/manage-account"
           element={<ManageAccount />}
         />
         <Route
-          path='/recruiter/account-setting/notifications'
+          path="/recruiter/account-setting/notifications"
           element={<Notifications />}
         />
         <Route
-          path='/recruiter/account-setting/previous-jobs'
+          path="/recruiter/account-setting/previous-jobs"
           element={<PreviousJobs />}
         />
         <Route
-          path='/recruiter/account-setting/change-password'
+          path="/recruiter/account-setting/payments-earnings"
+          element={<PaymentsAndEarnings />}
+        />
+        <Route
+          path="/recruiter/account-setting/change-password"
           element={<ChangePassword />}
         />
 
-        <Route path='/recruiter/contact-center' element={<ContactCenter />} />
+        <Route path="/recruiter/contact-center" element={<ContactCenter />} />
         {/* <Route path='/recruiter/chat' element={<RecruiterChat />} /> */}
 
-        <Route path='/recruiter/posted-jobs' element={<PostedJobs />} />
-        <Route path='/recruiter/posted-jobs/detail' element={<JobDetail />} />
+        <Route path="/recruiter/posted-jobs" element={<PostedJobs />} />
+        <Route path="/recruiter/posted-jobs/detail" element={<JobDetail />} />
 
         {/* User Dashboard Dashboard */}
         <Route
-          path='/user/account-setting/profile-details'
+          path="/user/account-setting/profile-details"
           element={<ProfileDetails />}
         />
         <Route
-          path='/user/account-setting/company-details'
+          path="/user/account-setting/company-details"
           element={<CompanyDetails />}
         />
         <Route
-          path='/user/account-setting/manage-account'
+          path="/user/account-setting/manage-account"
           element={<ManageUserAccount />}
         />
         <Route
-          path='/user/account-setting/notifications'
+          path="/user/account-setting/notifications"
           element={<UserNotifications />}
         />
         <Route
-          path='/user/account-setting/applied-jobs'
+          path="/user/account-setting/applied-jobs"
           element={<AppliedJobs />}
         />
         <Route
-          path='/user/account-setting/payment-method'
+          path="/user/account-setting/payment-method"
           element={<PaymentMethod />}
         />
 
-        <Route path='/user/saved-leads' element={<SavedLeads />} />
-        <Route path='/user/contact-center' element={<UserContactCenter />} />
+        <Route path="/user/saved-leads" element={<SavedLeads />} />
+        <Route path="/user/contact-center" element={<UserContactCenter />} />
         {/* <Route path='/user/chat' element={<UserChat />} /> */}
 
-        <Route path='/user/top-job-for-you' element={<TopJobForYou />} />
-        <Route path='/set-up-profile' element={<SetUpProfile />} />
-        <Route path='/chat' element={<ChatPage />} />
+        <Route path="/user/top-job-for-you" element={<TopJobForYou />} />
+        <Route path="/set-up-profile" element={<SetUpProfile />} />
+        <Route path="/chat" element={<ChatPage />} />
       </Routes>
     </Router>
   );

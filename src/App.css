@@ -1146,6 +1146,67 @@ label {
   gap: 16px;
 }
 
+/* Rate Type Radio Buttons */
+.rateType-radioButtons {
+  display: flex;
+  gap: 13px;
+  width: 100%;
+}
+
+.rateType-radioButtons .paintJobRadio {
+  position: relative;
+  flex: 1;
+  margin: 0;
+}
+
+.rateType-radioButtons .paintJobRadio label.form-check-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border: 2px dashed #e0e6eb;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin: 0;
+  width: 100%;
+  min-height: 48px;
+  box-sizing: border-box;
+}
+
+.rateType-radioButtons .paintJobRadio:has(input[type='radio']:checked) label {
+  border-color: #195248;
+  background-color: #f8f9fa;
+}
+
+.rateType-radioButtons .paintJobRadio label.form-check-label span {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  flex: 1;
+  line-height: 1.4;
+}
+
+.rateType-radioButtons .paintJobRadio input.form-check-input {
+  float: unset;
+  margin: 0;
+  border: 1px solid #195248;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+@media (max-width: 576px) {
+  .rateType-radioButtons {
+    flex-direction: column;
+  }
+  
+  .rateType-radioButtons .paintJobRadio {
+    width: 100%;
+  }
+}
+
 .bathroomFittinJob {
   max-width: 650px;
 }

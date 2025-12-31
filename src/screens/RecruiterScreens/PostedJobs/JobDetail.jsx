@@ -1,4 +1,6 @@
 import RecruiterLayout from '../../../components/Layouts/RecruiterLayout';
+import { useTranslation } from 'react-i18next';
+import StarRating from '../../../components/StarRating';
 
 import recruiterjobdetailbanner from '../../../assets/images/recruiter-job-detail-banner.png';
 import editIcon from '../../../assets/images/edit-icon.png';
@@ -71,7 +73,20 @@ const interestedPros = [
   },
 ];
 
+const reviewsData = [
+  {
+    id: 1,
+    review: "John did an excellent job fixing our roof. Highly recommended!",
+    rating: 5,
+    date: "September 2025",
+    clientName: "Sarah Johnson",
+  },
+];
+
 const JobDetail = () => {
+  const { t } = useTranslation('common');
+  const hasReviews = reviewsData.length > 0;
+
   return (
     <RecruiterLayout>
       <section className='recruiter__job-detail'>
@@ -190,6 +205,43 @@ const JobDetail = () => {
                   ))}
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className='job-detail-reviews'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-12'>
+              <div className='sec-head'>
+                <h3>{t('reviews.myReviews')}</h3>
+                <p className='mt-2'>{t('reviews.reviewsSubtext')}</p>
+              </div>
+            </div>
+            <div className='col-md-12'>
+              {hasReviews ? (
+                <div className='reviews-list'>
+                  {reviewsData.map((review) => (
+                    <div key={review.id} className='review-item mb-4'>
+                      <div className='review-header mb-2'>
+                        <div className='d-flex align-items-center gap-2 mb-2'>
+                          <StarRating value={review.rating} />
+                          <span className='text-muted'>{review.date}</span>
+                        </div>
+                        <p className='review-text mb-0'>{review.review}</p>
+                        <p className='review-author text-muted small mt-2 mb-0'>
+                          - {review.clientName}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className='reviews-empty-state text-center py-5'>
+                  <p className='text-muted'>{t('reviews.noReviewsYet')}</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

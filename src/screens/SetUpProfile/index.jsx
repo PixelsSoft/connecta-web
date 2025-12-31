@@ -176,24 +176,131 @@ const SetUpProfile = () => {
                           <div className='step-1-content'>
                             <div className='sec-head'>
                               <h3>
-                                {t('setupProfile.companyInfoHeading')}
+                                {t('setupProfile.professionalProfileSetupTitle')}
                               </h3>
+                              <p className='mt-2 mb-4'>
+                                {t('setupProfile.professionalProfileSetupSubtext')}
+                              </p>
                             </div>
                             <div className='row'>
                               <div className='col-md-6 mb-3'>
                                 <div className='inputGroup'>
                                   <label
-                                    htmlFor='companyName'
+                                    htmlFor='companyOrBusinessName'
                                     className='form-label'
                                   >
-                                    {t('setupProfile.companyName')}
+                                    {t('setupProfile.companyOrBusinessName')}
                                   </label>
                                   <input
                                     type='text'
                                     className='form-control'
-                                    placeholder={t('setupProfile.companyName')}
-                                    id='companyName'
-                                    name='companyName'
+                                    placeholder={t('setupProfile.companyOrBusinessName')}
+                                    id='companyOrBusinessName'
+                                    name='companyOrBusinessName'
+                                    onChange={handleChanges}
+                                  />
+                                </div>
+                              </div>
+                              <div className='col-md-6 mb-3'>
+                                <div className='inputGroup'>
+                                  <label
+                                    htmlFor='category'
+                                    className='form-label'
+                                  >
+                                    {t('setupProfile.selectCategory')}
+                                  </label>
+                                  <select
+                                    className='form-control form-select'
+                                    id='category'
+                                    name='category'
+                                    onChange={handleChanges}
+                                    defaultValue=''
+                                  >
+                                    <option value='' disabled>
+                                      {t('setupProfile.selectCategory')}
+                                    </option>
+                                    {servicesCheckBoxes.map((category, index) => (
+                                      <option
+                                        value={category.value}
+                                        key={index}
+                                      >
+                                        {category.label}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                              <div className='col-md-6 mb-3'>
+                                <div className='inputGroup'>
+                                  <label
+                                    htmlFor='yearsOfExperience'
+                                    className='form-label'
+                                  >
+                                    {t('setupProfile.yearsOfExperience')}
+                                  </label>
+                                  <input
+                                    type='number'
+                                    className='form-control'
+                                    placeholder='0'
+                                    id='yearsOfExperience'
+                                    name='yearsOfExperience'
+                                    onChange={handleChanges}
+                                    min='0'
+                                  />
+                                </div>
+                              </div>
+                              <div className='col-md-6 mb-3'>
+                                <div className='inputGroup'>
+                                  <label
+                                    htmlFor='rateType'
+                                    className='form-label'
+                                  >
+                                    {t('setupProfile.hourlyOrFixedRate')}
+                                  </label>
+                                  <div className='rateType-radioButtons'>
+                                    <div className='form-check paintJobRadio'>
+                                      <label className='form-check-label' htmlFor='hourlyRate'>
+                                        <span>{t('setupProfile.hourlyRate')}</span>
+                                        <input
+                                          className='form-check-input'
+                                          type='radio'
+                                          name='rateType'
+                                          id='hourlyRate'
+                                          value='hourly'
+                                          onChange={handleChanges}
+                                        />
+                                      </label>
+                                    </div>
+                                    <div className='form-check paintJobRadio'>
+                                      <label className='form-check-label' htmlFor='fixedRate'>
+                                        <span>{t('setupProfile.fixedRate')}</span>
+                                        <input
+                                          className='form-check-input'
+                                          type='radio'
+                                          name='rateType'
+                                          id='fixedRate'
+                                          value='fixed'
+                                          onChange={handleChanges}
+                                        />
+                                      </label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className='col-md-6 mb-3'>
+                                <div className='inputGroup'>
+                                  <label
+                                    htmlFor='serviceArea'
+                                    className='form-label'
+                                  >
+                                    {t('setupProfile.serviceArea')}
+                                  </label>
+                                  <input
+                                    type='text'
+                                    className='form-control'
+                                    placeholder={t('setupProfile.serviceArea')}
+                                    id='serviceArea'
+                                    name='serviceArea'
                                     onChange={handleChanges}
                                   />
                                 </div>
@@ -331,6 +438,33 @@ const SetUpProfile = () => {
                                   </select>
                                 </div>
                               </div>
+                              <div className='col-md-12 mb-3'>
+                                <div className='inputGroup'>
+                                  <label
+                                    htmlFor='uploadPhotos'
+                                    className='form-label'
+                                  >
+                                    {t('setupProfile.uploadPhotos')}
+                                  </label>
+                                  <input
+                                    type='file'
+                                    className='form-control'
+                                    id='uploadPhotos'
+                                    name='uploadPhotos'
+                                    onChange={handleChanges}
+                                    multiple
+                                    accept='image/*'
+                                  />
+                                  <small className='form-text text-muted mt-2 d-block'>
+                                    {t('jobPosting.uploadHelpText')}
+                                  </small>
+                                </div>
+                              </div>
+                            </div>
+                            <div className='mt-3 mb-4'>
+                              <p className='text-muted small'>
+                                <em>{t('setupProfile.profileTip')}</em>
+                              </p>
                             </div>
                           </div>
                         )}
@@ -763,7 +897,15 @@ const SetUpProfile = () => {
                           {t('buttons.back')}
                         </button>
                       )}
-                      {step < 4 && (
+                      {step === 1 && (
+                        <button
+                          onClick={handleNext}
+                          className='customBtn btn-bgRed'
+                        >
+                          {t('setupProfile.saveAndContinue')}
+                        </button>
+                      )}
+                      {step > 1 && step < 4 && (
                         <button
                           onClick={handleNext}
                           className='customBtn btn-bgRed'

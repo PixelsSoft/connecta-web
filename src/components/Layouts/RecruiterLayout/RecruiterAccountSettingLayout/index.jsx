@@ -18,6 +18,10 @@ const RecruiterAccountSettingLayout = (props) => {
     { path: '/recruiter/account-setting/notifications', label: t('recruiter.notifications') },
     { path: '/recruiter/account-setting/previous-jobs', label: t('recruiter.previousJobs') },
     {
+      path: '/recruiter/account-setting/payments-earnings',
+      label: t('recruiter.paymentsAndEarnings'),
+    },
+    {
       path: '/recruiter/account-setting/change-password',
       label: t('recruiter.changePassword'),
     },
