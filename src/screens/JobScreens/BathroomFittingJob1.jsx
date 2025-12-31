@@ -14,10 +14,10 @@ const BathroomFittingJob1 = () => {
               <div className='jobPosting__content'>
                 <div className='sec-head'>
                   <h1>
-                    Post a Bathroom Fitting <br /> job
+                    Post a Bathroom Fitting <br /> Job
                   </h1>
                   <p>
-                    Enter Some Description about your job or upload some images
+                    Enter a description about your job or upload some images
                     to support your description!
                   </p>
                 </div>

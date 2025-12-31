@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState } from "react";
 import COLXXL10 from "../../../components/COLXXL10";
 import { LuPhone } from "react-icons/lu";
@@ -6,13 +5,6 @@ import { FaRegEnvelope } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import UserLayout from "../../../components/Layouts/UserLayout";
 import { useTranslation } from "react-i18next";
-=======
-import React from 'react';
-import COLXXL10 from '../../../components/COLXXL10';
-import { LuPhone } from 'react-icons/lu';
-import { FaRegEnvelope } from 'react-icons/fa6';
-import UserLayout from '../../../components/Layouts/UserLayout';
->>>>>>> origin/Working-on-flow
 
 const ContactCenter = () => {
   const { t } = useTranslation("common");
@@ -53,7 +45,7 @@ const ContactCenter = () => {
         return (
           <div>
             <h4 className="mb-3">{t("helpCenter.faqs")}</h4>
-            <p>Frequently Asked Questions content will go here...</p>
+            <p>{t("helpCenter.faqsContent")}</p>
           </div>
         );
       case "contactSupport":
@@ -133,48 +125,48 @@ const ContactCenter = () => {
                 <div className="col-md-6 mb-3">
                   <div className="inputGroup">
                     <label htmlFor="problemSubject" className="form-label">
-                      Subject
+                      {t("helpCenter.subject")}
                     </label>
                     <input
                       type="text"
                       className="form-control"
                       id="problemSubject"
-                      placeholder="Enter subject"
+                      placeholder={t("helpCenter.enterSubject")}
                     />
                   </div>
                 </div>
                 <div className="col-md-6 mb-3">
                   <div className="inputGroup">
                     <label htmlFor="problemCategory" className="form-label">
-                      Category
+                      {t("helpCenter.problemCategory")}
                     </label>
                     <select
                       className="form-control form-select"
                       id="problemCategory"
                     >
-                      <option>Technical Issue</option>
-                      <option>Account Issue</option>
-                      <option>Payment Issue</option>
-                      <option>Other</option>
+                      <option>{t("helpCenter.technicalIssue")}</option>
+                      <option>{t("helpCenter.accountIssue")}</option>
+                      <option>{t("helpCenter.paymentIssue")}</option>
+                      <option>{t("jobPosting.other")}</option>
                     </select>
                   </div>
                 </div>
                 <div className="col-md-12 mb-3">
                   <div className="inputGroup">
                     <label htmlFor="problemDescription" className="form-label">
-                      Description
+                      {t("forms.description")}
                     </label>
                     <textarea
                       className="form-control"
                       id="problemDescription"
                       rows="5"
-                      placeholder="Describe the problem..."
+                      placeholder={t("helpCenter.describeProblem")}
                     />
                   </div>
                 </div>
                 <div className="col-md-12">
                   <button type="submit" className="customBtn btn-bgRed">
-                    Submit Report
+                    {t("helpCenter.submitReport")}
                   </button>
                 </div>
               </div>
@@ -185,14 +177,14 @@ const ContactCenter = () => {
         return (
           <div>
             <h4 className="mb-3">{t("helpCenter.termsConditions")}</h4>
-            <p>Terms & Conditions content will go here...</p>
+            <p>{t("helpCenter.termsContent")}</p>
           </div>
         );
       case "privacyPolicy":
         return (
           <div>
             <h4 className="mb-3">{t("helpCenter.privacyPolicy")}</h4>
-            <p>Privacy Policy content will go here...</p>
+            <p>{t("helpCenter.privacyContent")}</p>
           </div>
         );
       case "language":
@@ -288,7 +280,7 @@ const ContactCenter = () => {
                 <div className="col-lg-3 col-md-4 col-sm-4">
                   <div className="accountSettings-sideBar me-xl-5 me-lg-4">
                     <div className="mb-4">
-                      <h5 className="mb-3">Sections</h5>
+                      <h5 className="mb-3">{t("helpCenter.sections")}</h5>
                       {sidebarLinks.map((item) => (
                         <div
                           key={item.id}
@@ -303,7 +295,7 @@ const ContactCenter = () => {
                       ))}
                     </div>
                     <div>
-                      <h5 className="mb-3">Settings</h5>
+                      <h5 className="mb-3">{t("helpCenter.settings")}</h5>
                       {settingsLinks.map((item) =>
                         item.path ? (
                           <Link
@@ -326,9 +318,10 @@ const ContactCenter = () => {
                           </div>
                         )
                       )}
-                    <div className='contact__center-box-content'>
+                    </div>
+                    <div className="contact__center-box-content">
                       <h5>
-                        <a href='tel:+44 225 25148'>+44 225 25148</a>
+                        <a href="tel:+44 225 25148">+44 225 25148</a>
                       </h5>
                       <p>You can call us 24/7 for instant assistance</p>
                     </div>

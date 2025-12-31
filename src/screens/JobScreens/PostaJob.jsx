@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import DefaultLayout2 from "../../components/Layouts/DefaultLayout2";
 import JobPostingSec from "../../components/JobPostingSec";
@@ -8,6 +8,10 @@ import {
   getSubcategories,
   getQuestions,
 } from "../../data/categoriesData";
+import {
+  getSubcategoriesFromCSV,
+  getQuestionsFromCSV,
+} from "../../utils/csvParser";
 
 import RoomIcon1 from "../../assets/images/1-room-icon.png";
 import RoomIcon2 from "../../assets/images/2-room-icon.png";
@@ -26,8 +30,11 @@ const PostaJob = () => {
   const { category } = useParams();
   const [choice, setChoice] = React.useState("have");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
+  const [subcategoriesFromCSV, setSubcategoriesFromCSV] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [questionAnswers, setQuestionAnswers] = useState({});
+  const [loadingSubcategories, setLoadingSubcategories] = useState(false);
+  const [loadingQuestions, setLoadingQuestions] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     address: "",
@@ -51,24 +58,116 @@ const PostaJob = () => {
     navigate("/recruiter/posted-jobs");
   };
 
-  // Get category data dynamically
-  const categoryData = Object.values(categoriesData).map((cat) => ({
-    name: cat.name,
-    value: cat.name.replace(/\s+/g, "-"),
-    subcategories: Object.values(cat.subcategories).map((sub) => sub.name),
-  }));
+  // Get category data dynamically - memoize to prevent recreation
+  const categoryData = useMemo(() => {
+    return Object.values(categoriesData).map((cat) => ({
+      name: cat.name,
+      value: cat.name.replace(/\s+/g, "-"),
+      subcategories: Object.values(cat.subcategories).map((sub) => sub.name),
+    }));
+  }, []);
 
-  // Find matched category
-  const matched = categoryData.find((c) => c.value === category);
+  // Find matched category - memoize to prevent re-renders
+  const matched = useMemo(() => {
+    return categoryData.find((c) => c.value === category);
+  }, [category, categoryData]);
+
+  // Load subcategories from CSV when component mounts or category changes
+  useEffect(() => {
+    const loadSubcategories = async () => {
+      if (!matched?.name) return;
+
+      setLoadingSubcategories(true);
+      setSelectedSubcategory(""); // Reset selection when category changes
+      setQuestions([]); // Clear questions
+      setQuestionAnswers({}); // Clear answers
+
+      try {
+        const csvSubcategories = await getSubcategoriesFromCSV(matched.name);
+        if (csvSubcategories.length > 0) {
+          setSubcategoriesFromCSV(csvSubcategories);
+        } else {
+          // Fallback to hardcoded subcategories
+          const fallbackSubcategories = getSubcategories(matched.name);
+          setSubcategoriesFromCSV(
+            fallbackSubcategories.map((sub) => ({ name: sub.name }))
+          );
+        }
+      } catch (error) {
+        console.error("Error loading subcategories:", error);
+        // Fallback to hardcoded subcategories
+        const fallbackSubcategories = getSubcategories(matched.name);
+        setSubcategoriesFromCSV(
+          fallbackSubcategories.map((sub) => ({ name: sub.name }))
+        );
+      } finally {
+        setLoadingSubcategories(false);
+      }
+    };
+
+    loadSubcategories();
+  }, [matched?.name]); // Only depend on the category name
 
   // Handle subcategory selection
-  const handleSubcategoryChange = (subcategoryName) => {
-    setSelectedSubcategory(subcategoryName);
-    const categoryName = matched?.name;
-    if (categoryName) {
-      const subcategoryQuestions = getQuestions(categoryName, subcategoryName);
-      setQuestions(subcategoryQuestions);
+  const handleSubcategoryChange = async (subcategoryName) => {
+    if (!subcategoryName) {
+      setSelectedSubcategory("");
+      setQuestions([]);
       setQuestionAnswers({});
+      return;
+    }
+
+    setSelectedSubcategory(subcategoryName);
+    setQuestions([]); // Clear previous questions
+    setQuestionAnswers({}); // Clear previous answers
+    const categoryName = matched?.name;
+
+    if (!categoryName) {
+      console.error("No category name found");
+      return;
+    }
+
+    setLoadingQuestions(true);
+    try {
+      console.log(
+        `[PostaJob] Loading questions for: ${categoryName} -> ${subcategoryName}`
+      );
+      // Try to load from CSV first
+      const csvQuestions = await getQuestionsFromCSV(
+        categoryName,
+        subcategoryName
+      );
+      console.log(`[PostaJob] CSV questions found: ${csvQuestions.length}`);
+
+      if (csvQuestions.length > 0) {
+        setQuestions(csvQuestions);
+      } else {
+        console.log("[PostaJob] No CSV questions, trying fallback...");
+        // Fallback to hardcoded questions
+        const fallbackQuestions = getQuestions(categoryName, subcategoryName);
+        console.log(
+          `[PostaJob] Fallback questions found: ${fallbackQuestions.length}`
+        );
+        if (fallbackQuestions.length > 0) {
+          setQuestions(fallbackQuestions);
+        } else {
+          console.warn(
+            `[PostaJob] No questions found for ${categoryName} -> ${subcategoryName}`
+          );
+        }
+      }
+    } catch (error) {
+      console.error("[PostaJob] Error loading questions:", error);
+      // Fallback to hardcoded questions
+      try {
+        const fallbackQuestions = getQuestions(categoryName, subcategoryName);
+        setQuestions(fallbackQuestions);
+      } catch (fallbackError) {
+        console.error("[PostaJob] Fallback also failed:", fallbackError);
+        setQuestions([]);
+      }
+    } finally {
+      setLoadingQuestions(false);
     }
   };
 
@@ -97,54 +196,78 @@ const PostaJob = () => {
     <DefaultLayout2>
       {step === 1 && (
         <JobPostingSec
-          secTitle={`${t("jobPosting.postJob")} ${matched.name} job`}
+          secTitle={`${t("jobPosting.postJob")} ${matched.name} Job`}
           secDescription={t("jobPosting.getResponses")}
           rightImg={paintingbannerimg}
         >
           <div className="inputGroup">
-            <label htmlFor="selectCategory" className="form-label">
-              {t("jobPosting.whatWouldYouLikeDone")}
+            <label htmlFor="selectSubcategory" className="form-label fw-600">
+              {t("jobPosting.selectCategory")} {matched.name}
             </label>
-            <select
-              id="selectCategory"
-              className="form-select form-control"
-              aria-label="Select job category"
-              value={selectedSubcategory}
-              onChange={(e) => handleSubcategoryChange(e.target.value)}
-            >
-              <option value={""} disabled>
-                {t("jobPosting.selectCategory")} {matched.name}
-              </option>
-              {matched.subcategories.map((item, index) => (
-                <option value={item} key={index}>
-                  {item}
+            {loadingSubcategories ? (
+              <div className="text-muted">Loading subcategories...</div>
+            ) : (
+              <select
+                id="selectSubcategory"
+                className="form-select form-control"
+                aria-label="Select subcategory"
+                value={selectedSubcategory}
+                onChange={(e) => handleSubcategoryChange(e.target.value)}
+              >
+                <option value={""} disabled>
+                  {t("jobPosting.selectCategory")} {matched.name}
                 </option>
-              ))}
-            </select>
+                {subcategoriesFromCSV.length > 0
+                  ? subcategoriesFromCSV.map((item, index) => (
+                      <option value={item.name} key={index}>
+                        {item.name}
+                      </option>
+                    ))
+                  : matched.subcategories.map((item, index) => (
+                      <option value={item} key={index}>
+                        {item}
+                      </option>
+                    ))}
+              </select>
+            )}
           </div>
 
           {/* Dynamic Questions Section - Only show if subcategory is selected */}
-          {selectedSubcategory && questions.length > 0 && (
+          {selectedSubcategory && (
             <div className="dynamic-questions mt-4">
-              <h5 className="mb-3">{t("jobPosting.additionalQuestions")}</h5>
-              {questions.map((question, index) => (
-                <div className="inputGroup mb-3" key={index}>
-                  <label className="form-label fw-600">{question}</label>
-                  <textarea
-                    className="form-control"
-                    rows="2"
-                    placeholder={t("jobPosting.pleaseDescribe")}
-                    value={questionAnswers[index] || ""}
-                    onChange={(e) =>
-                      handleQuestionAnswer(index, e.target.value)
-                    }
-                  />
+              {loadingQuestions ? (
+                <div className="text-muted">Loading questions...</div>
+              ) : questions.length > 0 ? (
+                <>
+                  {/* <h5 className="mb-3">
+                    {t("jobPosting.additionalQuestions")}
+                  </h5> */}
+                  {questions.map((question, index) => (
+                    <div className="inputGroup mb-3" key={index}>
+                      <label className="form-label fw-600">
+                        {index + 1}. {question}
+                      </label>
+                      <textarea
+                        className="form-control"
+                        rows="3"
+                        placeholder={t("jobPosting.pleaseDescribe")}
+                        value={questionAnswers[index] || ""}
+                        onChange={(e) =>
+                          handleQuestionAnswer(index, e.target.value)
+                        }
+                      />
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <div className="text-muted">
+                  No questions available for this subcategory.
                 </div>
-              ))}
+              )}
             </div>
           )}
 
-          <div className="paintingJobContent mt-3">
+          {/* <div className="paintingJobContent mt-3">
             <div className="input-group">
               <label className="form-label fw-600">
                 {t("jobPosting.howManyRooms")}
@@ -194,7 +317,7 @@ const PostaJob = () => {
                       <span>{t("jobPosting.other")}</span>
                       <input
                         type="text"
-                        className="forn-control"
+                        className="form-control"
                         placeholder={t("jobPosting.noOfRooms")}
                       />
                     </div>
@@ -260,7 +383,7 @@ const PostaJob = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
           <div className="inputGroup mt-3">
             <label className="form-label fw-600">
@@ -289,7 +412,11 @@ const PostaJob = () => {
           </div>
 
           <div className="d-flex justify-content-end mt-4">
-            <button className="btn btn-primary px-4 py-2" onClick={nextStep}>
+            <button
+              className="btn btn-primary px-4 py-2"
+              onClick={nextStep}
+              disabled={!selectedSubcategory || loadingQuestions}
+            >
               {t("buttons.next")}
             </button>
           </div>

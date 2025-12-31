@@ -1,0 +1,52 @@
+Main Category,Subcategory,Question
+Cleaning Services,1.1 General Cleaning,"What areas need to be cleaned? (e.g., kitchen, bathroom, living room)"
+Cleaning Services,1.1 General Cleaning,What is the size of the property (m²)?
+Cleaning Services,1.1 General Cleaning,How many rooms need cleaning?
+Cleaning Services,1.1 General Cleaning,Do you need one-time or regular cleaning?
+Cleaning Services,1.1 General Cleaning,Do you provide cleaning products or should the cleaner bring them?
+Cleaning Services,1.1 General Cleaning,When would you like the cleaning to be done?
+Cleaning Services,1.2 Deep Cleaning,What areas require deep cleaning?
+Cleaning Services,1.2 Deep Cleaning,"Is there any specific concern (e.g., mold, grease, allergens)?"
+Cleaning Services,1.2 Deep Cleaning,What is the approximate size of the space (m²)?
+Cleaning Services,1.2 Deep Cleaning,Is it a residential or commercial space?
+Cleaning Services,1.2 Deep Cleaning,Do you need appliances or furniture cleaned as well?
+Cleaning Services,1.3 Office Cleaning,How big is the office (m²)?
+Cleaning Services,1.3 Office Cleaning,How many rooms/workstations are there?
+Cleaning Services,1.3 Office Cleaning,"Do you need daily, weekly, or monthly cleaning?"
+Cleaning Services,1.3 Office Cleaning,"Are there special cleaning requirements (e.g., electronics, carpets)?"
+Cleaning Services,1.3 Office Cleaning,What are the preferred cleaning hours?
+Cleaning Services,1.4 Window Cleaning – kopen of laten installeren,Do you already have the windows or do you want to purchase them?
+Cleaning Services,1.4 Window Cleaning – kopen of laten installeren,How many windows need to be cleaned or installed?
+Cleaning Services,1.4 Window Cleaning – kopen of laten installeren,What is the height/access level of the windows?
+Cleaning Services,1.4 Window Cleaning – kopen of laten installeren,Are the windows accessible from outside or inside?
+Cleaning Services,1.4 Window Cleaning – kopen of laten installeren,Do you want a one-time service or regular maintenance?
+Cleaning Services,1.5 Post-Construction Cleaning,What type of construction was completed?
+Cleaning Services,1.5 Post-Construction Cleaning,What areas need to be cleaned?
+Cleaning Services,1.5 Post-Construction Cleaning,How large is the total area (m²)?
+Cleaning Services,1.5 Post-Construction Cleaning,"Are there any hazardous materials (e.g., dust, paint, debris)?"
+Cleaning Services,1.5 Post-Construction Cleaning,Do you have a preferred date for the cleaning?
+Cleaning Services,1.6 Carpet & Upholstery Cleaning,What type of carpet or upholstery needs cleaning?
+Cleaning Services,1.6 Carpet & Upholstery Cleaning,How many pieces or rooms are affected?
+Cleaning Services,1.6 Carpet & Upholstery Cleaning,What material are the items made of?
+Cleaning Services,1.6 Carpet & Upholstery Cleaning,Are there any stains or odors to remove?
+Cleaning Services,1.6 Carpet & Upholstery Cleaning,Do you need protection or treatment after cleaning?
+Cleaning Services,1.7 Gutter Cleaning,How long is the gutter system (in meters)?
+Cleaning Services,1.7 Gutter Cleaning,When was the last cleaning done?
+Cleaning Services,1.7 Gutter Cleaning,Are there signs of blockage or overflow?
+Cleaning Services,1.7 Gutter Cleaning,Do you need downspout cleaning as well?
+Cleaning Services,1.7 Gutter Cleaning,Is the gutter easily accessible?
+Cleaning Services,1.8 Graffiti Removal,"What surface is the graffiti on? (e.g., wall, glass, metal)"
+Cleaning Services,1.8 Graffiti Removal,How large is the area (approx. m²)?
+Cleaning Services,1.8 Graffiti Removal,How long has the graffiti been there?
+Cleaning Services,1.8 Graffiti Removal,Do you want anti-graffiti coating afterward?
+Cleaning Services,1.8 Graffiti Removal,Do you have photos of the graffiti?
+Cleaning Services,1.9 End-of-Rental Cleaning,What is the size of the property (m²)?
+Cleaning Services,1.9 End-of-Rental Cleaning,Which rooms need special attention?
+Cleaning Services,1.9 End-of-Rental Cleaning,Do you need carpet or appliance cleaning included?
+Cleaning Services,1.9 End-of-Rental Cleaning,Is a cleaning checklist from landlord/agency available?
+Cleaning Services,1.9 End-of-Rental Cleaning,When is the handover date?
+Cleaning Services,1.10 Facade Cleaning,"What type of building façade is it? (e.g., glass, stone, brick)"
+Cleaning Services,1.10 Facade Cleaning,How high is the building?
+Cleaning Services,1.10 Facade Cleaning,Do you have access equipment or should it be provided?
+Cleaning Services,1.10 Facade Cleaning,How large is the area (approx. m²)?
+Cleaning Services,1.10 Facade Cleaning,When would you like the cleaning done?

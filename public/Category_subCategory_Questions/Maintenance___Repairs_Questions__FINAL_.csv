@@ -1,0 +1,71 @@
+Main Category,Subcategory,Question
+Maintenance & Repairs,4.1 Handyman,What type of small repair or installation is needed?
+Maintenance & Repairs,4.1 Handyman,Which room or area is involved?
+Maintenance & Repairs,4.1 Handyman,Do you provide materials or should they be supplied?
+Maintenance & Repairs,4.1 Handyman,Is this urgent or routine maintenance?
+Maintenance & Repairs,4.1 Handyman,When should the work be done?
+Maintenance & Repairs,4.2 Appliance Repair,What type of appliance needs repair?
+Maintenance & Repairs,4.2 Appliance Repair,What is the brand and model (if known)?
+Maintenance & Repairs,4.2 Appliance Repair,What issue is the appliance having?
+Maintenance & Repairs,4.2 Appliance Repair,Is the appliance under warranty?
+Maintenance & Repairs,4.2 Appliance Repair,When do you need the repair?
+Maintenance & Repairs,4.3 Furniture Assembly,What type of furniture needs assembling?
+Maintenance & Repairs,4.3 Furniture Assembly,How many pieces need to be assembled?
+Maintenance & Repairs,4.3 Furniture Assembly,Do you have the assembly manual?
+Maintenance & Repairs,4.3 Furniture Assembly,Is the furniture new or already partially assembled?
+Maintenance & Repairs,4.3 Furniture Assembly,When should the assembly take place?
+Maintenance & Repairs,4.4 Locksmith,"What kind of service do you need? (e.g., unlock, change lock, install new lock)"
+Maintenance & Repairs,4.4 Locksmith,"Is it for a door, window, or safe?"
+Maintenance & Repairs,4.4 Locksmith,Is it an emergency?
+Maintenance & Repairs,4.4 Locksmith,How many locks are involved?
+Maintenance & Repairs,4.4 Locksmith,Do you have the new locks or need recommendations?
+Maintenance & Repairs,4.5 Window & Door Installation,Do you already have the windows/doors or want to purchase them?
+Maintenance & Repairs,4.5 Window & Door Installation,What type of window or door is it?
+Maintenance & Repairs,4.5 Window & Door Installation,How many units need to be installed?
+Maintenance & Repairs,4.5 Window & Door Installation,Is removal of old units needed?
+Maintenance & Repairs,4.5 Window & Door Installation,When should the installation take place?
+Maintenance & Repairs,4.6 Roller Shutter Repair,What type of roller shutter is it? (manual or electric)
+Maintenance & Repairs,4.6 Roller Shutter Repair,What issue are you experiencing?
+Maintenance & Repairs,4.6 Roller Shutter Repair,What is the size of the shutter?
+Maintenance & Repairs,4.6 Roller Shutter Repair,Do you know the brand or model?
+Maintenance & Repairs,4.6 Roller Shutter Repair,When would you like the repair done?
+Maintenance & Repairs,4.7 Chimney Sweep,"What type of chimney do you have? (e.g., open fireplace, stove, gas)"
+Maintenance & Repairs,4.7 Chimney Sweep,When was it last cleaned?
+Maintenance & Repairs,4.7 Chimney Sweep,Is there any known blockage or issue?
+Maintenance & Repairs,4.7 Chimney Sweep,Do you need certification or inspection as well?
+Maintenance & Repairs,4.7 Chimney Sweep,When do you want the service done?
+Maintenance & Repairs,4.8 Heating System Maintenance,"What type of heating system is it? (e.g., gas, electric, underfloor)"
+Maintenance & Repairs,4.8 Heating System Maintenance,"What issues are you experiencing, if any?"
+Maintenance & Repairs,4.8 Heating System Maintenance,When was it last serviced?
+Maintenance & Repairs,4.8 Heating System Maintenance,Do you need a safety check or full service?
+Maintenance & Repairs,4.8 Heating System Maintenance,When should the service be carried out?
+Maintenance & Repairs,4.9 Light Fixture / Switch Installation,What type of fixture or switch needs to be installed?
+Maintenance & Repairs,4.9 Light Fixture / Switch Installation,How many units are involved?
+Maintenance & Repairs,4.9 Light Fixture / Switch Installation,Is it a replacement or a new installation?
+Maintenance & Repairs,4.9 Light Fixture / Switch Installation,Do you provide the materials or should they be supplied?
+Maintenance & Repairs,4.9 Light Fixture / Switch Installation,When should the installation be done?
+Maintenance & Repairs,4.10 Curtain Rail / Blind Mounting,Do you already have the curtain rail or blinds?
+Maintenance & Repairs,4.10 Curtain Rail / Blind Mounting,How many windows are involved?
+Maintenance & Repairs,4.10 Curtain Rail / Blind Mounting,"What type of wall are they mounted on? (e.g., concrete, drywall)"
+Maintenance & Repairs,4.10 Curtain Rail / Blind Mounting,Do you need removal of old systems?
+Maintenance & Repairs,4.10 Curtain Rail / Blind Mounting,When should the installation take place?
+Maintenance & Repairs,4.11 Silicone Sealing / Kit Replacement,"Which area needs sealing? (e.g., bathroom, kitchen, windows)"
+Maintenance & Repairs,4.11 Silicone Sealing / Kit Replacement,Is this for new installation or old sealant removal?
+Maintenance & Repairs,4.11 Silicone Sealing / Kit Replacement,What is the approximate length (meters)?
+Maintenance & Repairs,4.11 Silicone Sealing / Kit Replacement,Do you provide materials?
+Maintenance & Repairs,4.11 Silicone Sealing / Kit Replacement,When should the work be done?
+Maintenance & Repairs,4.12 Painter / Decorator,"What needs to be painted or decorated? (e.g., wall, ceiling, furniture)"
+Maintenance & Repairs,4.12 Painter / Decorator,What is the total surface area (approx. m²)?
+Maintenance & Repairs,4.12 Painter / Decorator,"Is preparation required (e.g., sanding, plastering)?"
+Maintenance & Repairs,4.12 Painter / Decorator,Do you provide the paint?
+Maintenance & Repairs,4.12 Painter / Decorator,When should the work start?
+Maintenance & Repairs,4.13 Plasterer / Drywall Finisher,What area needs plastering or finishing?
+Maintenance & Repairs,4.13 Plasterer / Drywall Finisher,Is it new drywall or a repair?
+Maintenance & Repairs,4.13 Plasterer / Drywall Finisher,What is the total surface area (approx. m²)?
+Maintenance & Repairs,4.13 Plasterer / Drywall Finisher,Is sanding or painting also required?
+Maintenance & Repairs,4.13 Plasterer / Drywall Finisher,When should the job begin?
+Maintenance & Repairs,4.14 Tile Setter / Floor Layer,"What type of surface do you want to install? (e.g., tiles, laminate, vinyl)"
+Maintenance & Repairs,4.14 Tile Setter / Floor Layer,What is the surface area (approx. m²)?
+Maintenance & Repairs,4.14 Tile Setter / Floor Layer,Do you already have the materials?
+Maintenance & Repairs,4.14 Tile Setter / Floor Layer,Do you need removal of old flooring?
+Maintenance & Repairs,4.14 Tile Setter / Floor Layer,When do you want installation done?

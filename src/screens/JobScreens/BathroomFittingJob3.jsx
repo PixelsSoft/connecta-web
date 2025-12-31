@@ -14,24 +14,24 @@ const BathroomFittingJob3 = () => {
               <div className='jobPosting__content'>
                 <div className='sec-head'>
                   <h1>
-                    Post a Bathroom Fitting <br /> job
+                    Post a Bathroom Fitting <br /> Job
                   </h1>
-                  <p>Verifiy your email address and Phone number</p>
+                  <p>Verify your email address and phone number</p>
                 </div>
 
                 <div className='bathroomFittinJob'>
-                  <div class='inputGroup mb-4'>
-                    <label for='userOTP' class='form-label'>
+                  <div className='inputGroup mb-4'>
+                    <label htmlFor='userOTP' className='form-label'>
                       OTP Code
                     </label>
                     <input
                       type='text'
-                      class='form-control'
+                      className='form-control'
                       id='userOTP'
                       placeholder='******'
                     />
                     <p className='darkGrayColor mb-0 mt-2'>
-                      code will be able to resent after{' '}
+                      Code will be resent after{' '}
                       <span style={{ color: '#056517' }}>00:59</span>
                     </p>
                   </div>

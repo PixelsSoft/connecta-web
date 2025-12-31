@@ -24,17 +24,17 @@ const PaintingJob1 = () => {
             <div className='col-lg-7'>
               <div className='jobPosting__content'>
                 <div className='sec-head'>
-                  <h1>Post a Painting job</h1>
+                  <h1>Post a Painting Job</h1>
                   <p>
                     Get responses from Connecta24 screened and reviewed
-                    Professional People near you
+                    professionals near you
                   </p>
                 </div>
 
                 <div className='paintingJobContent'>
                   <div className='input-group'>
                     <label className='form-label fw-600'>
-                      How many room do you want to cover in this services?
+                      How many rooms do you want to cover in this service?
                     </label>
                     <div className='paintingBoxRadioButtons'>
                       {[
@@ -87,7 +87,7 @@ const PaintingJob1 = () => {
                             <span>Other</span>
                             <input
                               type='text'
-                              className='forn-control'
+                              className='form-control'
                               placeholder='No of rooms'
                             />
                           </div>

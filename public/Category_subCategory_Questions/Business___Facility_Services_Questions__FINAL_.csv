@@ -1,0 +1,31 @@
+Main Category,Subcategory,Question
+Business & Facility Services,8.1 Office Renovation,"What type of renovation is needed? (e.g., full, partial, cosmetic)"
+Business & Facility Services,8.1 Office Renovation,What is the size of the office (m²)?
+Business & Facility Services,8.1 Office Renovation,Is the renovation structural or decorative?
+Business & Facility Services,8.1 Office Renovation,Will the office remain in use during the work?
+Business & Facility Services,8.1 Office Renovation,When should the renovation begin?
+Business & Facility Services,8.2 Office IT Setup & Cabling,"What kind of IT infrastructure is needed? (e.g., internet, LAN, phone)"
+Business & Facility Services,8.2 Office IT Setup & Cabling,How many workstations are involved?
+Business & Facility Services,8.2 Office IT Setup & Cabling,Do you need equipment supplied or only installation?
+Business & Facility Services,8.2 Office IT Setup & Cabling,Is there an existing network that needs upgrading?
+Business & Facility Services,8.2 Office IT Setup & Cabling,When should the setup be completed?
+Business & Facility Services,8.3 Facility Management,"What type of facility needs management? (e.g., office, warehouse, residential)"
+Business & Facility Services,8.3 Facility Management,"Which services are required? (e.g., cleaning, maintenance, security)"
+Business & Facility Services,8.3 Facility Management,What is the size of the facility?
+Business & Facility Services,8.3 Facility Management,Do you need a one-time service or ongoing contract?
+Business & Facility Services,8.3 Facility Management,When should the services start?
+Business & Facility Services,8.4 Coffee Machine Maintenance,What brand and model is the coffee machine?
+Business & Facility Services,8.4 Coffee Machine Maintenance,What type of issue are you experiencing?
+Business & Facility Services,8.4 Coffee Machine Maintenance,How often is maintenance required?
+Business & Facility Services,8.4 Coffee Machine Maintenance,Is the machine under warranty?
+Business & Facility Services,8.4 Coffee Machine Maintenance,When should the service be carried out?
+Business & Facility Services,8.5 Industrial Cleaning,What type of facility needs cleaning?
+Business & Facility Services,8.5 Industrial Cleaning,What is the total area (m²)?
+Business & Facility Services,8.5 Industrial Cleaning,Is it a one-time or recurring service?
+Business & Facility Services,8.5 Industrial Cleaning,Are there any hazardous materials?
+Business & Facility Services,8.5 Industrial Cleaning,When should the cleaning take place?
+Business & Facility Services,8.6 Archive Digitization,What type of documents need to be digitized?
+Business & Facility Services,8.6 Archive Digitization,How many pages or boxes are there?
+Business & Facility Services,8.6 Archive Digitization,Do you require OCR (text recognition)?
+Business & Facility Services,8.6 Archive Digitization,Do you need confidential disposal of originals?
+Business & Facility Services,8.6 Archive Digitization,When should the digitization be completed?

@@ -1,0 +1,41 @@
+Main Category,Subcategory,Question
+Specialist Services,6.1 Asbestos Removal,Where is the asbestos located?
+Specialist Services,6.1 Asbestos Removal,How large is the affected area (m²)?
+Specialist Services,6.1 Asbestos Removal,Do you have a prior inspection report?
+Specialist Services,6.1 Asbestos Removal,Is the building currently occupied?
+Specialist Services,6.1 Asbestos Removal,When should the removal be carried out?
+Specialist Services,6.2 Mold Removal,"Where is the mold located? (e.g., bathroom, basement, walls)"
+Specialist Services,6.2 Mold Removal,What is the approximate size of the mold area?
+Specialist Services,6.2 Mold Removal,Have you tried any previous treatments?
+Specialist Services,6.2 Mold Removal,Is this a recurring issue?
+Specialist Services,6.2 Mold Removal,When would you like the treatment done?
+Specialist Services,6.3 Pest Control,What type of pest do you need removed?
+Specialist Services,6.3 Pest Control,Is the issue indoors or outdoors?
+Specialist Services,6.3 Pest Control,Have you used pest control services before?
+Specialist Services,6.3 Pest Control,How severe is the infestation?
+Specialist Services,6.3 Pest Control,When should the service be scheduled?
+Specialist Services,6.4 Fire & Water Damage Restoration,"Was the damage caused by fire, water, or both?"
+Specialist Services,6.4 Fire & Water Damage Restoration,Which areas of the property are affected?
+Specialist Services,6.4 Fire & Water Damage Restoration,How long ago did the damage occur?
+Specialist Services,6.4 Fire & Water Damage Restoration,"Do you need cleanup, repair, or full restoration?"
+Specialist Services,6.4 Fire & Water Damage Restoration,Is the property safe to access?
+Specialist Services,6.5 Lead Paint Removal,"Where is the lead paint located? (e.g., walls, windows, doors)"
+Specialist Services,6.5 Lead Paint Removal,What is the size of the area?
+Specialist Services,6.5 Lead Paint Removal,Is the building residential or commercial?
+Specialist Services,6.5 Lead Paint Removal,Do you have a lead test report?
+Specialist Services,6.5 Lead Paint Removal,When do you want the removal to take place?
+Specialist Services,6.6 Radon Inspection,Have you had a radon test done before?
+Specialist Services,6.6 Radon Inspection,What type of property is it?
+Specialist Services,6.6 Radon Inspection,Do you need testing only or mitigation as well?
+Specialist Services,6.6 Radon Inspection,Is the property occupied?
+Specialist Services,6.6 Radon Inspection,When should the inspection take place?
+Specialist Services,6.7 Septic Tank Cleaning,When was the last time the tank was cleaned?
+Specialist Services,6.7 Septic Tank Cleaning,What size is your septic tank?
+Specialist Services,6.7 Septic Tank Cleaning,Are there any signs of blockage or overflow?
+Specialist Services,6.7 Septic Tank Cleaning,Is the tank easily accessible?
+Specialist Services,6.7 Septic Tank Cleaning,When do you want the cleaning done?
+Specialist Services,6.8 Well Pump Services,"What kind of issue are you experiencing? (e.g., no water, low pressure)"
+Specialist Services,6.8 Well Pump Services,What type of pump is installed?
+Specialist Services,6.8 Well Pump Services,When was it last serviced?
+Specialist Services,6.8 Well Pump Services,Is the well easily accessible?
+Specialist Services,6.8 Well Pump Services,Do you need repair or replacement?

@@ -14,30 +14,30 @@ const BathroomFittingJob2 = () => {
               <div className='jobPosting__content'>
                 <div className='sec-head'>
                   <h1>
-                    Post a Bathroom Fitting <br /> job
+                    Post a Bathroom Fitting <br /> Job
                   </h1>
-                  <p>Enter your contact Information</p>
+                  <p>Enter your contact information</p>
                 </div>
 
                 <div className='bathroomFittinJob'>
-                  <div class='inputGroup mb-4'>
-                    <label for='userEmail' class='form-label'>
+                  <div className='inputGroup mb-4'>
+                    <label htmlFor='userEmail' className='form-label'>
                       Email
                     </label>
                     <input
                       type='email'
-                      class='form-control'
+                      className='form-control'
                       id='userEmail'
                       placeholder='info@modernize.com'
                     />
                   </div>
-                  <div class='inputGroup'>
-                    <label for='userPhone' class='form-label mb-0'>
+                  <div className='inputGroup'>
+                    <label htmlFor='userPhone' className='form-label mb-0'>
                       Phone
                     </label>
                     <input
                       type='text'
-                      class='form-control'
+                      className='form-control'
                       id='userPhone'
                       placeholder='+91 12345 65478'
                     />

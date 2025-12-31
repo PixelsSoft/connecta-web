@@ -163,19 +163,19 @@ const SavedLeads = () => {
                 />
 
                 <div className='shortFeeBox'>
-                  <h5>Short listed Fee</h5>
+                  <h5>Shortlisted Fee</h5>
                   <h4 className='redColor'>100 CHF</h4>
-                  <p>fee charged only when you get shortlisted by person</p>
+                  <p>Fee is charged only when you get shortlisted by a client</p>
                 </div>
                 <div className='shortFeeBox'>
                   <h5>5 Interested</h5>
                   {/* <h4 className='redColor'>100 CHF</h4> */}
-                  <p>Those people show interest in this job</p>
+                  <p>These people have shown interest in this job</p>
                 </div>
                 <div className='shortFeeBox'>
                   <h5>0 Shortlisted</h5>
                   {/* <h4 className='redColor'>100 CHF</h4> */}
-                  <p>Those people received contact details</p>
+                  <p>These people have received contact details</p>
                 </div>
               </div>
             </div>
