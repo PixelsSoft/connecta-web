@@ -163,34 +163,34 @@ const HomeFooter = () => {
                         <ul className='footer-links'>
                           <li>
                             <button
-                              className='footerLink'
+                              className='footerLink notranslate'
                               onClick={() => handleLanguageChange('en')}
                             >
-                              {t('home.english')}
+                              English
                             </button>
                           </li>
                           <li>
                             <button
-                              className='footerLink'
+                              className='footerLink notranslate'
                               onClick={() => handleLanguageChange('de')}
                             >
-                              {t('home.german')}
+                              German
                             </button>
                           </li>
                           <li>
                             <button
-                              className='footerLink'
+                              className='footerLink notranslate'
                               onClick={() => handleLanguageChange('fr')}
                             >
-                              {t('home.french')}
+                              French
                             </button>
                           </li>
                           <li>
                             <button
-                              className='footerLink'
+                              className='footerLink notranslate'
                               onClick={() => handleLanguageChange('it')}
                             >
-                              {t('home.italian')}
+                              Italian
                             </button>
                           </li>
                         </ul>

@@ -105,12 +105,12 @@ const CompanyDetails = () => {
           <div className='col-lg-6 mb-3'>
             <div className='inputGroup'>
               <label htmlFor='companyPhoneNo' className='form-label'>
-                Company Phone No
+                Company Phone Number
               </label>
               <input
                 type='text'
                 className='form-control'
-                placeholder='Company Phone No'
+                placeholder='Company Phone Number'
                 id='companyPhoneNo'
                 name='companyPhoneNo'
                 onChange={handleChanges}

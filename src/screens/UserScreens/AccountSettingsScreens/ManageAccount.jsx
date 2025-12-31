@@ -24,8 +24,8 @@ const ManageAccount = () => {
                   <div className='account__manageBox-content-withIcon-content'>
                     <h5>Verify Account</h5>
                     <p>
-                      kindly verify your account with your email or phone no an
-                      otp sent to your email address for verifications
+                      Kindly verify your account with your email or phone number. An
+                      OTP has been sent to your email address for verification.
                     </p>
                   </div>
                 </div>
@@ -44,8 +44,8 @@ const ManageAccount = () => {
                   <div className='account__manageBox-content-withIcon-content'>
                     <h5>Delete Account</h5>
                     <p>
-                      kindly verify your account with your email or phone no an
-                      otp sent to your email address for verifications
+                      Kindly verify your account with your email or phone number. An
+                      OTP has been sent to your email address for verification.
                     </p>
                   </div>
                 </div>

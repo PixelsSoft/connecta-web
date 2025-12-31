@@ -72,7 +72,7 @@ const DashboardFooter = () => {
           <div className='row justify-content-end'>
             <div className='col-lg-12'>
               <div className='footer-head'>
-                <h2>lets contact</h2>
+                <h2>Let's Contact</h2>
               </div>
             </div>
             <div className='col-lg-4 mb-lg-0 mb-4'>
@@ -141,7 +141,7 @@ const DashboardFooter = () => {
                     <ul className='footer-links'>
                       <li>
                         <button
-                          className='footerLink'
+                          className='footerLink notranslate'
                           onClick={() => handleLanguageChange('en', 'English')}
                         >
                           English
@@ -149,7 +149,7 @@ const DashboardFooter = () => {
                       </li>
                       <li>
                         <button
-                          className='footerLink'
+                          className='footerLink notranslate'
                           onClick={() => handleLanguageChange('de', 'German')}
                         >
                           German
@@ -157,7 +157,7 @@ const DashboardFooter = () => {
                       </li>
                       <li>
                         <button
-                          className='footerLink'
+                          className='footerLink notranslate'
                           onClick={() => handleLanguageChange('fr', 'French')}
                         >
                           French
@@ -165,7 +165,7 @@ const DashboardFooter = () => {
                       </li>
                       <li>
                         <button
-                          className='footerLink'
+                          className='footerLink notranslate'
                           onClick={() => handleLanguageChange('it', 'Italian')}
                         >
                           Italian

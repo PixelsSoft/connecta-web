@@ -1,6 +1,5 @@
 import React from 'react';
 import COLXXL10 from '../../../components/COLXXL10';
-import RecruiterLayout from '../../../components/Layouts/RecruiterLayout';
 import { LuPhone } from 'react-icons/lu';
 import { FaRegEnvelope } from 'react-icons/fa6';
 import UserLayout from '../../../components/Layouts/UserLayout';
@@ -31,7 +30,7 @@ const ContactCenter = () => {
                       <h5>
                         <a href='tel:+44 225 25148'>+44 225 25148</a>
                       </h5>
-                      <p>you can call us 24/7 for instant assistant</p>
+                      <p>You can call us 24/7 for instant assistance</p>
                     </div>
                   </div>
                 </div>

@@ -1,15 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DefaultLayout2 from '../../components/Layouts/DefaultLayout2';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../../context/AuthContext';
 
 const Login = (e) => {
   const navigate = useNavigate();
   const { t } = useTranslation('common');
+  const { login } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  // Test credentials for local development
+  const testUsers = {
+    // User (Service Booker) credentials
+    'user@connecta24.com': {
+      password: 'user123',
+      role: 'user',
+      userData: {
+        email: 'user@connecta24.com',
+        name: 'John User',
+        fullName: 'John User',
+      },
+    },
+    // Professional (Service Provider) credentials
+    'professional@connecta24.com': {
+      password: 'pro123',
+      role: 'professional',
+      userData: {
+        email: 'professional@connecta24.com',
+        name: 'Jane Professional',
+        fullName: 'Jane Professional',
+      },
+    },
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/set-up-profile');
+    
+    // Check if credentials match test users
+    const testUser = testUsers[email.toLowerCase()];
+    
+    if (testUser && testUser.password === password) {
+      // Valid test credentials
+      const mockToken = 'mock_token_' + Date.now();
+      login(mockToken, testUser.userData, testUser.role);
+      
+      // Navigate based on role
+      if (testUser.role === 'professional') {
+        navigate('/recruiter/posted-jobs');
+      } else {
+        navigate('/user/saved-leads');
+      }
+    } else {
+      // Invalid credentials - show error
+      alert('Invalid email or password. Please use test credentials:\n\nUser: user@connecta24.com / user123\nProfessional: professional@connecta24.com / pro123');
+    }
   };
   return (
     <DefaultLayout2>
@@ -30,6 +76,9 @@ const Login = (e) => {
                         className='form-control'
                         id='userName'
                         placeholder='info@wrappixel.com'
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
                       />
                     </div>
                     <div className='inputGroup'>
@@ -41,6 +90,9 @@ const Login = (e) => {
                         className='form-control'
                         id='userPassword'
                         placeholder={t('forms.password')}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
                       />
                     </div>
                     <div className='forgotDiv'>
