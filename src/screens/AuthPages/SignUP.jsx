@@ -1,18 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DefaultLayout2 from "../../components/Layouts/DefaultLayout2";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from 'react-redux';
+import { register, clearError } from '../../store/slices/authSlice';
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 
 const SignUP = () => {
   const navigate = useNavigate();
   const { t } = useTranslation("common");
+  const dispatch = useDispatch();
+  const { loading, error, requiresOtp, otpEmail } = useSelector((state) => state.auth);
+  
   const [accountType, setAccountType] = useState("customer");
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+    phone: ''
+  });
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    if (requiresOtp && otpEmail) {
+      navigate('/verify-otp', { state: { email: otpEmail } });
+    }
+  }, [requiresOtp, otpEmail, navigate]);
+
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate("/set-up-profile");
+    dispatch(clearError());
+    
+    const userData = {
+      ...formData,
+      user_type: accountType
+    };
+    
+    dispatch(register(userData));
   };
 
   return (
@@ -24,6 +56,12 @@ const SignUP = () => {
               <div className="auth-content">
                 <h2>{t("buttons.Title_SignUp")}</h2>
                 <p className="auth-subtext">{t("buttons.signUpSubtext")}</p>
+
+                {error && (
+                  <div className="alert alert-danger" role="alert">
+                    {error}
+                  </div>
+                )}
 
                 <Tabs
                   activeKey={accountType}
@@ -42,8 +80,12 @@ const SignUP = () => {
                             type="text"
                             className="form-control"
                             id="fullName"
+                            name="name"
                             placeholder="Jon Doe"
+                            value={formData.name}
+                            onChange={handleInputChange}
                             required
+                            disabled={loading}
                           />
                         </div>
                         <div className="inputGroup">
@@ -54,8 +96,12 @@ const SignUP = () => {
                             type="email"
                             className="form-control"
                             id="userEmail"
+                            name="email"
                             placeholder="jon.doe@mail.com"
+                            value={formData.email}
+                            onChange={handleInputChange}
                             required
+                            disabled={loading}
                           />
                         </div>
                         <div className="inputGroup">
@@ -66,8 +112,12 @@ const SignUP = () => {
                             type="password"
                             className="form-control"
                             id="userPassword"
+                            name="password"
                             placeholder="••••••••"
+                            value={formData.password}
+                            onChange={handleInputChange}
                             required
+                            disabled={loading}
                           />
                         </div>
                         <div className="inputGroup">
@@ -81,8 +131,12 @@ const SignUP = () => {
                             type="password"
                             className="form-control"
                             id="userPasswordConfirm"
+                            name="password_confirmation"
                             placeholder="••••••••"
+                            value={formData.password_confirmation}
+                            onChange={handleInputChange}
                             required
+                            disabled={loading}
                           />
                         </div>
                         <div className="inputGroup">
@@ -94,15 +148,20 @@ const SignUP = () => {
                             type="tel"
                             className="form-control"
                             id="phoneNumber"
+                            name="phone"
                             placeholder="+1234567890"
+                            value={formData.phone}
+                            onChange={handleInputChange}
+                            disabled={loading}
                           />
                         </div>
 
                         <button
                           type="submit"
                           className="customBtn btn-bgRed w-100"
+                          disabled={loading}
                         >
-                          {t("buttons.signUp")}
+                          {loading ? 'Loading...' : t("buttons.signUp")}
                         </button>
 
                         <p className="auth-agreement-text text-center mt-3">
@@ -134,8 +193,12 @@ const SignUP = () => {
                             type="text"
                             className="form-control"
                             id="fullNamePro"
+                            name="name"
                             placeholder="Jon Doe"
+                            value={formData.name}
+                            onChange={handleInputChange}
                             required
+                            disabled={loading}
                           />
                         </div>
                         <div className="inputGroup">
@@ -146,8 +209,12 @@ const SignUP = () => {
                             type="email"
                             className="form-control"
                             id="userEmailPro"
+                            name="email"
                             placeholder="jon.doe@mail.com"
+                            value={formData.email}
+                            onChange={handleInputChange}
                             required
+                            disabled={loading}
                           />
                         </div>
                         <div className="inputGroup">
@@ -161,8 +228,12 @@ const SignUP = () => {
                             type="password"
                             className="form-control"
                             id="userPasswordPro"
+                            name="password"
                             placeholder="••••••••"
+                            value={formData.password}
+                            onChange={handleInputChange}
                             required
+                            disabled={loading}
                           />
                         </div>
                         <div className="inputGroup">
@@ -176,8 +247,12 @@ const SignUP = () => {
                             type="password"
                             className="form-control"
                             id="userPasswordConfirmPro"
+                            name="password_confirmation"
                             placeholder="••••••••"
+                            value={formData.password_confirmation}
+                            onChange={handleInputChange}
                             required
+                            disabled={loading}
                           />
                         </div>
                         <div className="inputGroup">
@@ -192,15 +267,20 @@ const SignUP = () => {
                             type="tel"
                             className="form-control"
                             id="phoneNumberPro"
+                            name="phone"
                             placeholder="+1234567890"
+                            value={formData.phone}
+                            onChange={handleInputChange}
+                            disabled={loading}
                           />
                         </div>
 
                         <button
                           type="submit"
                           className="customBtn btn-bgRed w-100"
+                          disabled={loading}
                         >
-                          {t("buttons.signUp")}
+                          {loading ? 'Loading...' : t("buttons.signUp")}
                         </button>
 
                         <p className="auth-agreement-text text-center mt-3">

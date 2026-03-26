@@ -2,7 +2,8 @@ import React from 'react';
 import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../../context/AuthContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout as logoutAction } from '../../../store/slices/authSlice';
 
 import logo from '../../../assets/images/logo.png';
 import arrowIcon from '../../../assets/images/arrow-icon.png';
@@ -15,11 +16,12 @@ import logoutIcon from '../../../assets/images/logout-icon.png';
 
 const Header = (props) => {
   const { t } = useTranslation('common');
-  const { isAuthenticated, user, userRole, logout } = useAuth();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await dispatch(logoutAction());
     navigate('/');
   };
 
@@ -33,7 +35,7 @@ const Header = (props) => {
 
   // Get profile settings link based on role
   const getProfileSettingsLink = () => {
-    if (userRole === 'professional') {
+    if (user?.user_type === 'professional') {
       return '/recruiter/account-setting/contact-info';
     }
     return '/user/account-setting/profile-details';

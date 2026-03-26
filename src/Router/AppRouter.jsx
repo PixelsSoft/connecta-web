@@ -3,6 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "../screens/Home";
 import Login from "../screens/AuthPages/Login";
 import SignUP from "../screens/AuthPages/SignUP";
+import VerifyOtp from "../screens/AuthPages/VerifyOtp";
+import ForgotPassword from "../screens/AuthPages/ForgotPassword";
+import ResetPassword from "../screens/AuthPages/ResetPassword";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 import FindProfessional from "../screens/JobScreens/FindProfessional";
 
@@ -52,6 +56,9 @@ const AppRouter = () => {
         {/* Auth Screens */}
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUP />} />
+        <Route path="/verify-otp" element={<VerifyOtp />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
 
         <Route path="/post-a-job/:category" element={<PostaJob />} />
         <Route path="/book-service/:service" element={<BookService />} />
@@ -74,71 +81,173 @@ const AppRouter = () => {
           element={<BathroomFittingJob3 />}
         /> */}
 
-        {/* Recruiter Screens */}
+        {/* Recruiter Screens - Only for professionals */}
         <Route
           path="/recruiter/account-setting/contact-info"
-          element={<ContactInformation />}
+          element={
+            <ProtectedRoute allowedRoles={['professional']}>
+              <ContactInformation />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/recruiter/account-setting/manage-account"
-          element={<ManageAccount />}
+          element={
+            <ProtectedRoute allowedRoles={['professional']}>
+              <ManageAccount />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/recruiter/account-setting/notifications"
-          element={<Notifications />}
+          element={
+            <ProtectedRoute allowedRoles={['professional']}>
+              <Notifications />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/recruiter/account-setting/previous-jobs"
-          element={<PreviousJobs />}
+          element={
+            <ProtectedRoute allowedRoles={['professional']}>
+              <PreviousJobs />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/recruiter/account-setting/payments-earnings"
-          element={<PaymentsAndEarnings />}
+          element={
+            <ProtectedRoute allowedRoles={['professional']}>
+              <PaymentsAndEarnings />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/recruiter/account-setting/change-password"
-          element={<ChangePassword />}
+          element={
+            <ProtectedRoute allowedRoles={['professional']}>
+              <ChangePassword />
+            </ProtectedRoute>
+          }
         />
 
-        <Route path="/recruiter/contact-center" element={<ContactCenter />} />
-        {/* <Route path='/recruiter/chat' element={<RecruiterChat />} /> */}
+        <Route 
+          path="/recruiter/contact-center" 
+          element={
+            <ProtectedRoute allowedRoles={['professional']}>
+              <ContactCenter />
+            </ProtectedRoute>
+          } 
+        />
 
-        <Route path="/recruiter/posted-jobs" element={<PostedJobs />} />
-        <Route path="/recruiter/posted-jobs/detail" element={<JobDetail />} />
+        <Route 
+          path="/recruiter/posted-jobs" 
+          element={
+            <ProtectedRoute allowedRoles={['professional']}>
+              <PostedJobs />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/recruiter/posted-jobs/detail" 
+          element={
+            <ProtectedRoute allowedRoles={['professional']}>
+              <JobDetail />
+            </ProtectedRoute>
+          } 
+        />
 
-        {/* User Dashboard Dashboard */}
+        {/* User Dashboard - Only for customers */}
         <Route
           path="/user/account-setting/profile-details"
-          element={<ProfileDetails />}
+          element={
+            <ProtectedRoute allowedRoles={['customer']}>
+              <ProfileDetails />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/user/account-setting/company-details"
-          element={<CompanyDetails />}
+          element={
+            <ProtectedRoute allowedRoles={['customer']}>
+              <CompanyDetails />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/user/account-setting/manage-account"
-          element={<ManageUserAccount />}
+          element={
+            <ProtectedRoute allowedRoles={['customer']}>
+              <ManageUserAccount />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/user/account-setting/notifications"
-          element={<UserNotifications />}
+          element={
+            <ProtectedRoute allowedRoles={['customer']}>
+              <UserNotifications />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/user/account-setting/applied-jobs"
-          element={<AppliedJobs />}
+          element={
+            <ProtectedRoute allowedRoles={['customer']}>
+              <AppliedJobs />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/user/account-setting/payment-method"
-          element={<PaymentMethod />}
+          element={
+            <ProtectedRoute allowedRoles={['customer']}>
+              <PaymentMethod />
+            </ProtectedRoute>
+          }
         />
 
-        <Route path="/user/saved-leads" element={<SavedLeads />} />
-        <Route path="/user/contact-center" element={<UserContactCenter />} />
-        {/* <Route path='/user/chat' element={<UserChat />} /> */}
+        <Route 
+          path="/user/saved-leads" 
+          element={
+            <ProtectedRoute allowedRoles={['customer']}>
+              <SavedLeads />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/user/contact-center" 
+          element={
+            <ProtectedRoute allowedRoles={['customer']}>
+              <UserContactCenter />
+            </ProtectedRoute>
+          } 
+        />
 
-        <Route path="/user/top-job-for-you" element={<TopJobForYou />} />
-        <Route path="/set-up-profile" element={<SetUpProfile />} />
-        <Route path="/chat" element={<ChatPage />} />
+        <Route 
+          path="/user/top-job-for-you" 
+          element={
+            <ProtectedRoute allowedRoles={['customer']}>
+              <TopJobForYou />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/set-up-profile" 
+          element={
+            <ProtectedRoute>
+              <SetUpProfile />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/chat" 
+          element={
+            <ProtectedRoute>
+              <ChatPage />
+            </ProtectedRoute>
+          } 
+        />
       </Routes>
     </Router>
   );

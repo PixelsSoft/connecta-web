@@ -8,6 +8,7 @@ import { useEffect } from "react";
 
 import AppRouter from "./Router/AppRouter";
 import { AuthProvider } from "./context/AuthContext";
+import Loader from "./components/Loader/Loader";
 
 function App() {
   useEffect(() => {
@@ -20,6 +21,7 @@ function App() {
 
   return (
     <AuthProvider>
+      <Loader />
       <AppRouter />
     </AuthProvider>
   );

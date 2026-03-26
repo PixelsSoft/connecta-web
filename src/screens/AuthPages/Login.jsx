@@ -1,62 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DefaultLayout2 from '../../components/Layouts/DefaultLayout2';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../context/AuthContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { login as loginAction, clearError } from '../../store/slices/authSlice';
 
-const Login = (e) => {
+const Login = () => {
   const navigate = useNavigate();
   const { t } = useTranslation('common');
-  const { login } = useAuth();
+  const dispatch = useDispatch();
+  const { loading, error, isAuthenticated, requiresOtp, otpEmail, user } = useSelector((state) => state.auth);
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // Test credentials for local development
-  const testUsers = {
-    // User (Service Booker) credentials
-    'user@connecta24.com': {
-      password: 'user123',
-      role: 'user',
-      userData: {
-        email: 'user@connecta24.com',
-        name: 'John User',
-        fullName: 'John User',
-      },
-    },
-    // Professional (Service Provider) credentials
-    'professional@connecta24.com': {
-      password: 'pro123',
-      role: 'professional',
-      userData: {
-        email: 'professional@connecta24.com',
-        name: 'Jane Professional',
-        fullName: 'Jane Professional',
-      },
-    },
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    // Check if credentials match test users
-    const testUser = testUsers[email.toLowerCase()];
-    
-    if (testUser && testUser.password === password) {
-      // Valid test credentials
-      const mockToken = 'mock_token_' + Date.now();
-      login(mockToken, testUser.userData, testUser.role);
-      
-      // Navigate based on role
-      if (testUser.role === 'professional') {
+  useEffect(() => {
+    if (requiresOtp && otpEmail) {
+      navigate('/verify-otp', { state: { email: otpEmail } });
+    } else if (isAuthenticated && user) {
+      // Navigate based on user type
+      if (user.user_type === 'professional') {
         navigate('/recruiter/posted-jobs');
       } else {
         navigate('/user/saved-leads');
       }
-    } else {
-      // Invalid credentials - show error
-      alert('Invalid email or password. Please use test credentials:\n\nUser: user@connecta24.com / user123\nProfessional: professional@connecta24.com / pro123');
     }
+  }, [requiresOtp, otpEmail, isAuthenticated, user, navigate]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(clearError());
+    dispatch(loginAction({ email, password }));
   };
+
   return (
     <DefaultLayout2>
       <section className='auth-sec'>
@@ -65,6 +41,11 @@ const Login = (e) => {
             <div className='col-12'>
               <div className='auth-content'>
                 <h2>{t('buttons.Title_login')}</h2>
+                {error && (
+                  <div className="alert alert-danger" role="alert">
+                    {error}
+                  </div>
+                )}
                 <form onSubmit={handleSubmit}>
                   <div className='auth-contentForm'>
                     <div className='inputGroup'>
@@ -79,6 +60,7 @@ const Login = (e) => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
+                        disabled={loading}
                       />
                     </div>
                     <div className='inputGroup'>
@@ -93,6 +75,7 @@ const Login = (e) => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
+                        disabled={loading}
                       />
                     </div>
                     <div className='forgotDiv'>
@@ -107,15 +90,16 @@ const Login = (e) => {
                           {t('forms.rememberMe')}
                         </label>
                       </div>
-                      <Link to={''} className='forgotText'>
+                      <Link to={'/forgot-password'} className='forgotText'>
                         {t('forms.forgotPassword')}
                       </Link>
                     </div>
                     <button
                       type='submit'
                       className='customBtn btn-bgRed w-100'
+                      disabled={loading}
                     >
-                      {t('buttons.signIn')}
+                      {loading ? 'Loading...' : t('buttons.signIn')}
                     </button>
                     <p className='m-0 text-center'>{t('home.or')}</p>
                     <div className='authBottom-btns'>
