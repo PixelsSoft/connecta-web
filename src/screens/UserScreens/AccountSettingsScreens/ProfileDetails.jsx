@@ -1,59 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 import UserAccountSettingLayout from '../../../components/Layouts/UserLayout/UserAccountSettingLayout';
 import { useTranslation } from 'react-i18next';
 import JobBox from '../../../components/JobBox';
 import StarRating from '../../../components/StarRating';
-import paintingHouseSmIcon from '../../../assets/images/painting-house-sm-icon.png';
-import gardeningSmIcon from '../../../assets/images/gardening-sm-icon.png';
+import axiosInstance from '../../../utils/axios';
+import { API_ENDPOINTS } from '../../../config/api';
 
 const ProfileDetails = () => {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    location: '',
+    address: '',
   });
+  const [postedJobs, setPostedJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState(false);
 
-  // Sample data for posted jobs
-  const postedJobsData = [
-    {
-      id: 1,
-      icon: paintingHouseSmIcon,
-      title: 'Painting House',
-      possition: 'Open',
-      description: `Reliable painting services – from touch-ups to complete house painting, we've got you covered.`,
-      date: '02/20/2025',
-    },
-    {
-      id: 2,
-      icon: gardeningSmIcon,
-      title: 'Gardening',
-      possition: 'Closed',
-      description: `Professional gardening services – landscaping, lawn care, and garden maintenance.`,
-      date: '02/15/2025',
-    },
-  ];
+  useEffect(() => {
+    fetchProfileData();
+  }, []);
 
-  // Sample data for reviews
-  const reviewsData = [
-    {
-      id: 1,
-      review: "Excellent service! The professional completed the job on time and exceeded expectations.",
-      rating: 5,
-      date: "February 2025",
-      professionalName: "John Smith",
-    },
-    {
-      id: 2,
-      review: "Very satisfied with the quality of work. Highly recommended!",
-      rating: 4,
-      date: "January 2025",
-      professionalName: "Sarah Johnson",
-    },
-  ];
+  const fetchProfileData = async () => {
+    try {
+      setLoading(true);
+      const response = await axiosInstance.get(API_ENDPOINTS.USERS.PROFILE);
+      
+      if (response.data.success) {
+        const userData = response.data.data;
+        setFormData({
+          name: userData.name || '',
+          email: userData.email || '',
+          phone: userData.phone || '',
+          address: userData.address || '',
+        });
+        setPostedJobs(userData.jobs || []);
+      }
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+      toast.error('Failed to load profile data');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleChanges = (event) => {
     const { name, value } = event.target;
@@ -63,11 +59,43 @@ const ProfileDetails = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // You can now send `formData` to an API or handle validation
+    
+    try {
+      setUpdating(true);
+      const response = await axiosInstance.put(
+        API_ENDPOINTS.USERS.UPDATE_PROFILE,
+        {
+          name: formData.name,
+          phone: formData.phone,
+          address: formData.address,
+        }
+      );
+
+      if (response.data.success) {
+        toast.success('Profile updated successfully!');
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      const errorMessage = error.response?.data?.message || 'Failed to update profile. Please try again.';
+      toast.error(errorMessage);
+    } finally {
+      setUpdating(false);
+    }
   };
+
+  if (loading) {
+    return (
+      <UserAccountSettingLayout>
+        <div className="text-center py-5">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </UserAccountSettingLayout>
+    );
+  }
 
   return (
     <UserAccountSettingLayout>
@@ -108,7 +136,9 @@ const ProfileDetails = () => {
                   id='email'
                   name='email'
                   value={formData.email}
-                  onChange={handleChanges}
+                  readOnly
+                  disabled
+                  style={{ backgroundColor: '#f5f5f5', cursor: 'not-allowed' }}
                 />
               </div>
             </div>
@@ -140,8 +170,8 @@ const ProfileDetails = () => {
                   className='form-control'
                   placeholder={t('profile.location')}
                   id='location'
-                  name='location'
-                  value={formData.location}
+                  name='address'
+                  value={formData.address}
                   onChange={handleChanges}
                 />
               </div>
@@ -153,15 +183,15 @@ const ProfileDetails = () => {
         <div className='mt-5 mb-4'>
           <h4 className='mb-3'>{t('profile.myPostedJobs')}</h4>
           <div className='row'>
-            {postedJobsData.length > 0 ? (
-              postedJobsData.map((item) => (
-                <div className='col-lg-6 mb-3' key={item.id}>
+            {postedJobs.length > 0 ? (
+              postedJobs.map((job) => (
+                <div className='col-lg-6 mb-3' key={job.id}>
                   <JobBox
-                    icon={item.icon}
-                    title={item.title}
-                    position={item.possition}
-                    description={item.description}
-                    date={item.date}
+                    icon={job.category?.icon || ''}
+                    title={job.title}
+                    position={job.status}
+                    description={job.description}
+                    date={new Date(job.created_at).toLocaleDateString()}
                   />
                 </div>
               ))
@@ -173,42 +203,26 @@ const ProfileDetails = () => {
           </div>
         </div>
 
-        {/* My Reviews Section */}
-        <div className='mt-5 mb-4'>
+        {/* My Reviews Section - Removed for now as we don't have reviews table yet */}
+        {/* <div className='mt-5 mb-4'>
           <h4 className='mb-3'>{t('profile.myReviews')}</h4>
           <div className='reviews-list'>
-            {reviewsData.length > 0 ? (
-              reviewsData.map((review) => (
-                <div key={review.id} className='review-item mb-4 p-3 border rounded'>
-                  <div className='review-header mb-2'>
-                    <div className='d-flex align-items-center gap-2 mb-2'>
-                      <StarRating value={review.rating} />
-                      <span className='text-muted'>{review.date}</span>
-                    </div>
-                    <p className='review-text mb-0'>{review.review}</p>
-                    <p className='review-author text-muted small mt-2 mb-0'>
-                      - {review.professionalName}
-                    </p>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className='reviews-empty-state text-center py-5'>
-                <p className='text-muted'>{t('reviews.noReviewsYet')}</p>
-              </div>
-            )}
+            <div className='reviews-empty-state text-center py-5'>
+              <p className='text-muted'>{t('reviews.noReviewsYet')}</p>
+            </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Buttons */}
         <div className='mt-4'>
-          <div className='d-flex gap-3'>
+          <div className='d-flex gap-3 flex-wrap'>
             <button
               type='button'
               onClick={handleSubmit}
               className='customBtn btn-bgRed'
+              disabled={updating}
             >
-              {t('profile.editProfile')}
+              {updating ? 'Updating...' : t('profile.editProfile')}
             </button>
             <button
               type='button'

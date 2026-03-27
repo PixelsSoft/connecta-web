@@ -22,6 +22,8 @@ export const API_ENDPOINTS = {
     SHOW: (id) => `/users/${id}`,
     UPDATE: (id) => `/users/${id}`,
     DELETE: (id) => `/users/${id}`,
+    PROFILE: '/users/profile',
+    UPDATE_PROFILE: '/users/profile/update',
   },
 
   // Professionals
