@@ -68,6 +68,29 @@ export const API_ENDPOINTS = {
     SUBSCRIBE: '/newsletter/subscribe',
     UNSUBSCRIBE: '/newsletter/unsubscribe',
   },
+
+  // Settings
+  SETTINGS: {
+    GET_ALL: '/settings',
+  },
+
+  // FAQs
+  FAQS: {
+    LIST: '/faqs',
+    SHOW: (id) => `/faqs/${id}`,
+  },
+
+  // Pages
+  PAGES: {
+    GET: (slug) => `/pages/${slug}`,
+  },
+
+  // Support Tickets
+  SUPPORT_TICKETS: {
+    LIST: '/support-tickets',
+    CREATE: '/support-tickets',
+    SHOW: (id) => `/support-tickets/${id}`,
+  },
 };
 
 export default API_BASE_URL;

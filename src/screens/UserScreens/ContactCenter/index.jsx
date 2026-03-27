@@ -1,18 +1,122 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import COLXXL10 from "../../../components/COLXXL10";
 import { LuPhone } from "react-icons/lu";
 import { FaRegEnvelope } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import UserLayout from "../../../components/Layouts/UserLayout";
 import { useTranslation } from "react-i18next";
+import axiosInstance from "../../../utils/axios";
+import { API_ENDPOINTS } from "../../../config/api";
 
 const ContactCenter = () => {
   const { t } = useTranslation("common");
   const [activeSection, setActiveSection] = useState("faqs");
+  const [contactSettings, setContactSettings] = useState({
+    contact_phone: "+44 225 25148",
+    contact_email: "info@connecta24.com",
+    contact_address: "",
+    support_hours: "Monday - Friday: 8:00 AM - 6:00 PM",
+    support_hours_weekend: "Saturday: 9:00 AM - 2:00 PM",
+  });
   const [settings, setSettings] = useState({
     language: "en",
     notifications: true,
   });
+  const [faqs, setFaqs] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [termsContent, setTermsContent] = useState("");
+  const [privacyContent, setPrivacyContent] = useState("");
+  const [ticketForm, setTicketForm] = useState({
+    subject: "",
+    category: "technical",
+    description: ""
+  });
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [openAccordion, setOpenAccordion] = useState(null);
+
+  useEffect(() => {
+    fetchSettings();
+    fetchFaqs();
+  }, []);
+
+  useEffect(() => {
+    if (activeSection === "termsConditions") {
+      fetchPage("terms-conditions");
+    } else if (activeSection === "privacyPolicy") {
+      fetchPage("privacy-policy");
+    }
+  }, [activeSection]);
+
+  useEffect(() => {
+    if (activeSection === "faqs") {
+      fetchFaqs();
+    }
+  }, [selectedCategory]);
+
+  const fetchSettings = async () => {
+    try {
+      const response = await axiosInstance.get(API_ENDPOINTS.SETTINGS.GET_ALL);
+      if (response.data.success) {
+        setContactSettings(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching settings:", error);
+    }
+  };
+
+  const fetchFaqs = async () => {
+    try {
+      const params = selectedCategory !== "all" ? { category: selectedCategory } : {};
+      const response = await axiosInstance.get(API_ENDPOINTS.FAQS.LIST, { params });
+      if (response.data.success) {
+        setFaqs(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching FAQs:", error);
+    }
+  };
+
+  const fetchPage = async (slug) => {
+    try {
+      const response = await axiosInstance.get(API_ENDPOINTS.PAGES.GET(slug));
+      if (response.data.success) {
+        if (slug === "terms-conditions") {
+          setTermsContent(response.data.data.content);
+        } else if (slug === "privacy-policy") {
+          setPrivacyContent(response.data.data.content);
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching page:", error);
+    }
+  };
+
+  const handleTicketFormChange = (e) => {
+    const { name, value } = e.target;
+    setTicketForm(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmitTicket = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axiosInstance.post(API_ENDPOINTS.SUPPORT_TICKETS.CREATE, ticketForm);
+      if (response.data.success) {
+        setSubmitSuccess(true);
+        setTicketForm({
+          subject: "",
+          category: "technical",
+          description: ""
+        });
+        setTimeout(() => setSubmitSuccess(false), 5000);
+      }
+    } catch (error) {
+      console.error("Error submitting ticket:", error);
+      alert("Failed to submit support ticket. Please try again.");
+    }
+  };
 
   const handleSettingsChange = (name, value) => {
     setSettings((prev) => ({
@@ -45,7 +149,52 @@ const ContactCenter = () => {
         return (
           <div>
             <h4 className="mb-3">{t("helpCenter.faqs")}</h4>
-            <p>{t("helpCenter.faqsContent")}</p>
+            
+            <div className="mb-4">
+              <select 
+                className="form-control form-select" 
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                style={{ maxWidth: "300px" }}
+              >
+                <option value="all">All Categories</option>
+                <option value="general">General</option>
+                <option value="account">Account</option>
+                <option value="payment">Payment</option>
+                <option value="technical">Technical</option>
+              </select>
+            </div>
+
+            {faqs.length > 0 ? (
+              <div className="accordion" id="faqAccordion">
+                {faqs.map((faq, index) => (
+                  <div className="accordion-item" key={faq.id}>
+                    <h2 className="accordion-header" id={`heading${faq.id}`}>
+                      <button
+                        className={`accordion-button ${openAccordion === faq.id ? '' : 'collapsed'}`}
+                        type="button"
+                        onClick={() => setOpenAccordion(openAccordion === faq.id ? null : faq.id)}
+                        aria-expanded={openAccordion === faq.id}
+                        aria-controls={`collapse${faq.id}`}
+                      >
+                        {faq.question}
+                      </button>
+                    </h2>
+                    <div
+                      id={`collapse${faq.id}`}
+                      className={`accordion-collapse collapse ${openAccordion === faq.id ? 'show' : ''}`}
+                      aria-labelledby={`heading${faq.id}`}
+                    >
+                      <div className="accordion-body">
+                        {faq.answer}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-muted">No FAQs available for this category.</p>
+            )}
           </div>
         );
       case "contactSupport":
@@ -63,9 +212,10 @@ const ContactCenter = () => {
                   </div>
                   <div className="contact__center-box-content">
                     <h5>
-                      <a href="tel:+44 225 25148">+44 225 25148</a>
+                      <a href={`tel:${contactSettings.contact_phone}`}>{contactSettings.contact_phone}</a>
                     </h5>
-                    <p>{t("recruiter.callDescription")}</p>
+                    <p>{contactSettings.support_hours}</p>
+                    <p className="text-muted small">{contactSettings.support_hours_weekend}</p>
                   </div>
                 </div>
               </div>
@@ -79,8 +229,8 @@ const ContactCenter = () => {
                   </div>
                   <div className="contact__center-box-content">
                     <h5>
-                      <a href="mailto:Sales@connectedforlife.com">
-                        Sales@connectedforlife.com
+                      <a href={`mailto:${contactSettings.contact_email}`}>
+                        {contactSettings.contact_email}
                       </a>
                     </h5>
                     <p>{t("recruiter.emailSalesDescription")}</p>
@@ -97,11 +247,11 @@ const ContactCenter = () => {
                   </div>
                   <div className="contact__center-box-content">
                     <h5>
-                      <a href="mailto:Admin@connectedforlife.com">
-                        Admin@connectedforlife.com
+                      <a href={`mailto:${contactSettings.contact_email}`}>
+                        {contactSettings.contact_email}
                       </a>
                     </h5>
-                    <p>{t("recruiter.emailAdminDescription")}</p>
+                    <p>{contactSettings.contact_address}</p>
                   </div>
                 </div>
               </div>
@@ -120,7 +270,14 @@ const ContactCenter = () => {
         return (
           <div>
             <h4 className="mb-3">{t("helpCenter.reportProblem")}</h4>
-            <form>
+            
+            {submitSuccess && (
+              <div className="alert alert-success" role="alert">
+                Your support ticket has been submitted successfully! We will get back to you soon.
+              </div>
+            )}
+
+            <form onSubmit={handleSubmitTicket}>
               <div className="row">
                 <div className="col-md-6 mb-3">
                   <div className="inputGroup">
@@ -131,7 +288,11 @@ const ContactCenter = () => {
                       type="text"
                       className="form-control"
                       id="problemSubject"
+                      name="subject"
+                      value={ticketForm.subject}
+                      onChange={handleTicketFormChange}
                       placeholder={t("helpCenter.enterSubject")}
+                      required
                     />
                   </div>
                 </div>
@@ -143,11 +304,15 @@ const ContactCenter = () => {
                     <select
                       className="form-control form-select"
                       id="problemCategory"
+                      name="category"
+                      value={ticketForm.category}
+                      onChange={handleTicketFormChange}
+                      required
                     >
-                      <option>{t("helpCenter.technicalIssue")}</option>
-                      <option>{t("helpCenter.accountIssue")}</option>
-                      <option>{t("helpCenter.paymentIssue")}</option>
-                      <option>{t("jobPosting.other")}</option>
+                      <option value="technical">{t("helpCenter.technicalIssue")}</option>
+                      <option value="account">{t("helpCenter.accountIssue")}</option>
+                      <option value="payment">{t("helpCenter.paymentIssue")}</option>
+                      <option value="other">{t("jobPosting.other")}</option>
                     </select>
                   </div>
                 </div>
@@ -159,8 +324,12 @@ const ContactCenter = () => {
                     <textarea
                       className="form-control"
                       id="problemDescription"
+                      name="description"
+                      value={ticketForm.description}
+                      onChange={handleTicketFormChange}
                       rows="5"
                       placeholder={t("helpCenter.describeProblem")}
+                      required
                     />
                   </div>
                 </div>
@@ -177,14 +346,22 @@ const ContactCenter = () => {
         return (
           <div>
             <h4 className="mb-3">{t("helpCenter.termsConditions")}</h4>
-            <p>{t("helpCenter.termsContent")}</p>
+            {termsContent ? (
+              <div dangerouslySetInnerHTML={{ __html: termsContent }} />
+            ) : (
+              <p>Loading...</p>
+            )}
           </div>
         );
       case "privacyPolicy":
         return (
           <div>
             <h4 className="mb-3">{t("helpCenter.privacyPolicy")}</h4>
-            <p>{t("helpCenter.privacyContent")}</p>
+            {privacyContent ? (
+              <div dangerouslySetInnerHTML={{ __html: privacyContent }} />
+            ) : (
+              <p>Loading...</p>
+            )}
           </div>
         );
       case "language":
@@ -321,9 +498,9 @@ const ContactCenter = () => {
                     </div>
                     <div className="contact__center-box-content">
                       <h5>
-                        <a href="tel:+44 225 25148">+44 225 25148</a>
+                        <a href={`tel:${contactSettings.contact_phone}`}>{contactSettings.contact_phone}</a>
                       </h5>
-                      <p>You can call us 24/7 for instant assistance</p>
+                      <p>{t("recruiter.callDescription")}</p>
                     </div>
                   </div>
                 </div>
