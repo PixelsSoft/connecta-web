@@ -38,6 +38,8 @@ import UserContactCenter from "../screens/UserScreens/ContactCenter";
 import SetUpProfile from "../screens/SetUpProfile";
 import SavedLeads from "../screens/UserScreens/SavedLeads";
 import TopJobForYou from "../screens/UserScreens/TopJobForYou";
+import UserPostedJobs from "../screens/UserScreens/PostedJobs";
+import UserJobDetail from "../screens/UserScreens/PostedJobs/JobDetail";
 
 // User And Recruiter chat Screens share same chat layout component
 // import UserChat from '../screens/UserScreens/UserChat/index.';
@@ -149,7 +151,7 @@ const AppRouter = () => {
           } 
         />
         <Route 
-          path="/recruiter/posted-jobs/detail" 
+          path="/recruiter/posted-jobs/detail/:id" 
           element={
             <ProtectedRoute allowedRoles={['professional']}>
               <JobDetail />
@@ -212,6 +214,22 @@ const AppRouter = () => {
           element={
             <ProtectedRoute allowedRoles={['customer']}>
               <SavedLeads />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/user/posted-jobs" 
+          element={
+            <ProtectedRoute allowedRoles={['customer']}>
+              <UserPostedJobs />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/user/posted-jobs/:id" 
+          element={
+            <ProtectedRoute allowedRoles={['customer']}>
+              <UserJobDetail />
             </ProtectedRoute>
           } 
         />

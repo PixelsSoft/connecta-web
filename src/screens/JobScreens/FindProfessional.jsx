@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import DefaultLayout2 from "../../components/Layouts/DefaultLayout2";
 import { useTranslation } from "react-i18next";
-import { getAllCategories } from "../../data/categoriesData";
+import { fetchCategories } from "../../store/slices/categorySlice";
 
 import paintingicon from "../../assets/images/painting-icon.png";
 import homeRepairingicon from "../../assets/images/homeRepairing-icon.png";
@@ -36,53 +37,6 @@ import InteriorAndFinishingIcon from "../../assets/images/category-icons/Interio
 import TransportAndMovingIcon from "../../assets/images/category-icons/TransportAndMoving-icon.png";
 import TechnicalAndInstallationIcon from "../../assets/images/category-icons/TechnicalAndInstallation-icon.png";
 
-// const categoryData = [
-//   {
-//     icon: paintingicon,
-//     name: 'Painting',
-//   },
-//   {
-//     icon: homeRepairingicon,
-//     name: 'Home Repairing',
-//   },
-//   {
-//     icon: gardeningicon,
-//     name: 'Gardening',
-//   },
-//   {
-//     icon: electricianicon,
-//     name: 'Electrician',
-//   },
-//   {
-//     icon: cleaningicon,
-//     name: 'Cleaning',
-//   },
-//   {
-//     icon: roofingicon,
-//     name: 'Roofing',
-//   },
-//   {
-//     icon: kitchenRepairingicon,
-//     name: 'Kitchen Repairing',
-//   },
-//   {
-//     icon: plumbingicon,
-//     name: 'Plumbing',
-//   },
-//   {
-//     icon: architecturalServicesicon,
-//     name: 'Architectural Services',
-//   },
-//   {
-//     icon: chimneyicon,
-//     name: 'Chimney',
-//   },
-//   {
-//     icon: brickLayingicon,
-//     name: 'Brick Laying',
-//   },
-// ];
-
 // Icon mapping for categories
 const iconMapping = {
   "Design & Planning": DesignAnplainingicon,
@@ -104,26 +58,27 @@ const iconMapping = {
   "Specialist Services": DesignAnplainingicon, // Default icon
 };
 
-// Get dynamic category data
-const categoryData = getAllCategories().map(category => ({
-  icon: iconMapping[category.name] || DesignAnplainingicon,
-  name: category.name,
-  value: category.name.replace(/\s+/g, '-'),
-}));
-
 const FindProfessional = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { t } = useTranslation('common');
+  const { categories, loading } = useSelector((state) => state.category);
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
+
+  // Map categories from API to display format
+  const categoryData = categories.map(category => ({
+    icon: iconMapping[category.name] || DesignAnplainingicon,
+    name: category.name,
+    value: category.slug,
+    id: category.id,
+  }));
 
   const handleSelectChange = (e) => {
     const selectedValue = e.target.value;
- 
-    // if (selectedValue === 'painting-job') {
-    //   navigate('/painting-job');
-    // }
     navigate(`/post-a-job/${selectedValue}`);
-
-    // Add more redirects if needed for other categories
   };
   return (
     <DefaultLayout2>
@@ -149,52 +104,45 @@ const FindProfessional = () => {
                       aria-label="Select job category"
                       onChange={handleSelectChange}
                       defaultValue=""
+                      disabled={loading}
                     >
                       <option value={""} disabled>
-                        {t('jobPosting.selectCategory')}
+                        {loading ? 'Loading categories...' : t('jobPosting.selectCategory')}
                       </option>
                       {categoryData.map((item, index) => (
-                     
                         <option
                           value={item.value}
-                          key={index}
+                          key={item.id || index}
                         >
                           {item.name}
                         </option>
                       ))}
-                      {/* <option value="Painting-job">Painting</option>
-                      <option value="Home-repairing">Home Repairing</option>
-                      <option value="Gardening">Gardening</option>
-                      <option value="Electrician">Electrician</option>
-                      <option value="Cleaning">Cleaning</option>
-                      <option value="Roofing">Roofing</option>
-                      <option value="Kitchen-Repairing">
-                        Kitchen Repairing
-                      </option>
-                      <option value="Plumbing">Plumbing</option>
-                      <option value="Architectural-Services">
-                        Architectural Services
-                      </option>
-                      <option value="Chimney">Chimney</option>
-                      <option value="Brick-Laying">Brick Laying</option> */}
                     </select>
                   </div>
                   <div className="mostRecentCategories">
                     <h4>{t('jobPosting.mostRecentCategories')}</h4>
-                    <div className="mostRecentCategories_boxes">
-                      {categoryData.map((item, index) => (
-                        <Link
-                          to={`/post-a-job/${item.value}`}
-                          className="mostRecentCategories_box"
-                          key={index}
-                        >
-                          <div className="mostRecentCategories_boxe-icon">
-                            <img src={item.icon} alt="" />
-                          </div>
-                          <p>{item.name}</p>
-                        </Link>
-                      ))}
-                    </div>
+                    {loading ? (
+                      <div className="text-center py-4">
+                        <div className="spinner-border text-primary" role="status">
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="mostRecentCategories_boxes">
+                        {categoryData.map((item, index) => (
+                          <Link
+                            to={`/post-a-job/${item.value}`}
+                            className="mostRecentCategories_box"
+                            key={item.id || index}
+                          >
+                            <div className="mostRecentCategories_boxe-icon">
+                              <img src={item.icon} alt={item.name} />
+                            </div>
+                            <p>{item.name}</p>
+                          </Link>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

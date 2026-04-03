@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
-import RecruiterLayout from '../../../components/Layouts/RecruiterLayout';
+import UserLayout from '../../../components/Layouts/UserLayout';
 import JobBox from '../../../components/JobBox';
 import axiosInstance from '../../../utils/axios';
 import { API_ENDPOINTS } from '../../../config/api';
@@ -11,19 +13,21 @@ import paintingHouseSmIcon from '../../../assets/images/painting-house-sm-icon.p
 
 const PostedJobs = () => {
   const { t } = useTranslation('common');
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchAvailableJobs();
+    fetchPostedJobs();
   }, []);
 
-  const fetchAvailableJobs = async () => {
+  const fetchPostedJobs = async () => {
     try {
       setLoading(true);
       const response = await axiosInstance.get(API_ENDPOINTS.JOBS.LIST, {
         params: {
-          status: 'open', // Only show open jobs
+          user_id: user?.id,
         },
       });
 
@@ -31,30 +35,34 @@ const PostedJobs = () => {
         setJobs(response.data.data.data || []);
       }
     } catch (error) {
-      console.error('Error fetching available jobs:', error);
-      toast.error('Failed to load available jobs');
+      console.error('Error fetching posted jobs:', error);
+      toast.error('Failed to load posted jobs');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleShowInterest = async (jobId) => {
+  const handleDeleteJob = async (jobId) => {
+    if (!window.confirm('Are you sure you want to delete this job?')) {
+      return;
+    }
+
     try {
-      const response = await axiosInstance.post(API_ENDPOINTS.JOBS.INTERESTED(jobId));
+      const response = await axiosInstance.delete(API_ENDPOINTS.JOBS.DELETE(jobId));
       
       if (response.data.success) {
-        toast.success('Interest shown successfully!');
-        fetchAvailableJobs(); // Refresh the list
+        toast.success('Job deleted successfully');
+        fetchPostedJobs(); // Refresh the list
       }
     } catch (error) {
-      console.error('Error showing interest:', error);
-      toast.error('Failed to show interest');
+      console.error('Error deleting job:', error);
+      toast.error('Failed to delete job');
     }
   };
 
   if (loading) {
     return (
-      <RecruiterLayout>
+      <UserLayout>
         <section className='posted__job-sec'>
           <div className='container'>
             <div className='row'>
@@ -62,17 +70,17 @@ const PostedJobs = () => {
                 <div className='spinner-border text-primary' role='status'>
                   <span className='visually-hidden'>Loading...</span>
                 </div>
-                <p className='mt-3'>Loading available jobs...</p>
+                <p className='mt-3'>Loading your posted jobs...</p>
               </div>
             </div>
           </div>
         </section>
-      </RecruiterLayout>
+      </UserLayout>
     );
   }
 
   return (
-    <RecruiterLayout>
+    <UserLayout>
       {jobs.length === 0 ? (
         <section className='no__job-posted-yet'>
           <div className='container'>
@@ -80,12 +88,15 @@ const PostedJobs = () => {
               <div className='col-md-12'>
                 <div className='no__job-posted-content'>
                   <img src={nojobicon} alt='' />
-                  <h4>{t('recruiter.noJobAvailable') || 'No Jobs Available Yet'}</h4>
+                  <h4>{t('user.noJobPostedYet') || 'No Jobs Posted Yet'}</h4>
                   <p className='text-muted mt-2'>
-                    Check back later for new job opportunities from customers.
+                    Start posting jobs to find the right professionals for your needs.
                   </p>
-                  <button className='customBtn' onClick={() => fetchAvailableJobs()}>
-                    {t('recruiter.refresh') || 'Refresh'}
+                  <button 
+                    className='customBtn mt-3' 
+                    onClick={() => navigate('/find-professionals')}
+                  >
+                    {t('user.postAJob') || 'Post a Job'}
                   </button>
                 </div>
               </div>
@@ -98,13 +109,12 @@ const PostedJobs = () => {
             <div className='row mb-4'>
               <div className='col-md-12'>
                 <div className='d-flex justify-content-between align-items-center'>
-                  <div>
-                    <h3>Available Jobs</h3>
-                    <p className='text-muted mb-0'>Browse and apply to jobs posted by customers</p>
-                  </div>
-                  <button className='btn btn-primary' onClick={() => fetchAvailableJobs()}>
-                    <i className='bi bi-arrow-clockwise me-2'></i>
-                    Refresh
+                  <h3>My Posted Jobs</h3>
+                  <button 
+                    className='btn btn-primary'
+                    onClick={() => navigate('/find-professionals')}
+                  >
+                    Post New Job
                   </button>
                 </div>
               </div>
@@ -115,12 +125,12 @@ const PostedJobs = () => {
                   <JobBox
                     icon={job.category?.image || paintingHouseSmIcon}
                     title={job.title}
-                    headerRightLabel={t('recruiter.interested')}
+                    headerRightLabel={job.status}
                     position={`Budget: ${job.budget || 'N/A'}`}
                     description={job.description}
                     date={new Date(job.created_at).toLocaleDateString()}
-                    to={`/recruiter/posted-jobs/detail/${job.id}`}
-                    onInterest={() => handleShowInterest(job.id)}
+                    to={`/user/posted-jobs/${job.id}`}
+                    onDelete={() => handleDeleteJob(job.id)}
                   />
                 </div>
               ))}
@@ -128,7 +138,7 @@ const PostedJobs = () => {
           </div>
         </section>
       )}
-    </RecruiterLayout>
+    </UserLayout>
   );
 };
 

@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 import DefaultLayout2 from "../../components/Layouts/DefaultLayout2";
 import JobPostingSec from "../../components/JobPostingSec";
 import { useTranslation } from "react-i18next";
-import {
-  categoriesData,
-  getSubcategories,
-  getQuestions,
-} from "../../data/categoriesData";
+import { fetchCategoriesWithSubcategories, fetchCategoryById } from "../../store/slices/categorySlice";
+import axiosInstance from "../../utils/axios";
+import { API_ENDPOINTS } from "../../config/api";
 import {
   getSubcategoriesFromCSV,
   getQuestionsFromCSV,
@@ -28,6 +28,10 @@ const PostaJob = () => {
   const [step, setStep] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const { category } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { categoriesWithSubcategories, loading } = useSelector((state) => state.category);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
   const [choice, setChoice] = React.useState("have");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   const [subcategoriesFromCSV, setSubcategoriesFromCSV] = useState([]);
@@ -49,30 +53,74 @@ const PostaJob = () => {
   });
   const { t } = useTranslation("common");
 
-  const navigate = useNavigate();
+  // Fetch categories with subcategories on mount
+  useEffect(() => {
+    if (categoriesWithSubcategories.length === 0) {
+      dispatch(fetchCategoriesWithSubcategories());
+    }
+  }, [dispatch, categoriesWithSubcategories.length]);
 
   const nextStep = () => setStep((prev) => prev + 1);
   const prevStep = () => setStep((prev) => prev - 1);
 
-  const handleSubmit = () => {
-    navigate("/recruiter/posted-jobs");
+  const handleSubmit = async () => {
+    // Check if user is authenticated
+    if (!isAuthenticated || !user) {
+      toast.error('Please login to post a job');
+      setShowModal(true); // Show login modal
+      return;
+    }
+
+    // Check if user is a customer (only customers can post jobs)
+    if (user.user_type !== 'customer') {
+      toast.error('Only customers can post jobs. Professionals can apply to jobs.');
+      return;
+    }
+
+    try {
+      const jobData = {
+        category_id: matched.id,
+        subcategory_id: matched.subcategories?.find(sub => sub.name === selectedSubcategory)?.id,
+        title: formData.jobTitle || `${matched.name} - ${selectedSubcategory}`,
+        description: formData.description,
+        location: formData.location || formData.address,
+        budget: formData.budget,
+        questions_answers: questionAnswers,
+      };
+
+      const response = await axiosInstance.post(API_ENDPOINTS.JOBS.CREATE, jobData);
+
+      if (response.data.success) {
+        toast.success('Job posted successfully!');
+        navigate('/user/posted-jobs');
+      }
+    } catch (error) {
+      console.error('Error posting job:', error);
+      if (error.response?.status === 401) {
+        toast.error('Please login to post a job');
+        setShowModal(true);
+      } else {
+        toast.error(error.response?.data?.message || 'Failed to post job');
+      }
+    }
   };
 
-  // Get category data dynamically - memoize to prevent recreation
-  const categoryData = useMemo(() => {
-    return Object.values(categoriesData).map((cat) => ({
-      name: cat.name,
-      value: cat.name.replace(/\s+/g, "-"),
-      subcategories: Object.values(cat.subcategories).map((sub) => sub.name),
-    }));
-  }, []);
-
-  // Find matched category - memoize to prevent re-renders
+  // Find matched category from API data
   const matched = useMemo(() => {
-    return categoryData.find((c) => c.value === category);
-  }, [category, categoryData]);
+    console.log('PostaJob - Looking for category:', category);
+    console.log('PostaJob - Available categories:', categoriesWithSubcategories);
+    
+    if (!categoriesWithSubcategories || categoriesWithSubcategories.length === 0) {
+      console.log('PostaJob - No categories loaded yet');
+      return null;
+    }
+    
+    const found = categoriesWithSubcategories.find((cat) => cat.slug === category);
+    console.log('PostaJob - Matched category:', found);
+    return found;
+  }, [category, categoriesWithSubcategories]);
 
-  // Load subcategories from CSV when component mounts or category changes
+  // Load subcategories when component mounts or category changes
   useEffect(() => {
     const loadSubcategories = async () => {
       if (!matched?.name) return;
@@ -83,30 +131,26 @@ const PostaJob = () => {
       setQuestionAnswers({}); // Clear answers
 
       try {
-        const csvSubcategories = await getSubcategoriesFromCSV(matched.name);
-        if (csvSubcategories.length > 0) {
-          setSubcategoriesFromCSV(csvSubcategories);
+        // Use subcategories from API
+        if (matched.subcategories && matched.subcategories.length > 0) {
+          setSubcategoriesFromCSV(matched.subcategories.map(sub => ({ name: sub.name })));
         } else {
-          // Fallback to hardcoded subcategories
-          const fallbackSubcategories = getSubcategories(matched.name);
-          setSubcategoriesFromCSV(
-            fallbackSubcategories.map((sub) => ({ name: sub.name }))
-          );
+          // Try CSV as fallback
+          const csvSubcategories = await getSubcategoriesFromCSV(matched.name);
+          if (csvSubcategories.length > 0) {
+            setSubcategoriesFromCSV(csvSubcategories);
+          }
         }
       } catch (error) {
         console.error("Error loading subcategories:", error);
-        // Fallback to hardcoded subcategories
-        const fallbackSubcategories = getSubcategories(matched.name);
-        setSubcategoriesFromCSV(
-          fallbackSubcategories.map((sub) => ({ name: sub.name }))
-        );
+        setSubcategoriesFromCSV([]);
       } finally {
         setLoadingSubcategories(false);
       }
     };
 
     loadSubcategories();
-  }, [matched?.name]); // Only depend on the category name
+  }, [matched]);
 
   // Handle subcategory selection
   const handleSubcategoryChange = async (subcategoryName) => {
@@ -120,52 +164,35 @@ const PostaJob = () => {
     setSelectedSubcategory(subcategoryName);
     setQuestions([]); // Clear previous questions
     setQuestionAnswers({}); // Clear previous answers
-    const categoryName = matched?.name;
-
-    if (!categoryName) {
-      console.error("No category name found");
+    
+    const categoryId = matched?.id;
+    const subcategory = matched?.subcategories?.find(sub => sub.name === subcategoryName);
+    
+    if (!categoryId || !subcategory) {
+      console.error("Category or subcategory not found");
       return;
     }
 
     setLoadingQuestions(true);
     try {
-      console.log(
-        `[PostaJob] Loading questions for: ${categoryName} -> ${subcategoryName}`
+      console.log(`[PostaJob] Loading questions for category ${categoryId}, subcategory ${subcategory.id}`);
+      
+      // Fetch questions from API
+      const response = await axiosInstance.get(
+        API_ENDPOINTS.CATEGORIES.QUESTIONS(categoryId, subcategory.id)
       );
-      // Try to load from CSV first
-      const csvQuestions = await getQuestionsFromCSV(
-        categoryName,
-        subcategoryName
-      );
-      console.log(`[PostaJob] CSV questions found: ${csvQuestions.length}`);
-
-      if (csvQuestions.length > 0) {
-        setQuestions(csvQuestions);
+      
+      if (response.data.success && response.data.data) {
+        const apiQuestions = response.data.data.map(q => q.question);
+        console.log(`[PostaJob] API questions found: ${apiQuestions.length}`);
+        setQuestions(apiQuestions);
       } else {
-        console.log("[PostaJob] No CSV questions, trying fallback...");
-        // Fallback to hardcoded questions
-        const fallbackQuestions = getQuestions(categoryName, subcategoryName);
-        console.log(
-          `[PostaJob] Fallback questions found: ${fallbackQuestions.length}`
-        );
-        if (fallbackQuestions.length > 0) {
-          setQuestions(fallbackQuestions);
-        } else {
-          console.warn(
-            `[PostaJob] No questions found for ${categoryName} -> ${subcategoryName}`
-          );
-        }
+        console.log("[PostaJob] No questions found in API response");
+        setQuestions([]);
       }
     } catch (error) {
       console.error("[PostaJob] Error loading questions:", error);
-      // Fallback to hardcoded questions
-      try {
-        const fallbackQuestions = getQuestions(categoryName, subcategoryName);
-        setQuestions(fallbackQuestions);
-      } catch (fallbackError) {
-        console.error("[PostaJob] Fallback also failed:", fallbackError);
-        setQuestions([]);
-      }
+      setQuestions([]);
     } finally {
       setLoadingQuestions(false);
     }
@@ -188,8 +215,31 @@ const PostaJob = () => {
     }));
   };
 
+  if (loading && categoriesWithSubcategories.length === 0) {
+    return (
+      <DefaultLayout2>
+        <div className="container text-center py-5">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <p className="mt-3">Loading categories...</p>
+        </div>
+      </DefaultLayout2>
+    );
+  }
+
   if (!matched) {
-    return <div>Unknown category: {category}</div>;
+    return (
+      <DefaultLayout2>
+        <div className="container text-center py-5">
+          <h3>Category not found</h3>
+          <p>The category "{category}" does not exist.</p>
+          <Link to="/find-professional" className="btn btn-primary">
+            Back to Categories
+          </Link>
+        </div>
+      </DefaultLayout2>
+    );
   }
 
   return (
@@ -223,9 +273,9 @@ const PostaJob = () => {
                         {item.name}
                       </option>
                     ))
-                  : matched.subcategories.map((item, index) => (
-                      <option value={item} key={index}>
-                        {item}
+                  : matched.subcategories && matched.subcategories.map((item, index) => (
+                      <option value={item.name} key={index}>
+                        {item.name}
                       </option>
                     ))}
               </select>
@@ -747,44 +797,42 @@ const PostaJob = () => {
         </JobPostingSec>
       )}
 
-      {/* Modal only shows when showModal is true - removed auto-opening */}
+      {/* Login Modal */}
       <CustomModal
         show={showModal}
         onHide={() => setShowModal(false)}
-        title={t("jobPosting.verificationRequired")}
-        body={
-          <div>
-            <p>{t("jobPosting.verificationText")}</p>
-            <div className="inputGroup mt-3">
-              <label className="form-label fw-600">{t("forms.otpCode")}</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder={t("forms.otpCode")}
-              />
-            </div>
-            <p className="text-muted small mt-2">
-              {t("jobPosting.otpHelpText")}
-            </p>
-          </div>
-        }
-        footer={
-          <div className="d-flex justify-content-end gap-2">
+        title="Login Required"
+      >
+        <div className="text-center py-3">
+          <p className="mb-4">You need to be logged in to post a job.</p>
+          <div className="d-flex flex-column gap-3">
             <button
-              className="btn btn-outline-secondary"
-              onClick={() => setShowModal(false)}
+              className="btn btn-primary w-100"
+              onClick={() => {
+                setShowModal(false);
+                navigate('/login', { state: { from: window.location.pathname } });
+              }}
             >
-              {t("buttons.cancel")}
+              Login
             </button>
             <button
-              className="btn btn-primary"
+              className="btn btn-outline-primary w-100"
+              onClick={() => {
+                setShowModal(false);
+                navigate('/register', { state: { from: window.location.pathname } });
+              }}
+            >
+              Create Account
+            </button>
+            <button
+              className="btn btn-secondary w-100"
               onClick={() => setShowModal(false)}
             >
-              {t("buttons.verify")}
+              Cancel
             </button>
           </div>
-        }
-      />
+        </div>
+      </CustomModal>
     </DefaultLayout2>
   );
 };

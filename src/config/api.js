@@ -48,8 +48,12 @@ export const API_ENDPOINTS = {
   // Categories
   CATEGORIES: {
     LIST: '/categories',
+    ALL_WITH_SUBCATEGORIES: '/categories/all-with-subcategories',
     SHOW: (id) => `/categories/${id}`,
     SUBCATEGORIES: (id) => `/categories/${id}/subcategories`,
+    BY_SLUG: (slug) => `/categories/slug/${slug}`,
+    QUESTIONS: (categoryId, subcategoryId) => `/categories/${categoryId}/subcategories/${subcategoryId}/questions`,
+    QUESTIONS_BY_SLUG: (categorySlug, subcategorySlug) => `/categories/${categorySlug}/subcategories/${subcategorySlug}/questions-by-slug`,
   },
 
   // Transactions
