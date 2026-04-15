@@ -4,13 +4,14 @@ import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import UserLayout from '../../../components/Layouts/UserLayout';
 import StarRating from '../../../components/StarRating';
-import InterestedProBox from '../../../components/InterestedProBox';
 import DashboardFooter from '../../../components/Layouts/DashboardFooter';
 import axiosInstance from '../../../utils/axios';
 import { API_ENDPOINTS } from '../../../config/api';
 
 import recruiterjobdetailbanner from '../../../assets/images/recruiter-job-detail-banner.png';
 import editIcon from '../../../assets/images/edit-icon.png';
+import proCheckIcon from '../../../assets/images/applied-check.png';
+import defaultUserImg from '../../../assets/images/interested-pro-img.png';
 import interestedProImg from '../../../assets/images/interested-pro-img.png';
 
 const JobDetail = () => {
@@ -231,21 +232,66 @@ const JobDetail = () => {
               <div className='interested-pro'>
                 <div className='interested-pro-head'>
                   <h3>Interested Professionals</h3>
-                  <p>Total Interest: {interestedPros.length}</p>
+                  <p>Total Interest: {job.interested_count || 0}</p>
                 </div>
 
                 <div className='row'>
-                  {interestedPros.length > 0 ? (
-                    interestedPros.map((pro, index) => (
+                  {job.interests && job.interests.length > 0 ? (
+                    job.interests.map((interest, index) => (
                       <div className='col-xl-12 col-md-6 mb-3' key={index}>
-                        <InterestedProBox
-                          userImg={pro.userImg}
-                          userName={pro.userName}
-                          ratingValue={pro.ratingValue}
-                          ratingValueText={pro.ratingValueText}
-                          topProLabel={pro.topProLabel}
-                          description={pro.description}
-                        />
+                        <div className='interested-pro-box'>
+                          <div className='interestedProBox-head'>
+                            <div className='interestedProBox-head-left'>
+                              <img 
+                                src={interest.professional?.profile_image || defaultUserImg} 
+                                alt={interest.professional?.name || 'Professional'} 
+                              />
+                              <div className='interestedProBox-user'>
+                                <h4>{interest.professional?.name || 'N/A'}</h4>
+                                <div className='interestedProBox-rating'>
+                                  <StarRating value={4.5} />
+                                  <span>4.5/5</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className='interestedProBox-head-right'>
+                              <img src={proCheckIcon} alt='' />
+                              <h5>Professional</h5>
+                            </div>
+                          </div>
+                          <p className='interestedProBox-body'>
+                            {interest.professional?.email || 'No email provided'}
+                            {interest.professional?.phone && (
+                              <>
+                                <br />
+                                <i className='bi bi-telephone me-2'></i>
+                                {interest.professional.phone}
+                              </>
+                            )}
+                            <br />
+                            <small className='text-muted'>
+                              Interested on {new Date(interest.created_at).toLocaleDateString()}
+                            </small>
+                          </p>
+                          <div className='d-flex gap-2'>
+                            <button
+                              className='customBtn btn-bgRed flex-fill text-center'
+                              onClick={() => navigate('/chat', { 
+                                state: { userId: interest.professional_id } 
+                              })}
+                            >
+                              <i className='bi bi-chat-dots me-2'></i>
+                              Start Chat
+                            </button>
+                            <button
+                              className='customBtn btn-outline flex-fill text-center'
+                              onClick={() => navigate(`/professional/${interest.professional_id}`)}
+                            >
+                              <i className='bi bi-person me-2'></i>
+                              View Profile
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     ))
                   ) : (

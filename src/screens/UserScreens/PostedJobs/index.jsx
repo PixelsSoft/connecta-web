@@ -125,7 +125,7 @@ const PostedJobs = () => {
                   <JobBox
                     icon={job.category?.image || paintingHouseSmIcon}
                     title={job.title}
-                    headerRightLabel={job.status}
+                    headerRightLabel={`${job.interested_count || 0} Interested`}
                     position={`Budget: ${job.budget || 'N/A'}`}
                     description={job.description}
                     date={new Date(job.created_at).toLocaleDateString()}

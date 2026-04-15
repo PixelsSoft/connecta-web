@@ -14,6 +14,7 @@ const JobDetail = () => {
   const navigate = useNavigate();
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [hasShownInterest, setHasShownInterest] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -28,6 +29,7 @@ const JobDetail = () => {
 
       if (response.data.success) {
         setJob(response.data.data);
+        setHasShownInterest(response.data.data.user_interested || false);
       }
     } catch (error) {
       console.error('Error fetching job detail:', error);
@@ -44,10 +46,28 @@ const JobDetail = () => {
       
       if (response.data.success) {
         toast.success('Interest shown successfully!');
+        setHasShownInterest(true);
+        fetchJobDetail(); // Refresh to get updated count
       }
     } catch (error) {
       console.error('Error showing interest:', error);
-      toast.error('Failed to show interest');
+      const message = error.response?.data?.message || 'Failed to show interest';
+      toast.error(message);
+    }
+  };
+
+  const handleRemoveInterest = async () => {
+    try {
+      const response = await axiosInstance.delete(API_ENDPOINTS.JOBS.INTERESTED(id));
+      
+      if (response.data.success) {
+        toast.success('Interest removed successfully!');
+        setHasShownInterest(false);
+        fetchJobDetail(); // Refresh to get updated count
+      }
+    } catch (error) {
+      console.error('Error removing interest:', error);
+      toast.error('Failed to remove interest');
     }
   };
 
@@ -134,10 +154,17 @@ const JobDetail = () => {
                     {job.budget && <p className='mb-0'><i className='bi bi-currency-dollar me-2'></i>{job.budget}</p>}
                   </div>
                   <div className='jobDetail-headRight'>
-                    <button className='customBtn btn-primary' onClick={handleShowInterest}>
-                      <i className='bi bi-hand-thumbs-up me-2'></i>
-                      <span>Show Interest</span>
-                    </button>
+                    {hasShownInterest ? (
+                      <button className='customBtn btn-secondary' onClick={handleRemoveInterest}>
+                        <i className='bi bi-hand-thumbs-up-fill me-2'></i>
+                        <span>Interest Shown</span>
+                      </button>
+                    ) : (
+                      <button className='customBtn btn-primary' onClick={handleShowInterest}>
+                        <i className='bi bi-hand-thumbs-up me-2'></i>
+                        <span>Show Interest</span>
+                      </button>
+                    )}
                   </div>
                 </div>
                 <div className='recruiter__job-detail-content-overview'>
@@ -193,10 +220,20 @@ const JobDetail = () => {
                             <small className='text-muted'><i className='bi bi-telephone me-2'></i>{job.user.phone}</small>
                           </div>
                         )}
-                        <button className='btn btn-primary w-100 mt-3' onClick={handleShowInterest}>
-                          <i className='bi bi-hand-thumbs-up me-2'></i>
-                          Show Interest
-                        </button>
+                        <div className='mt-3 mb-3'>
+                          <strong className='text-primary'>{job.interested_count || 0} professionals interested</strong>
+                        </div>
+                        {hasShownInterest ? (
+                          <button className='btn btn-secondary w-100' onClick={handleRemoveInterest}>
+                            <i className='bi bi-hand-thumbs-up-fill me-2'></i>
+                            Remove Interest
+                          </button>
+                        ) : (
+                          <button className='btn btn-primary w-100' onClick={handleShowInterest}>
+                            <i className='bi bi-hand-thumbs-up me-2'></i>
+                            Show Interest
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>

@@ -115,12 +115,11 @@ const PostedJobs = () => {
                   <JobBox
                     icon={job.category?.image || paintingHouseSmIcon}
                     title={job.title}
-                    headerRightLabel={t('recruiter.interested')}
+                    headerRightLabel={`${job.interested_count || 0} Interested`}
                     position={`Budget: ${job.budget || 'N/A'}`}
                     description={job.description}
                     date={new Date(job.created_at).toLocaleDateString()}
                     to={`/recruiter/posted-jobs/detail/${job.id}`}
-                    onInterest={() => handleShowInterest(job.id)}
                   />
                 </div>
               ))}
