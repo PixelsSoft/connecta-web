@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Home from "../screens/Home";
 import Login from "../screens/AuthPages/Login";
 import SignUP from "../screens/AuthPages/SignUP";
@@ -44,9 +45,25 @@ import UserJobDetail from "../screens/UserScreens/PostedJobs/JobDetail";
 // User And Recruiter chat Screens share same chat layout component
 // import UserChat from '../screens/UserScreens/UserChat/index.';
 // import RecruiterChat from '../screens/RecruiterScreens/RecruiterChat';
-import ChatPage from "../screens/ChatPage";
+import ChatLayout from "../components/ChatLayout";
+import UserLayout from "../components/Layouts/UserLayout";
+import RecruiterLayout from "../components/Layouts/RecruiterLayout";
 import PostaJob from "../screens/JobScreens/PostaJob";
 import BookService from "../screens/JobScreens/BookService";
+
+// Chat wrapper component to handle layout based on user type
+const ChatLayoutWrapper = () => {
+  const { user } = useSelector((state) => state.auth);
+  const Layout = user?.user_type === 'professional' ? RecruiterLayout : UserLayout;
+  
+  return (
+    <Layout>
+      <div className='chatScreen-page'>
+        <ChatLayout />
+      </div>
+    </Layout>
+  );
+};
 
 const AppRouter = () => {
   return (
@@ -262,7 +279,7 @@ const AppRouter = () => {
           path="/chat" 
           element={
             <ProtectedRoute>
-              <ChatPage />
+              <ChatLayoutWrapper />
             </ProtectedRoute>
           } 
         />

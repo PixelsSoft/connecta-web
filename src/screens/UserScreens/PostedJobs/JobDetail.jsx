@@ -277,7 +277,21 @@ const JobDetail = () => {
                             <button
                               className='customBtn btn-bgRed flex-fill text-center'
                               onClick={() => navigate('/chat', { 
-                                state: { userId: interest.professional_id } 
+                                state: { 
+                                  userId: interest.professional_id,
+                                  userName: interest.professional?.name,
+                                  userEmail: interest.professional?.email,
+                                  userAvatar: interest.professional?.profile_image || null,
+                                  userType: 'professional',
+                                  jobDetails: {
+                                    title: job?.title || null,
+                                    description: job?.description || null,
+                                    budget: job?.budget || null,
+                                    location: job?.location || null,
+                                    category: job?.category?.name || null,
+                                    subcategory: job?.subcategory?.name || null
+                                  }
+                                } 
                               })}
                             >
                               <i className='bi bi-chat-dots me-2'></i>

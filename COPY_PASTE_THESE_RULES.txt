@@ -1,0 +1,29 @@
+========================================
+COPY THESE FIRESTORE RULES
+========================================
+
+Step 1: Go to this URL:
+https://console.firebase.google.com/project/connecta24-b27c0/firestore/rules
+
+Step 2: DELETE EVERYTHING in the rules editor
+
+Step 3: COPY and PASTE these rules:
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
+
+Step 4: Click the "Publish" button (top right)
+
+Step 5: Wait 30 seconds
+
+Step 6: Refresh your app and test chat
+
+========================================
+THAT'S IT! Chat will work after this.
+========================================
