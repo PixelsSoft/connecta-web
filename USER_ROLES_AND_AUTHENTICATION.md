@@ -6,8 +6,8 @@ This document describes the user role system and authentication flow implemented
 
 ## User Roles
 
-### 1. User (Service Bookers)
-- **Role Identifier**: `user`
+### 1. Customer (Service Bookers)
+- **Role Identifier**: `customer`
 - **Description**: Users who book and request services from professionals
 - **Default Navigation**: `/user/saved-leads`
 - **Dashboard Access**: User Dashboard
@@ -27,7 +27,7 @@ This document describes the user role system and authentication flow implemented
 3. System authenticates user (API call)
 4. System retrieves user role from API response
 5. User is redirected based on role:
-   - **User**: `/user/saved-leads`
+   - **Customer**: `/user/saved-leads`
    - **Professional**: `/recruiter/posted-jobs`
 
 ### Sign Up Process
@@ -41,7 +41,7 @@ This document describes the user role system and authentication flow implemented
    - **Role Selection**: User or Professional
 3. System creates account with selected role
 4. User is redirected based on selected role:
-   - **User**: `/user/saved-leads`
+   - **Customer**: `/user/saved-leads`
    - **Professional**: `/recruiter/posted-jobs`
 
 ### Logout Process

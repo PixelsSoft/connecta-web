@@ -43,6 +43,18 @@ export const API_ENDPOINTS = {
     DELETE: (id) => `/jobs/${id}`,
     INTERESTED: (id) => `/jobs/${id}/interested`,
     SHORTLIST: (id) => `/jobs/${id}/shortlist`,
+    MARK_COMPLETE: (id) => `/jobs/${id}/mark-complete`,
+    CONFIRM_COMPLETION: (id) => `/jobs/${id}/confirm-completion`,
+    QUOTES: (jobId) => `/jobs/${jobId}/quotes`,
+    QUOTE_ACCEPT: (jobId, quoteId) => `/jobs/${jobId}/quotes/${quoteId}/accept`,
+    QUOTE_REJECT: (jobId, quoteId) => `/jobs/${jobId}/quotes/${quoteId}/reject`,
+  },
+
+  PAYMENTS: {
+    INTENT: '/payments/intent',
+    CONFIRM: '/payments/confirm',
+    CHECKOUT: '/payments/checkout',
+    VERIFY: '/payments/verify',
   },
 
   // Categories
@@ -60,13 +72,6 @@ export const API_ENDPOINTS = {
   TRANSACTIONS: {
     LIST: '/transactions',
     SHOW: (id) => `/transactions/${id}`,
-  },
-
-  // Messages
-  MESSAGES: {
-    LIST: '/messages',
-    SEND: '/messages',
-    CONVERSATION: (userId) => `/messages/conversation/${userId}`,
   },
 
   // Newsletter

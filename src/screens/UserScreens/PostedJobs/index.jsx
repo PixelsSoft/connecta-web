@@ -32,7 +32,7 @@ const PostedJobs = () => {
       });
 
       if (response.data.success) {
-        setJobs(response.data.data.data || []);
+        setJobs(response.data.data.jobs || []);
       }
     } catch (error) {
       console.error('Error fetching posted jobs:', error);
@@ -129,6 +129,8 @@ const PostedJobs = () => {
                     position={`Budget: ${job.budget || 'N/A'}`}
                     description={job.description}
                     date={new Date(job.created_at).toLocaleDateString()}
+                    status={job.status}
+                    paymentStatus={job.payment_status}
                     to={`/user/posted-jobs/${job.id}`}
                     onDelete={() => handleDeleteJob(job.id)}
                   />

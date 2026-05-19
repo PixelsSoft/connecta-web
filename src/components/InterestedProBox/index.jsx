@@ -1,9 +1,26 @@
 import StarRating from '../StarRating';
+import { useNavigate } from 'react-router-dom';
 
 import proCheckIcon from '../../assets/images/applied-check.png';
-import { Link } from 'react-router-dom';
 
 const InterestedProBox = (props) => {
+  const navigate = useNavigate();
+
+  const handleStartChat = () => {
+    if (!props.professionalId) return;
+
+    navigate('/chat', {
+      state: {
+        userId: props.professionalId,
+        userName: props.userName,
+        userEmail: props.userEmail || '',
+        userAvatar: props.userAvatar || null,
+        userType: 'professional',
+        jobDetails: props.jobDetails || null,
+      },
+    });
+  };
+
   return (
     <div className='interested-pro-box'>
       <div className='interestedProBox-head'>
@@ -23,12 +40,13 @@ const InterestedProBox = (props) => {
         </div>
       </div>
       <p className='interestedProBox-body'>{props.description}</p>
-      <Link
-        to={'/recruiter/chat'}
+      <button
+        type='button'
+        onClick={handleStartChat}
         className='customBtn btn-bgRed w-100 text-center'
       >
         Start Chat
-      </Link>
+      </button>
     </div>
   );
 };

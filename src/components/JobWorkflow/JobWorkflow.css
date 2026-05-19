@@ -1,0 +1,163 @@
+.job-progress {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 1rem 1.25rem;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #eee;
+}
+
+.job-progress__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 72px;
+  opacity: 0.45;
+}
+
+.job-progress__step.active,
+.job-progress__step.done {
+  opacity: 1;
+}
+
+.job-progress__dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f0f0f0;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.job-progress__step.active .job-progress__dot {
+  background: #e63946;
+  color: #fff;
+}
+
+.job-progress__step.done .job-progress__dot {
+  background: #198754;
+  color: #fff;
+}
+
+.job-progress__label {
+  font-size: 11px;
+  text-align: center;
+  color: #555;
+  line-height: 1.2;
+}
+
+.job-progress__line {
+  flex: 1;
+  min-width: 24px;
+  height: 2px;
+  background: #e0e0e0;
+  margin: 0 4px 18px;
+}
+
+.job-progress__line.done {
+  background: #198754;
+}
+
+.quote-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.quote-card--accepted {
+  border-color: #198754;
+  background: #f8fff9;
+}
+
+.quote-card__amount {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #e63946;
+}
+
+.quote-card__meta {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.job-deal-box {
+  background: linear-gradient(135deg, #fff5f5 0%, #fff 100%);
+  border: 1px solid #f5c2c7;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.job-deal-box h4 {
+  margin-bottom: 0.75rem;
+}
+
+.payment-result-sec {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 0;
+}
+
+.payment-result-card {
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+  background: #fff;
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.payment-result-card .icon-success {
+  font-size: 4rem;
+  color: #198754;
+}
+
+.payment-result-card .icon-cancel {
+  font-size: 4rem;
+  color: #e63946;
+}
+
+.payment-modal .modal-content {
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.payment-modal .modal-title {
+  font-weight: 700;
+}
+
+.payment-modal-amount {
+  font-size: 1.1rem;
+  padding: 0.75rem 1rem;
+  background: #fff5f5;
+  border-radius: 8px;
+  border: 1px solid #f5c2c7;
+}
+
+.payment-element-wrap {
+  padding: 0.25rem 0;
+  min-height: 120px;
+}
+
+.payment-modal-form .customBtn {
+  min-width: 120px;
+}
+
+.job__box-status .badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}

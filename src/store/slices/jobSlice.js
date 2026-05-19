@@ -63,6 +63,20 @@ export const markInterested = createAsyncThunk(
   }
 );
 
+export const shortlistProfessional = createAsyncThunk(
+  'job/shortlistProfessional',
+  async ({ jobId, professionalId }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(API_ENDPOINTS.JOBS.SHORTLIST(jobId), {
+        professional_id: professionalId,
+      });
+      return { ...response.data, jobId, professionalId };
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { message: 'Failed to update shortlist' });
+    }
+  }
+);
+
 const jobSlice = createSlice({
   name: 'job',
   initialState,
@@ -84,8 +98,9 @@ const jobSlice = createSlice({
       })
       .addCase(fetchJobs.fulfilled, (state, action) => {
         state.loading = false;
-        state.jobs = action.payload.data.jobs;
-        state.pagination = action.payload.data.pagination || state.pagination;
+        const payload = action.payload?.data || {};
+        state.jobs = payload.jobs || [];
+        state.pagination = payload.pagination || state.pagination;
       })
       .addCase(fetchJobs.rejected, (state, action) => {
         state.loading = false;
@@ -100,7 +115,8 @@ const jobSlice = createSlice({
       })
       .addCase(createJob.fulfilled, (state, action) => {
         state.loading = false;
-        state.jobs.unshift(action.payload.data.job);
+        const job = action.payload?.data?.job;
+        if (job) state.jobs.unshift(job);
       })
       .addCase(createJob.rejected, (state, action) => {
         state.loading = false;
@@ -115,7 +131,7 @@ const jobSlice = createSlice({
       })
       .addCase(fetchJobById.fulfilled, (state, action) => {
         state.loading = false;
-        state.currentJob = action.payload.data.job;
+        state.currentJob = action.payload?.data?.job || null;
       })
       .addCase(fetchJobById.rejected, (state, action) => {
         state.loading = false;
@@ -124,9 +140,20 @@ const jobSlice = createSlice({
 
     // Mark Interested
     builder
-      .addCase(markInterested.fulfilled, (state, action) => {
+      .addCase(markInterested.fulfilled, (state) => {
         if (state.currentJob) {
-          state.currentJob.is_interested = true;
+          state.currentJob.user_interested = true;
+        }
+      })
+      .addCase(shortlistProfessional.fulfilled, (state, action) => {
+        if (!state.currentJob?.interests) return;
+        const { professionalId } = action.meta.arg;
+        const status = action.payload?.data?.status;
+        const interest = state.currentJob.interests.find(
+          (i) => i.professional_id === professionalId
+        );
+        if (interest && status) {
+          interest.status = status;
         }
       });
   },

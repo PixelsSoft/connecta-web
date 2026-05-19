@@ -97,6 +97,47 @@ export const getOrCreateConversation = async (userId1, userId2, user1Data, user2
   }
 };
 
+// Send a message
+export const sendMessage = async (conversationId, senderId, senderName, message, type = 'text', fileUrl = null) => {
+  try {
+    checkFirebase();
+
+    const conversationRef = doc(db, 'conversations', conversationId);
+    const conversationSnap = await getDoc(conversationRef);
+
+    if (!conversationSnap.exists()) {
+      throw new Error('Conversation not ready. Please wait a moment and try again.');
+    }
+
+    const conversationData = conversationSnap.data();
+    const messagesRef = collection(db, 'conversations', conversationId, 'messages');
+
+    await addDoc(messagesRef, {
+      senderId,
+      senderName,
+      message,
+      type,
+      fileUrl,
+      timestamp: serverTimestamp(),
+      read: false,
+    });
+
+    const otherUserId = conversationData.participants?.find(id => id !== senderId);
+    if (otherUserId) {
+      await updateDoc(conversationRef, {
+        lastMessage: type === 'text' ? message : `Sent a ${type}`,
+        lastMessageTime: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+        [`unreadCount.${otherUserId}`]: (conversationData.unreadCount?.[otherUserId] || 0) + 1,
+      });
+    }
+
+    return true;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // Upload file to Firebase Storage
 export const uploadFile = async (file, conversationId) => {
   try {

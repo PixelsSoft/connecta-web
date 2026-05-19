@@ -132,6 +132,10 @@
     "logout": "Logout",
     "contactDetails": "Contact Details",
     "interested": "Interested",
+    "interestShown": "Interest Shown",
+    "shortlisted": "Shortlisted",
+    "contactAfterInterest": "You are on the client list. They can shortlist you to share contact details.",
+    "contactVisibleShortlisted": "You have been shortlisted. Contact details are now visible.",
     "contactDescription": "It will appear once a client shortlists you. For now, click 'Interested' to be added to the client list.",
     "or": "or"
   },
@@ -209,6 +213,8 @@
     "satisfiedClients": "825,000+ Satisfied Clients trust Connecta24 for quality service"
   },
   "recruiter": {
+    "savedLeads": "Saved Leads",
+    "noJobAvailable": "No Jobs Available Yet",
     "noJobPostedYet": "No Job Posted Yet!",
     "refresh": "Refresh",
     "interested": "Interested",

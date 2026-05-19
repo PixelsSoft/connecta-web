@@ -50,6 +50,8 @@ import UserLayout from "../components/Layouts/UserLayout";
 import RecruiterLayout from "../components/Layouts/RecruiterLayout";
 import PostaJob from "../screens/JobScreens/PostaJob";
 import BookService from "../screens/JobScreens/BookService";
+import PaymentSuccess from "../screens/Payment/PaymentSuccess";
+import PaymentCancel from "../screens/Payment/PaymentCancel";
 
 // Chat wrapper component to handle layout based on user type
 const ChatLayoutWrapper = () => {
@@ -81,6 +83,8 @@ const AppRouter = () => {
 
         <Route path="/post-a-job/:category" element={<PostaJob />} />
         <Route path="/book-service/:service" element={<BookService />} />
+        <Route path="/payment/success" element={<PaymentSuccess />} />
+        <Route path="/payment/cancel" element={<PaymentCancel />} />
 
         {/* Find Jobs || Find Professionls */}
         <Route path="/find-professionals" element={<FindProfessional />} />

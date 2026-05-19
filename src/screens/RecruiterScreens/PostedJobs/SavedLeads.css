@@ -1,0 +1,232 @@
+/* Professional Saved Leads — layout polish */
+
+.seved__lead-sec .seved__lead-leftCol {
+  border-right: 1px solid #07242b33;
+  padding-right: 24px;
+}
+
+.seved__lead-sec .col-xl-5 {
+  padding-left: 28px;
+  padding-right: 28px;
+  border-right: 1px solid #07242b33;
+}
+
+.seved__lead-content-head .greenColor {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.seved__lead-search .travelForWork-search-box .form-control {
+  border: 1px solid #a4b1ab;
+  border-radius: 0;
+  font-size: 14px;
+}
+
+.seved__lead-search .travelForWork-search-box .filterBtn:hover {
+  background-color: var(--greenColor);
+  border-color: var(--greenColor);
+  color: #fff;
+}
+
+.seved__lead-left .job__box {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.seved__lead-left .job__box:hover {
+  border-color: #a4b1ab;
+  box-shadow: 0 2px 8px rgba(7, 36, 43, 0.08);
+}
+
+.seved__lead-left .job__box-active {
+  border-color: var(--greenColor);
+  border-width: 2px;
+  box-shadow: 0 0 0 1px rgba(38, 71, 43, 0.12);
+}
+
+/* Right panel */
+.savedLeadContact-content {
+  border: 1px solid #dedede;
+  box-shadow: 0 4px 16px rgba(7, 36, 43, 0.06);
+}
+
+.savedLeadContact-Detail {
+  background-color: #07242b;
+  margin: -16px -16px 0;
+  border-radius: 12px 12px 0 0;
+}
+
+.savedLeadContact-Detail .saved-lead-interest-btn {
+  background-color: var(--redColor);
+  border: 2px solid var(--redColor);
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 14px 20px;
+  border-radius: 10px;
+  margin-top: 8px;
+  transition: background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.savedLeadContact-Detail .saved-lead-interest-btn:hover:not(:disabled) {
+  background-color: #9a0d22;
+  border-color: #9a0d22;
+  color: #fff;
+}
+
+.savedLeadContact-Detail .saved-lead-interest-btn:disabled {
+  opacity: 0.75;
+  cursor: wait;
+}
+
+.savedLeadContact-Detail .saved-lead-interest-btn--done {
+  background-color: var(--greenColor);
+  border-color: var(--greenColor);
+  color: #fff;
+  cursor: pointer;
+}
+
+.savedLeadContact-Detail .saved-lead-interest-btn--done:hover:not(:disabled) {
+  background-color: #1e3822;
+  border-color: #1e3822;
+  color: #fff;
+}
+
+.savedLeadContact-Detail .saved-lead-interest-btn--shortlisted {
+  background-color: #1e3822;
+  border-color: var(--greenColor);
+  color: #fff;
+  opacity: 1;
+  cursor: default;
+}
+
+.savedLeadContact-content .shortFeeBox:first-of-type {
+  padding-top: 24px;
+}
+
+.savedLeadContact-content .shortFeeBox h5 {
+  font-weight: 600;
+}
+
+.savedLeadContact-content .shortFeeBox h4.redColor {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.1;
+}
+
+/* Center job details */
+.job-details .job-details-textWithContent--category span {
+  color: var(--greenColor);
+  font-weight: 500;
+}
+
+.job-details .job-details-textWithContent--location span {
+  color: #1b1b1b99;
+}
+
+.job-details .job-details-budget {
+  color: #1b1b1b;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.job-details-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.job-details .job-detail-question {
+  border-bottom: 1px solid #0000001a;
+  padding-bottom: 12px;
+}
+
+.job-details .job-detail-question:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.job-details .job-detail-question h5 {
+  color: #1b1b1b;
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.job-details .job-detail-question p {
+  color: #1b1b1b99;
+  font-size: 14px;
+  margin: 0;
+}
+
+.job-details .job-detail-question__label {
+  color: var(--greenColor);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.job-details .job-details-posted {
+  color: #1b1b1b;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.savedLeadContact-content .shortFeeBox--last {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* List tabs */
+.saved-lead-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.saved-lead-tabs__btn {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid #a4b1ab;
+  background: #fff;
+  color: #1b1b1b;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.saved-lead-tabs__btn.active {
+  background: var(--greenColor);
+  border-color: var(--greenColor);
+  color: #fff;
+}
+
+.saved-lead-tabs__btn:hover:not(.active) {
+  border-color: var(--greenColor);
+  color: var(--greenColor);
+}
+
+/* Workflow panel in right column */
+.savedLeadContact-content .pro-job-workflow {
+  border-top: 1px solid #07242b33;
+  border-bottom: 1px solid #07242b33;
+  padding: 20px 0;
+  margin: 0;
+}
+
+.pro-job-workflow__title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.pro-job-workflow .job-progress {
+  margin-bottom: 0;
+}
+
+.pro-job-workflow__quote {
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}

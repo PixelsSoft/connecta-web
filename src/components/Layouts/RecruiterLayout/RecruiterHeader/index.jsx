@@ -61,7 +61,7 @@ const RecruiterHeader = () => {
                   >
                     <div className={`btn__witchIcon`}>
                       <img src={postedjobicon} alt='' />
-                      <span>{t('recruiter.availableJobs') || 'Available Jobs'}</span>
+                      <span>{t('recruiter.savedLeads') || 'Saved Leads'}</span>
                     </div>
                   </Link>
 

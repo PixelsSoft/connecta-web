@@ -20,14 +20,20 @@ const PaymentMethod = () => {
                     <img src={walletIcon} alt='' />
                   </div>
                   <div className='account__manageBox-content-withIcon-content'>
-                    <h5>Connect Payment Method</h5>
+                    <h5>Pay with Stripe</h5>
                     <p>
-                      Kindly verify your account with your email or phone number. An
-                      OTP has been sent to your email address for verification.
+                      When you accept a professional&apos;s quote on a job, you will be
+                      redirected to Stripe Checkout to pay securely.
                     </p>
                   </div>
                 </div>
-                <button className='customBtn btn-bgRed'>Connect</button>
+                <button
+                  type='button'
+                  className='customBtn btn-bgRed'
+                  onClick={() => { window.location.href = '/user/posted-jobs'; }}
+                >
+                  View My Jobs
+                </button>
               </div>
             </div>
           </div>
