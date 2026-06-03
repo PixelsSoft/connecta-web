@@ -46,6 +46,8 @@ const Header = (props) => {
     return '/chat';
   };
 
+  const isProfessional = isAuthenticated && user?.user_type === 'professional';
+
   return (
     <Navbar expand='lg' className='main-navbar'>
       <Container>
@@ -57,13 +59,23 @@ const Header = (props) => {
 
         <Navbar.Collapse id='navbar-nav'>
           <Nav className='ms-auto'>
-            <Nav.Link
-              as={Link}
-              to='/find-professionals'
-              className='header__postJob-icon'
-            >
-              {t('buttons.postJob')}
-            </Nav.Link>
+            {isProfessional ? (
+              <Nav.Link
+                as={Link}
+                to='/recruiter/posted-jobs'
+                className='header__postJob-icon'
+              >
+                {t('buttons.browseLeads')}
+              </Nav.Link>
+            ) : (
+              <Nav.Link
+                as={Link}
+                to='/find-professionals'
+                className='header__postJob-icon'
+              >
+                {t('buttons.postJob')}
+              </Nav.Link>
+            )}
 
             {/* Show user dropdown if logged in, otherwise show login/signup buttons */}
             {isAuthenticated ? (

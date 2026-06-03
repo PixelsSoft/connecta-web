@@ -22,7 +22,7 @@ const Login = () => {
       if (user.user_type === 'professional') {
         navigate('/recruiter/posted-jobs');
       } else {
-        navigate('/user/saved-leads');
+        navigate('/user/posted-jobs');
       }
     }
   }, [requiresOtp, otpEmail, isAuthenticated, user, navigate]);

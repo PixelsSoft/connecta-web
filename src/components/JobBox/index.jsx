@@ -2,12 +2,7 @@
 import paintingHouseSmIcon from '../../assets/images/painting-house-sm-icon.png';
 import appliedCheck from '../../assets/images/applied-check.png';
 import { Link } from 'react-router-dom';
-import {
-  JOB_STATUS_LABELS,
-  JOB_STATUS_BADGE,
-  getPaymentStatusLabel,
-  getPaymentStatusBadge,
-} from '../../utils/jobStatus';
+import { JOB_STATUS_LABELS, JOB_STATUS_BADGE } from '../../utils/jobStatus';
 import '../JobWorkflow/JobWorkflow.css';
 
 const JobBox = ({
@@ -22,7 +17,7 @@ const JobBox = ({
   description = 'Lorem ipsum',
   date = '02/20/2025',
   status,
-  paymentStatus,
+  extraBadges = [],
   onDelete,
 }) => {
   const statusLabel = status ? JOB_STATUS_LABELS[status] || status : null;
@@ -38,19 +33,19 @@ const JobBox = ({
         {applied && (
           <div className='job__box-content-applied'>
             <img src={appliedCheck} alt='' />
-            <h5>Applied</h5>
+            <h5>Unlocked</h5>
           </div>
         )}
-        {(statusLabel || (paymentStatus && paymentStatus !== 'unpaid')) && (
+        {(statusLabel || extraBadges.length > 0) && (
           <div className='job__box-status mb-2 d-flex flex-wrap gap-1'>
             {statusLabel && (
               <span className={`badge ${statusBadgeClass}`}>{statusLabel}</span>
             )}
-            {paymentStatus && paymentStatus !== 'unpaid' && (
-              <span className={`badge ${getPaymentStatusBadge(paymentStatus)}`}>
-                {getPaymentStatusLabel(paymentStatus)}
+            {extraBadges.map((badge) => (
+              <span key={badge} className='badge bg-secondary'>
+                {badge}
               </span>
-            )}
+            ))}
           </div>
         )}
         <div className='job__box-header'>

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import './style.css';
 import DefaultLayout2 from '../../components/Layouts/DefaultLayout2';
 import { useTranslation } from 'react-i18next';
+import { useProfessionalProfile } from '../../hooks/useProfessionalProfile';
 
 import redcheckicon from '../../assets/images/red-check-icon.png';
 
@@ -65,28 +67,68 @@ const iconMapping = {
   "Specialist Services": DesignAnplainingicon, // Default icon
 };
 
-// Get dynamic category data (same as in FindProfessional)
-const servicesCheckBoxes = getAllCategories().map(category => ({
-  label: category.name,
-  value: category.name.replace(/\s+/g, '-'),
-  icon: iconMapping[category.name] || DesignAnplainingicon,
-}));
-
 const SetUpProfile = () => {
   const { t } = useTranslation('common');
+  const { saveProfile, resolveLocation, loadProfile, loadCategories, user } =
+    useProfessionalProfile();
   const [formData, setFormData] = useState({
+    companyOrBusinessName: '',
+    companyPhoneNo: '',
+    companyAddress: '',
     selectedServices: [],
   });
+  const [skillCategories, setSkillCategories] = useState([]);
   const [checked, setChecked] = useState(false);
   const [step, setStep] = useState(1);
-  const [subStep, setSubStep] = useState(1); // for step 2
-
-  const [distance, setDistance] = useState(30);
-  const options = [5, 10, 20, 30];
+  const [subStep, setSubStep] = useState(1);
+  const [serviceLocation, setServiceLocation] = useState('');
+  const [coords, setCoords] = useState({ latitude: null, longitude: null });
+  const [distance, setDistance] = useState(50);
+  const [saving, setSaving] = useState(false);
+  const [locationLoading, setLocationLoading] = useState(false);
+  const options = [10, 25, 50, 75, 100];
 
   const [selectedMethod, setSelectedMethod] = useState('mastercard');
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const init = async () => {
+      try {
+        const [cats, profile] = await Promise.all([loadCategories(), loadProfile()]);
+        setSkillCategories(
+          (cats || []).map((cat) => ({
+            label: cat.name,
+            value: String(cat.id),
+            icon: iconMapping[cat.name] || DesignAnplainingicon,
+          }))
+        );
+        if (profile) {
+          setFormData((prev) => ({
+            ...prev,
+            companyOrBusinessName: profile.name || prev.companyOrBusinessName,
+            companyPhoneNo: profile.phone || prev.companyPhoneNo,
+            companyAddress: profile.address || prev.companyAddress,
+            selectedServices: (profile.skill_category_ids || []).map(String),
+          }));
+          if (profile.search_radius_km) setDistance(profile.search_radius_km);
+          if (profile.latitude != null) {
+            setCoords({ latitude: profile.latitude, longitude: profile.longitude });
+          }
+          if (profile.address) setServiceLocation(profile.address);
+        }
+      } catch {
+        setSkillCategories(
+          getAllCategories().map((category) => ({
+            label: category.name,
+            value: String(category.id),
+            icon: iconMapping[category.name] || DesignAnplainingicon,
+          }))
+        );
+      }
+    };
+    init();
+  }, [loadCategories, loadProfile]);
 
   const handleChanges = (event) => {
     const { name, value, type, checked } = event.target;
@@ -112,12 +154,80 @@ const SetUpProfile = () => {
     });
   };
 
-  const handleNext = () => {
-    if (step === 2 && subStep < 2) {
-      setSubStep((prev) => prev + 1);
-    } else {
+  const handleUseMyLocation = async () => {
+    setLocationLoading(true);
+    try {
+      const position = await resolveLocation({ useGps: true });
+      setCoords({ latitude: position.latitude, longitude: position.longitude });
+      toast.success(t('marketplace.locationSaved'));
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setLocationLoading(false);
+    }
+  };
+
+  const handleGeocodeServiceArea = async () => {
+    setLocationLoading(true);
+    try {
+      const position = await resolveLocation({ address: serviceLocation });
+      setCoords({ latitude: position.latitude, longitude: position.longitude });
+      if (position.display_name) setServiceLocation(position.display_name);
+      toast.success(t('marketplace.locationSaved'));
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setLocationLoading(false);
+    }
+  };
+
+  const handleNext = async () => {
+    setSaving(true);
+    try {
+      if (step === 1) {
+        await saveProfile({
+          name: formData.companyOrBusinessName || user?.name,
+          phone: formData.companyPhoneNo || undefined,
+          address: formData.companyAddress || undefined,
+        });
+      } else if (step === 2 && subStep === 1) {
+        if (formData.selectedServices.length === 0) {
+          toast.error(t('marketplace.selectAtLeastOneSkill'));
+          return;
+        }
+        await saveProfile({
+          skill_category_ids: formData.selectedServices.map((id) => parseInt(id, 10)),
+        });
+        setSubStep(2);
+        return;
+      } else if (step === 2 && subStep === 2) {
+        let lat = coords.latitude;
+        let lng = coords.longitude;
+        if (lat == null) {
+          const located = await resolveLocation({
+            address: serviceLocation || formData.companyAddress,
+          });
+          lat = located.latitude;
+          lng = located.longitude;
+          setCoords({ latitude: lat, longitude: lng });
+        }
+        await saveProfile({
+          address: serviceLocation || formData.companyAddress,
+          latitude: lat,
+          longitude: lng,
+          search_radius_km: distance,
+        });
+      }
+
+      if (step === 2 && subStep < 2) {
+        return;
+      }
       setStep((prev) => prev + 1);
       setSubStep(1);
+    } catch (err) {
+      toast.error(err.response?.data?.message || err.message || 'Failed to save profile');
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -126,6 +236,7 @@ const SetUpProfile = () => {
       setSubStep((prev) => prev - 1);
     } else if (step > 1) {
       setStep((prev) => prev - 1);
+      setSubStep(1);
     }
   };
 
@@ -197,6 +308,7 @@ const SetUpProfile = () => {
                                     placeholder={t('setupProfile.companyOrBusinessName')}
                                     id='companyOrBusinessName'
                                     name='companyOrBusinessName'
+                                    value={formData.companyOrBusinessName}
                                     onChange={handleChanges}
                                   />
                                 </div>
@@ -219,7 +331,7 @@ const SetUpProfile = () => {
                                     <option value='' disabled>
                                       {t('setupProfile.selectCategory')}
                                     </option>
-                                    {servicesCheckBoxes.map((category, index) => (
+                                    {skillCategories.map((category, index) => (
                                       <option
                                         value={category.value}
                                         key={index}
@@ -355,6 +467,7 @@ const SetUpProfile = () => {
                                     placeholder={t('setupProfile.companyPhoneNo')}
                                     id='companyPhoneNo'
                                     name='companyPhoneNo'
+                                    value={formData.companyPhoneNo}
                                     onChange={handleChanges}
                                   />
                                 </div>
@@ -373,6 +486,7 @@ const SetUpProfile = () => {
                                     placeholder={t('setupProfile.companyAddress')}
                                     id='companyAddress'
                                     name='companyAddress'
+                                    value={formData.companyAddress}
                                     onChange={handleChanges}
                                   />
                                 </div>
@@ -489,7 +603,7 @@ const SetUpProfile = () => {
                                   <option value='' disabled>
                                     {t('setupProfile.selectCategory')}
                                   </option>
-                                  {servicesCheckBoxes.map((category, index) => (
+                                  {skillCategories.map((category, index) => (
                                     <option
                                       value={category.value}
                                       key={index}
@@ -501,7 +615,7 @@ const SetUpProfile = () => {
                               </div>
                             </div>
                             <div className='customCheckBoxes'>
-                              {servicesCheckBoxes.map((service) => (
+                              {skillCategories.map((service) => (
                                 <label
                                   className='customCheck-wrapper'
                                   key={service.value}
@@ -559,8 +673,34 @@ const SetUpProfile = () => {
                                     type='text'
                                     className='form-control'
                                     placeholder={t('setupProfile.searchLocation')}
+                                    value={serviceLocation}
+                                    onChange={(e) => setServiceLocation(e.target.value)}
                                   />
                                 </div>
+                                <div className='d-flex flex-wrap gap-2 mt-2'>
+                                  <button
+                                    type='button'
+                                    className='btn btn-sm btn-dark'
+                                    onClick={handleGeocodeServiceArea}
+                                    disabled={locationLoading}
+                                  >
+                                    {locationLoading ? '...' : t('marketplace.findAddress')}
+                                  </button>
+                                  <button
+                                    type='button'
+                                    className='btn btn-sm btn-outline-dark'
+                                    onClick={handleUseMyLocation}
+                                    disabled={locationLoading}
+                                  >
+                                    {t('marketplace.useMyLocation')}
+                                  </button>
+                                </div>
+                                {coords.latitude != null && (
+                                  <p className='small text-success mt-2 mb-0'>
+                                    {t('marketplace.locationSaved')} ({coords.latitude.toFixed(4)},{' '}
+                                    {coords.longitude.toFixed(4)})
+                                  </p>
+                                )}
                               </div>
 
                               <div className='travelForWork-map'>
@@ -599,8 +739,8 @@ const SetUpProfile = () => {
 
                                 <input
                                   type='range'
-                                  min='5'
-                                  max='30'
+                                  min='10'
+                                  max='100'
                                   step='5'
                                   value={distance}
                                   onChange={(e) =>
@@ -610,15 +750,16 @@ const SetUpProfile = () => {
                                 />
 
                                 <div className='distance-buttons'>
-                                  {options.map((mile) => (
+                                  {options.map((km) => (
                                     <button
-                                      key={mile}
-                                      onClick={() => setDistance(mile)}
+                                      key={km}
+                                      type='button'
+                                      onClick={() => setDistance(km)}
                                       className={`distance-btn ${
-                                        distance === mile ? 'active' : ''
+                                        distance === km ? 'active' : ''
                                       }`}
                                     >
-                                      {mile.toString().padStart(2, '0')} {t('setupProfile.miles')}
+                                      {km} {t('setupProfile.km')}
                                     </button>
                                   ))}
                                 </div>
@@ -864,7 +1005,7 @@ const SetUpProfile = () => {
                               <h4>{t('setupProfile.profileSetupCompleted')}</h4>
                               <button
                                 className='customBtn btn-bgRed'
-                                onClick={() => navigate('/user/saved-leads')}
+                                onClick={() => navigate('/recruiter/posted-jobs')}
                               >
                                 {t('setupProfile.browseLeads')}
                               </button>
@@ -901,16 +1042,18 @@ const SetUpProfile = () => {
                         <button
                           onClick={handleNext}
                           className='customBtn btn-bgRed'
+                          disabled={saving}
                         >
-                          {t('setupProfile.saveAndContinue')}
+                          {saving ? t('marketplace.saving') : t('setupProfile.saveAndContinue')}
                         </button>
                       )}
                       {step > 1 && step < 4 && (
                         <button
                           onClick={handleNext}
                           className='customBtn btn-bgRed'
+                          disabled={saving}
                         >
-                          {t('buttons.next')}
+                          {saving ? t('marketplace.saving') : t('buttons.next')}
                         </button>
                       )}
                     </div>

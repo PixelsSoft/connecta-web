@@ -9,6 +9,8 @@ import axiosInstance from "../../utils/axios";
 import { API_ENDPOINTS } from "../../config/api";
 import CustomModal from "../../components/CustomModal";
 import { Col, Row } from "react-bootstrap";
+import { requestCurrentPosition } from "../../utils/geolocation";
+import { geocodeAddress } from "../../utils/geocode";
 import "./PostaJob.css";
 
 const TOTAL_STEPS = 4;
@@ -40,9 +42,26 @@ const PostaJob = () => {
     budget: "",
     preferredDate: "",
     preferredTime: "",
+    latitude: null,
+    longitude: null,
   });
+  const [locationLoading, setLocationLoading] = useState(false);
+  const [locationHint, setLocationHint] = useState("");
+  const [locationHintType, setLocationHintType] = useState(""); // success | error | info
 
   const { t } = useTranslation("common");
+
+  useEffect(() => {
+    if (isAuthenticated && user?.user_type === "professional") {
+      toast.error(
+        t("marketplace.professionalCannotPostJob", {
+          defaultValue:
+            "Professionals cannot post jobs. Browse available leads to find customers.",
+        })
+      );
+      navigate("/recruiter/posted-jobs", { replace: true });
+    }
+  }, [isAuthenticated, user, navigate, t]);
 
   useEffect(() => {
     if (categoriesWithSubcategories.length === 0) {
@@ -107,15 +126,115 @@ const PostaJob = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => {
+      const next = { ...prev, [name]: value };
+      if (name === "location") {
+        next.latitude = null;
+        next.longitude = null;
+      }
+      return next;
+    });
+    if (name === "location") {
+      setLocationHint("");
+      setLocationHintType("");
+    }
+  };
+
+  const setLocationSuccess = (message, coords, displayName) => {
+    setFormData((prev) => ({
+      ...prev,
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+      ...(displayName ? { location: displayName } : {}),
+    }));
+    setLocationHint(message);
+    setLocationHintType("success");
   };
 
   const handleImageChange = (e) => {
     setImages(Array.from(e.target.files));
   };
 
+  const handleUseMyLocation = async () => {
+    setLocationLoading(true);
+    setLocationHint("");
+    setLocationHintType("");
+    try {
+      const coords = await requestCurrentPosition();
+      setLocationSuccess(
+        "GPS location saved. Nearby professionals can find your job.",
+        coords
+      );
+      toast.success("Location captured");
+    } catch (err) {
+      const msg = err.message || "Could not get GPS location";
+      setLocationHint(msg);
+      setLocationHintType("error");
+      toast.error("GPS unavailable — use Find address or see the note below.", { duration: 5000 });
+    } finally {
+      setLocationLoading(false);
+    }
+  };
+
   const nextStep = () => setStep((prev) => Math.min(prev + 1, TOTAL_STEPS));
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
+
+  const ensureJobLocation = async () => {
+    if (formData.latitude != null && formData.longitude != null) {
+      return true;
+    }
+    if (!formData.location?.trim()) {
+      toast.error("Please enter a location or use your current location.");
+      return false;
+    }
+    setLocationLoading(true);
+    try {
+      const result = await geocodeAddress(formData.location);
+      setLocationSuccess(
+        result.display_name || "Address located.",
+        { latitude: result.latitude, longitude: result.longitude },
+        result.display_name
+      );
+      return true;
+    } catch (err) {
+      toast.error(err.response?.data?.message || err.message || "Could not locate address");
+      return false;
+    } finally {
+      setLocationLoading(false);
+    }
+  };
+
+  const handleDetailsNext = async () => {
+    if (!formData.description?.trim()) {
+      toast.error("Please add a description.");
+      return;
+    }
+    const ok = await ensureJobLocation();
+    if (ok) nextStep();
+  };
+
+  const handleGeocodeFromAddress = async () => {
+    if (!formData.location?.trim()) {
+      toast.error("Enter an address first.");
+      return;
+    }
+    setLocationLoading(true);
+    try {
+      const result = await geocodeAddress(formData.location);
+      setLocationSuccess(
+        result.display_name || "Address located.",
+        { latitude: result.latitude, longitude: result.longitude },
+        result.display_name
+      );
+      toast.success("Address located");
+    } catch (err) {
+      setLocationHint(err.response?.data?.message || err.message || "Could not locate address");
+      setLocationHintType("error");
+      toast.error(err.response?.data?.message || err.message || "Could not locate address");
+    } finally {
+      setLocationLoading(false);
+    }
+  };
 
   const handleSubmit = async () => {
     if (!isAuthenticated || !user) {
@@ -130,6 +249,12 @@ const PostaJob = () => {
 
     setSubmitting(true);
     try {
+      const hasCoords = await ensureJobLocation();
+      if (!hasCoords) {
+        setSubmitting(false);
+        return;
+      }
+
       const subcategoryObj = matched?.subcategories?.find((s) => s.name === selectedSubcategory);
 
       const data = new FormData();
@@ -138,6 +263,8 @@ const PostaJob = () => {
       data.append("title", formData.jobTitle || `${matched.name} - ${selectedSubcategory}`);
       data.append("description", formData.description || "");
       data.append("location", formData.location || "");
+      if (formData.latitude != null) data.append("latitude", String(formData.latitude));
+      if (formData.longitude != null) data.append("longitude", String(formData.longitude));
       data.append("budget", formData.budget || "");
       if (formData.preferredDate) data.append("preferred_date", formData.preferredDate);
       if (formData.preferredTime) data.append("preferred_time", formData.preferredTime);
@@ -317,15 +444,55 @@ const PostaJob = () => {
               <Row>
                 <Col md={6}>
                   <div className="paj-field">
-                    <label>Location</label>
+                    <label>Location *</label>
                     <input
                       type="text"
                       className="paj-input"
                       name="location"
-                      placeholder="City or address"
+                      placeholder="Street, city, postal code"
                       value={formData.location}
                       onChange={handleChange}
+                      required
                     />
+                    <p className="paj-hint mb-2">
+                      Recommended: enter your address and tap <strong>Find address</strong> (works without GPS).
+                    </p>
+                    <div className="paj-location-actions">
+                      <button
+                        type="button"
+                        className="paj-btn-primary paj-location-btn"
+                        onClick={handleGeocodeFromAddress}
+                        disabled={locationLoading}
+                      >
+                        {locationLoading ? "Locating…" : "Find address"}
+                      </button>
+                      <button
+                        type="button"
+                        className="paj-btn-outline paj-location-btn"
+                        onClick={handleUseMyLocation}
+                        disabled={locationLoading}
+                      >
+                        Use my location (optional)
+                      </button>
+                    </div>
+                    {locationHint && (
+                      <p
+                        className={`paj-hint mt-2 mb-0 ${
+                          locationHintType === "error"
+                            ? "paj-hint--error"
+                            : locationHintType === "success"
+                              ? "paj-hint--success"
+                              : ""
+                        }`}
+                      >
+                        {locationHint}
+                      </p>
+                    )}
+                    {formData.latitude != null && locationHintType === "success" && (
+                      <p className="paj-hint paj-hint--coords mb-0">
+                        Coordinates: {formData.latitude.toFixed(4)}, {formData.longitude.toFixed(4)}
+                      </p>
+                    )}
                   </div>
                 </Col>
                 <Col md={6}>
@@ -361,8 +528,8 @@ const PostaJob = () => {
                 <button className="paj-btn-outline" onClick={prevStep}>← Back</button>
                 <button
                   className="paj-btn-primary"
-                  onClick={nextStep}
-                  disabled={!formData.description}
+                  onClick={handleDetailsNext}
+                  disabled={!formData.description || locationLoading}
                 >
                   Next →
                 </button>

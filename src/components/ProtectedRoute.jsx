@@ -28,7 +28,7 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
     if (userRole === 'professional') {
       return <Navigate to="/recruiter/posted-jobs" replace />;
     } else {
-      return <Navigate to="/user/saved-leads" replace />;
+      return <Navigate to="/user/posted-jobs" replace />;
     }
   }
 

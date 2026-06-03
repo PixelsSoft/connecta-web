@@ -1,8 +1,6 @@
 import React from 'react';
 import UserAccountSettingLayout from '../../../components/Layouts/UserLayout/UserAccountSettingLayout';
 
-import checkIcon from '../../../assets/images/check-icon.png';
-import deleteIcon from '../../../assets/images/delete-icon.png';
 import walletIcon from '../../../assets/images/wallet-icon.png';
 
 const PaymentMethod = () => {
@@ -11,19 +9,21 @@ const PaymentMethod = () => {
       <div className='row'>
         <div className='col-md-12'>
           <div className='account__manageBoxes'>
-            {/* Verify Box */}
             <div className='account__manageBox'>
-              <h4>Payment Method</h4>
+              <h4>Payments</h4>
               <div className='account__manageBox-content'>
                 <div className='account__manageBox-content-withIcon'>
                   <div className='account__manageBox-content-withIcon-icon'>
                     <img src={walletIcon} alt='' />
                   </div>
                   <div className='account__manageBox-content-withIcon-content'>
-                    <h5>Pay with Stripe</h5>
+                    <h5>No platform payments required</h5>
                     <p>
-                      When you accept a professional&apos;s quote on a job, you will be
-                      redirected to Stripe Checkout to pay securely.
+                      Connecta24 does not process payments between you and professionals.
+                      You agree on price and payment directly after a professional contacts you.
+                    </p>
+                    <p className='text-muted small mb-0'>
+                      Professionals pay a one-time lead fee to unlock your contact details.
                     </p>
                   </div>
                 </div>

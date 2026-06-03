@@ -1,0 +1,65 @@
+/* Dark contact panel — used on professional lead views */
+.savedLeadContact-Detail {
+  background-color: #07242b;
+  padding: 16px;
+  border-radius: 12px 12px 0 0;
+  color: #fff;
+}
+
+.savedLeadContact-content > .savedLeadContact-Detail {
+  margin: -16px -16px 0;
+}
+
+.savedLeadContact-Detail h5 {
+  color: #fff;
+  font-weight: 600;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.savedLeadContact-Detail .savedLeadContact-DetailIocnText,
+.savedLeadContact-Detail .savedLeadContact-DetailIocnText span {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.savedLeadContact-Detail .savedLeadContact-DetailIocnText .bi {
+  color: #fff;
+}
+
+.savedLeadContact-Detail-note {
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 12px;
+}
+
+.savedLeadContact-Detail-success {
+  font-size: 14px;
+  color: #8fd9a8;
+}
+
+.savedLeadContact-Detail .savedLeadContact-Detail-btn,
+.savedLeadContact-Detail a.savedLeadContact-Detail-btn {
+  background-color: var(--redColor);
+  border: 2px solid var(--redColor);
+  color: #fff !important;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 12px 16px;
+  border-radius: 10px;
+}
+
+.savedLeadContact-Detail .savedLeadContact-Detail-btn:hover:not(:disabled),
+.savedLeadContact-Detail a.savedLeadContact-Detail-btn:hover {
+  background-color: #9a0d22;
+  border-color: #9a0d22;
+  color: #fff !important;
+}
+
+.savedLeadContact-Detail .savedLeadContact-Detail-btn:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Home from "../screens/Home";
 import Login from "../screens/AuthPages/Login";
@@ -8,6 +8,7 @@ import VerifyOtp from "../screens/AuthPages/VerifyOtp";
 import ForgotPassword from "../screens/AuthPages/ForgotPassword";
 import ResetPassword from "../screens/AuthPages/ResetPassword";
 import ProtectedRoute from "../components/ProtectedRoute";
+import CustomerOnlyRoute from "../components/CustomerOnlyRoute";
 
 import FindProfessional from "../screens/JobScreens/FindProfessional";
 
@@ -37,8 +38,8 @@ import AppliedJobs from "../screens/UserScreens/AccountSettingsScreens/AppliedJo
 import PaymentMethod from "../screens/UserScreens/AccountSettingsScreens/PaymentMethod";
 import UserContactCenter from "../screens/UserScreens/ContactCenter";
 import SetUpProfile from "../screens/SetUpProfile";
-import SavedLeads from "../screens/UserScreens/SavedLeads";
 import TopJobForYou from "../screens/UserScreens/TopJobForYou";
+import SavedLeads from "../screens/UserScreens/SavedLeads";
 import UserPostedJobs from "../screens/UserScreens/PostedJobs";
 import UserJobDetail from "../screens/UserScreens/PostedJobs/JobDetail";
 
@@ -81,13 +82,34 @@ const AppRouter = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
 
-        <Route path="/post-a-job/:category" element={<PostaJob />} />
-        <Route path="/book-service/:service" element={<BookService />} />
+        <Route
+          path="/post-a-job/:category"
+          element={
+            <CustomerOnlyRoute>
+              <PostaJob />
+            </CustomerOnlyRoute>
+          }
+        />
+        <Route
+          path="/book-service/:service"
+          element={
+            <CustomerOnlyRoute>
+              <BookService />
+            </CustomerOnlyRoute>
+          }
+        />
         <Route path="/payment/success" element={<PaymentSuccess />} />
         <Route path="/payment/cancel" element={<PaymentCancel />} />
 
         {/* Find Jobs || Find Professionls */}
-        <Route path="/find-professionals" element={<FindProfessional />} />
+        <Route
+          path="/find-professionals"
+          element={
+            <CustomerOnlyRoute>
+              <FindProfessional />
+            </CustomerOnlyRoute>
+          }
+        />
 
         {/* <Route path='/painting-job-1' element={<PaintingJob1 />} />
         <Route path='/painting-job-2' element={<PaintingJob2 />} />
@@ -230,13 +252,13 @@ const AppRouter = () => {
           }
         />
 
-        <Route 
-          path="/user/saved-leads" 
+        <Route
+          path="/user/saved-leads"
           element={
             <ProtectedRoute allowedRoles={['customer']}>
               <SavedLeads />
             </ProtectedRoute>
-          } 
+          }
         />
         <Route 
           path="/user/posted-jobs" 

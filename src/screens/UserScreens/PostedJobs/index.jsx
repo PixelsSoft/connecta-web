@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import UserLayout from '../../../components/Layouts/UserLayout';
 import JobBox from '../../../components/JobBox';
+import JobsPagination from '../../../components/JobsPagination';
 import axiosInstance from '../../../utils/axios';
 import { API_ENDPOINTS } from '../../../config/api';
 
@@ -16,23 +17,28 @@ const PostedJobs = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
   const [jobs, setJobs] = useState([]);
+  const [pagination, setPagination] = useState(null);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchPostedJobs();
-  }, []);
+    if (user?.id) fetchPostedJobs(page);
+  }, [user?.id, page]);
 
-  const fetchPostedJobs = async () => {
+  const fetchPostedJobs = async (pageNum = 1) => {
     try {
       setLoading(true);
       const response = await axiosInstance.get(API_ENDPOINTS.JOBS.LIST, {
         params: {
           user_id: user?.id,
+          page: pageNum,
+          per_page: 9,
         },
       });
 
       if (response.data.success) {
         setJobs(response.data.data.jobs || []);
+        setPagination(response.data.data.pagination || null);
       }
     } catch (error) {
       console.error('Error fetching posted jobs:', error);
@@ -52,7 +58,7 @@ const PostedJobs = () => {
       
       if (response.data.success) {
         toast.success('Job deleted successfully');
-        fetchPostedJobs(); // Refresh the list
+        fetchPostedJobs(page);
       }
     } catch (error) {
       console.error('Error deleting job:', error);
@@ -88,15 +94,18 @@ const PostedJobs = () => {
               <div className='col-md-12'>
                 <div className='no__job-posted-content'>
                   <img src={nojobicon} alt='' />
-                  <h4>{t('user.noJobPostedYet') || 'No Jobs Posted Yet'}</h4>
+                  <h4>{t('user.noJobPostedYet', { defaultValue: 'No Jobs Posted Yet!' })}</h4>
                   <p className='text-muted mt-2'>
-                    Start posting jobs to find the right professionals for your needs.
+                    {t('user.noJobPostedSubtext', {
+                      defaultValue:
+                        'Start posting jobs to find the right professionals for your needs.',
+                    })}
                   </p>
-                  <button 
-                    className='customBtn mt-3' 
+                  <button
+                    className='customBtn mt-3'
                     onClick={() => navigate('/find-professionals')}
                   >
-                    {t('user.postAJob') || 'Post a Job'}
+                    {t('user.postAJob', { defaultValue: 'Post a Job' })}
                   </button>
                 </div>
               </div>
@@ -125,18 +134,18 @@ const PostedJobs = () => {
                   <JobBox
                     icon={job.category?.image || paintingHouseSmIcon}
                     title={job.title}
-                    headerRightLabel={`${job.interested_count || 0} Interested`}
+                    headerRightLabel={`${job.unlock_count ?? 0} Responses`}
                     position={`Budget: ${job.budget || 'N/A'}`}
                     description={job.description}
                     date={new Date(job.created_at).toLocaleDateString()}
                     status={job.status}
-                    paymentStatus={job.payment_status}
                     to={`/user/posted-jobs/${job.id}`}
                     onDelete={() => handleDeleteJob(job.id)}
                   />
                 </div>
               ))}
             </div>
+            <JobsPagination pagination={pagination} loading={loading} onPageChange={setPage} />
           </div>
         </section>
       )}

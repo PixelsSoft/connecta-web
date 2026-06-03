@@ -21,6 +21,7 @@
     "bookService": "Book a Service",
     "offerServices": "Offer Your Services",
     "postJob": "Post a Job",
+    "browseLeads": "Browse Leads",
     "signUpProfessional": "Sign Up as Professional",
     "update": "Update",
     "viewAll": "View All Categories",
@@ -212,6 +213,16 @@
     "verifiedProfessionals": "Over 237,000 Verified Professionals at Your Service",
     "satisfiedClients": "825,000+ Satisfied Clients trust Connecta24 for quality service"
   },
+  "user": {
+    "noJobPostedYet": "No Jobs Posted Yet!",
+    "noJobPostedSubtext": "Start posting jobs to find the right professionals for your needs.",
+    "postAJob": "Post a Job",
+    "postedJobs": "Posted Jobs",
+    "savedLeads": "Saved Leads",
+    "chat": "Chat",
+    "accountSettings": "Account Settings",
+    "contactCenter": "Contact Center"
+  },
   "recruiter": {
     "savedLeads": "Saved Leads",
     "noJobAvailable": "No Jobs Available Yet",
@@ -368,6 +379,7 @@
     "workThroughoutUk": "I work throughout the UK",
     "setTravelLimit": "Set your Travel Limit here.",
     "miles": "miles",
+    "km": "km",
     "bankingInfo": "Banking Information",
     "bankingDescription": "We use identity verification to ensure your security and keep Connecta24 safe. Your ID will be handled securely and will never be shared with anyone.",
     "cardHolderName": "Card Holder Name",
@@ -398,5 +410,21 @@
     "myPostedJobs": "My Posted Jobs",
     "myReviews": "My Reviews",
     "viewMyJobs": "View My Jobs"
+  },
+  "marketplace": {
+    "locationSaved": "Location saved",
+    "locationRequired": "Set your service area or enable GPS to continue.",
+    "selectAtLeastOneSkill": "Select at least one skill category.",
+    "findAddress": "Find address",
+    "useMyLocation": "Use my location",
+    "saving": "Saving...",
+    "profileUpdated": "Profile updated",
+    "travelRadiusKm": "Travel radius",
+    "searchJobs": "Search jobs",
+    "maxDistance": "Max distance",
+    "useMyRadius": "My travel radius",
+    "noJobsMatch": "No jobs match your filters.",
+    "noGps": "No GPS",
+    "professionalCannotPostJob": "Professionals cannot post jobs. Browse available leads to find customers."
   }
 }

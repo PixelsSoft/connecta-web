@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import './ContactDetails.css';
 
 import whitePhoneIcon from '../../assets/images/white-phone-icon.png';
 import emailPhoneIcon from '../../assets/images/white-email-icon.png';
@@ -21,29 +23,26 @@ const maskEmail = (email) => {
 const ContactDetails = ({
   phone,
   email,
-  isInterested = false,
-  isShortlisted = false,
-  onInterestedClick,
-  onRemoveInterest,
-  interestLoading = false,
+  address,
+  customerName,
+  isUnlocked = false,
+  canUnlock = false,
+  slotsRemaining = 0,
+  unlockPriceLabel,
+  onUnlockClick,
+  unlockLoading = false,
+  chatJobId,
+  customerUserId,
 }) => {
   const { t } = useTranslation('common');
 
-  const displayPhone = isShortlisted ? phone || '—' : maskPhone(phone);
-  const displayEmail = isShortlisted ? email || '—' : maskEmail(email);
-
-  const handleClick = () => {
-    if (interestLoading) return;
-    if (isInterested) {
-      onRemoveInterest?.();
-    } else {
-      onInterestedClick?.();
-    }
-  };
+  const displayPhone = isUnlocked ? phone || '—' : maskPhone(phone);
+  const displayEmail = isUnlocked ? email || '—' : maskEmail(email);
+  const displayAddress = isUnlocked ? address || null : null;
 
   return (
     <div className='savedLeadContact-Detail'>
-      <h5 className='mb-3'>{t('home.contactDetails')}</h5>
+      <h5 className='mb-3'>{t('home.contactDetails') || 'Contact Details'}</h5>
 
       <div className='savedLeadContact-DetailIocnText'>
         <img src={whitePhoneIcon} alt='' />
@@ -55,45 +54,60 @@ const ContactDetails = ({
         <span>{displayEmail}</span>
       </div>
 
-      <p>
-        {isShortlisted
-          ? t('home.contactVisibleShortlisted') ||
-            'You have been shortlisted. Contact details are now visible.'
-          : isInterested
-            ? t('home.contactAfterInterest') ||
-              'You are on the client list. They can shortlist you to share contact details.'
-            : t('home.contactDescription')}
+      {displayAddress && (
+        <div className='savedLeadContact-DetailIocnText'>
+          <i className='bi bi-geo-alt me-2' aria-hidden />
+          <span>{displayAddress}</span>
+        </div>
+      )}
+
+      <p className='savedLeadContact-Detail-note'>
+        {isUnlocked
+          ? t('home.contactVisibleUnlocked') ||
+            'Lead unlocked. You can contact the customer directly.'
+          : canUnlock
+            ? t('home.contactHiddenUnlock') ||
+              'Contact details are hidden. Pay the unlock fee to view phone, email, and chat.'
+            : slotsRemaining === 0
+              ? 'This job has reached the maximum number of unlocks.'
+              : t('home.contactHidden') || 'Contact details are hidden until you unlock this lead.'}
       </p>
 
-      <button
-        type='button'
-        className={`customBtn w-100 saved-lead-interest-btn ${
-          isInterested ? 'saved-lead-interest-btn--done' : ''
-        } ${isShortlisted ? 'saved-lead-interest-btn--shortlisted' : ''}`}
-        onClick={handleClick}
-        disabled={interestLoading || isShortlisted}
-        title={
-          isInterested && !isShortlisted
-            ? 'Click to withdraw your interest'
-            : undefined
-        }
-      >
-        {interestLoading ? (
-          'Please wait...'
-        ) : isShortlisted ? (
-          <>
-            <i className='bi bi-check-circle-fill me-2' aria-hidden />
-            {t('home.shortlisted') || 'Shortlisted'}
-          </>
-        ) : isInterested ? (
-          <>
-            <i className='bi bi-check-circle-fill me-2' aria-hidden />
-            {t('home.interestShown') || 'Interest Shown'}
-          </>
-        ) : (
-          t('home.interested')
-        )}
-      </button>
+      {!isUnlocked && canUnlock && (
+        <button
+          type='button'
+          className='customBtn w-100 savedLeadContact-Detail-btn mb-2'
+          onClick={onUnlockClick}
+          disabled={unlockLoading}
+        >
+          {unlockLoading ? 'Please wait...' : `Unlock Lead — ${unlockPriceLabel}`}
+        </button>
+      )}
+
+      {isUnlocked && customerUserId && (
+        <Link
+          to='/chat'
+          state={{
+            partnerId: customerUserId,
+            userId: customerUserId,
+            userName: customerName,
+            userEmail: email,
+            userType: 'customer',
+            jobId: chatJobId,
+          }}
+          className='customBtn w-100 text-center d-block savedLeadContact-Detail-btn'
+        >
+          <i className='bi bi-chat-dots me-2' aria-hidden />
+          {t('home.openChat') || 'Open Chat'}
+        </Link>
+      )}
+
+      {isUnlocked && !customerUserId && (
+        <p className='savedLeadContact-Detail-success mb-0'>
+          <i className='bi bi-check-circle-fill me-1' aria-hidden />
+          Lead unlocked
+        </p>
+      )}
     </div>
   );
 };

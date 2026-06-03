@@ -226,8 +226,49 @@
 }
 
 .paj-btn-outline:hover {
-  border-color: #aaa;
-  color: #111;
+  border-color: var(--redColor, #bf1029);
+  color: var(--redColor, #bf1029);
+}
+
+.paj-btn-outline:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Location row */
+.paj-location-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.paj-location-btn {
+  padding: 10px 18px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+.paj-hint {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.45;
+}
+
+.paj-hint--success {
+  color: var(--greenColor, #26472b);
+  font-weight: 500;
+}
+
+.paj-hint--error {
+  color: #a32323;
+  font-weight: 500;
+}
+
+.paj-hint--coords {
+  font-size: 12px;
+  color: #888;
+  margin-top: 4px;
 }
 
 .paj-btn-success {

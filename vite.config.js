@@ -6,6 +6,11 @@ export default defineConfig({
   plugins: [react()],
   // base: "/connect24",
   base: "/",
+  server: {
+    host: "localhost",
+    port: 5173,
+    strictPort: true,
+  },
   resolve: {
     alias: {
       'react-i18next': '/src/i18n-shim.js',

@@ -22,10 +22,21 @@
   font-size: 14px;
 }
 
-.seved__lead-search .travelForWork-search-box .filterBtn:hover {
+.seved__lead-search .travelForWork-search-box .filterBtn:hover,
+.seved__lead-search .travelForWork-search-box .filterBtn.active {
   background-color: var(--greenColor);
   border-color: var(--greenColor);
   color: #fff;
+}
+
+.saved-lead-filters {
+  background: #f8faf9;
+  border-color: #a4b1ab !important;
+}
+
+.saved-lead-filters .form-label {
+  font-weight: 600;
+  color: #07242b;
 }
 
 .seved__lead-left .job__box {
@@ -47,12 +58,6 @@
 .savedLeadContact-content {
   border: 1px solid #dedede;
   box-shadow: 0 4px 16px rgba(7, 36, 43, 0.06);
-}
-
-.savedLeadContact-Detail {
-  background-color: #07242b;
-  margin: -16px -16px 0;
-  border-radius: 12px 12px 0 0;
 }
 
 .savedLeadContact-Detail .saved-lead-interest-btn {

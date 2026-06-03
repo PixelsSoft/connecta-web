@@ -51,32 +51,6 @@ export const fetchJobById = createAsyncThunk(
   }
 );
 
-export const markInterested = createAsyncThunk(
-  'job/markInterested',
-  async (jobId, { rejectWithValue }) => {
-    try {
-      const response = await axiosInstance.post(API_ENDPOINTS.JOBS.INTERESTED(jobId));
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data || { message: 'Failed to mark interested' });
-    }
-  }
-);
-
-export const shortlistProfessional = createAsyncThunk(
-  'job/shortlistProfessional',
-  async ({ jobId, professionalId }, { rejectWithValue }) => {
-    try {
-      const response = await axiosInstance.post(API_ENDPOINTS.JOBS.SHORTLIST(jobId), {
-        professional_id: professionalId,
-      });
-      return { ...response.data, jobId, professionalId };
-    } catch (error) {
-      return rejectWithValue(error.response?.data || { message: 'Failed to update shortlist' });
-    }
-  }
-);
-
 const jobSlice = createSlice({
   name: 'job',
   initialState,
@@ -138,24 +112,6 @@ const jobSlice = createSlice({
         state.error = action.payload?.message || 'Failed to fetch job';
       });
 
-    // Mark Interested
-    builder
-      .addCase(markInterested.fulfilled, (state) => {
-        if (state.currentJob) {
-          state.currentJob.user_interested = true;
-        }
-      })
-      .addCase(shortlistProfessional.fulfilled, (state, action) => {
-        if (!state.currentJob?.interests) return;
-        const { professionalId } = action.meta.arg;
-        const status = action.payload?.data?.status;
-        const interest = state.currentJob.interests.find(
-          (i) => i.professional_id === professionalId
-        );
-        if (interest && status) {
-          interest.status = status;
-        }
-      });
   },
 });
 

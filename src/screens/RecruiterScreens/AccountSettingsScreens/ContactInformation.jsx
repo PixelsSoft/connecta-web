@@ -1,36 +1,132 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import RecruiterAccountSettingLayout from '../../../components/Layouts/RecruiterLayout/RecruiterAccountSettingLayout';
 import { useTranslation } from 'react-i18next';
-import { getAllCategories } from '../../../data/categoriesData';
+import { useProfessionalProfile } from '../../../hooks/useProfessionalProfile';
 
 const ContactInformation = () => {
   const { t } = useTranslation('common');
+  const { saveProfile, resolveLocation, loadProfile, loadCategories } = useProfessionalProfile();
+  const [categories, setCategories] = useState([]);
+  const [saving, setSaving] = useState(false);
+  const [locationLoading, setLocationLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
-    businessName: '',
-    category: '',
-    description: '',
-    experience: '',
-    rate: '',
-    rateType: 'hourly',
+    phone: '',
+    address: '',
     serviceArea: '',
+    skillIds: [],
+    searchRadiusKm: 50,
+    latitude: null,
+    longitude: null,
   });
 
+  useEffect(() => {
+    const init = async () => {
+      try {
+        const [cats, profile] = await Promise.all([loadCategories(), loadProfile()]);
+        setCategories(cats || []);
+        if (profile) {
+          setFormData({
+            name: profile.name || '',
+            phone: profile.phone || '',
+            address: profile.address || '',
+            serviceArea: profile.address || '',
+            skillIds: (profile.skill_category_ids || []).map(String),
+            searchRadiusKm: profile.search_radius_km || 50,
+            latitude: profile.latitude ?? null,
+            longitude: profile.longitude ?? null,
+          });
+        }
+      } catch {
+        toast.error('Failed to load profile');
+      }
+    };
+    init();
+  }, [loadCategories, loadProfile]);
+
   const handleChanges = (event) => {
-    const { name, value, type, checked } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: type === 'radio' ? value : type === 'checkbox' ? checked : value,
-    }));
+    const { name, value } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const toggleSkill = (id) => {
+    setFormData((prev) => {
+      const has = prev.skillIds.includes(id);
+      return {
+        ...prev,
+        skillIds: has ? prev.skillIds.filter((s) => s !== id) : [...prev.skillIds, id],
+      };
+    });
+  };
+
+  const handleUseGps = async () => {
+    setLocationLoading(true);
+    try {
+      const pos = await resolveLocation({ useGps: true });
+      setFormData((prev) => ({
+        ...prev,
+        latitude: pos.latitude,
+        longitude: pos.longitude,
+      }));
+      toast.success(t('marketplace.locationSaved'));
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setLocationLoading(false);
+    }
+  };
+
+  const handleGeocode = async () => {
+    setLocationLoading(true);
+    try {
+      const pos = await resolveLocation({ address: formData.serviceArea });
+      setFormData((prev) => ({
+        ...prev,
+        latitude: pos.latitude,
+        longitude: pos.longitude,
+        serviceArea: pos.display_name || prev.serviceArea,
+      }));
+      toast.success(t('marketplace.locationSaved'));
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setLocationLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // You can now send `formData` to an API or handle validation
-  };
+    if (formData.skillIds.length === 0) {
+      toast.error(t('marketplace.selectAtLeastOneSkill'));
+      return;
+    }
 
-  const categories = getAllCategories();
+    setSaving(true);
+    try {
+      let { latitude, longitude } = formData;
+      if (latitude == null && formData.serviceArea?.trim()) {
+        const pos = await resolveLocation({ address: formData.serviceArea });
+        latitude = pos.latitude;
+        longitude = pos.longitude;
+      }
+
+      await saveProfile({
+        name: formData.name,
+        phone: formData.phone,
+        address: formData.serviceArea || formData.address,
+        skill_category_ids: formData.skillIds.map((id) => parseInt(id, 10)),
+        search_radius_km: formData.searchRadiusKm,
+        latitude: latitude ?? undefined,
+        longitude: longitude ?? undefined,
+      });
+      toast.success(t('marketplace.profileUpdated'));
+    } catch (err) {
+      toast.error(err.response?.data?.message || err.message || 'Update failed');
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <RecruiterAccountSettingLayout>
@@ -42,25 +138,6 @@ const ContactInformation = () => {
 
         <form onSubmit={handleSubmit}>
           <div className='row'>
-            <div className='col-md-12 mb-4'>
-              <div className='inputGroup'>
-                <label htmlFor='profilePhoto' className='form-label'>
-                  {t('profile.profilePhoto')}
-                </label>
-                <input
-                  type='file'
-                  className='form-control'
-                  id='profilePhoto'
-                  name='profilePhoto'
-                  accept='image/*'
-                  onChange={handleChanges}
-                />
-                <small className='form-text text-muted mt-2 d-block'>
-                  Upload your profile photo
-                </small>
-              </div>
-            </div>
-
             <div className='col-lg-6 mb-md-4 mb-3'>
               <div className='inputGroup'>
                 <label htmlFor='name' className='form-label'>
@@ -69,142 +146,50 @@ const ContactInformation = () => {
                 <input
                   type='text'
                   className='form-control'
-                  placeholder={t('forms.fullName')}
                   id='name'
                   name='name'
                   value={formData.name}
                   onChange={handleChanges}
+                  required
                 />
               </div>
             </div>
 
             <div className='col-lg-6 mb-md-4 mb-3'>
               <div className='inputGroup'>
-                <label htmlFor='businessName' className='form-label'>
-                  {t('profile.businessName')}
+                <label htmlFor='phone' className='form-label'>
+                  {t('forms.phone')}
                 </label>
                 <input
                   type='text'
                   className='form-control'
-                  placeholder={t('profile.businessName')}
-                  id='businessName'
-                  name='businessName'
-                  value={formData.businessName}
+                  id='phone'
+                  name='phone'
+                  value={formData.phone}
                   onChange={handleChanges}
                 />
               </div>
             </div>
 
-            <div className='col-lg-6 mb-md-4 mb-3'>
-              <div className='inputGroup'>
-                <label htmlFor='category' className='form-label'>
-                  {t('profile.category')}
-                </label>
-                <select
-                  className='form-control form-select'
-                  id='category'
-                  name='category'
-                  value={formData.category}
-                  onChange={handleChanges}
-                >
-                  <option value='' disabled>
-                    {t('setupProfile.selectCategory')}
-                  </option>
-                  {categories.map((cat, index) => (
-                    <option key={index} value={cat.name}>
-                      {cat.name}
-                    </option>
-                  ))}
-                </select>
+            <div className='col-md-12 mb-4'>
+              <label className='form-label'>{t('setupProfile.whatSkillsDoYouHave')}</label>
+              <div className='d-flex flex-wrap gap-2'>
+                {categories.map((cat) => (
+                  <button
+                    key={cat.id}
+                    type='button'
+                    className={`btn btn-sm ${
+                      formData.skillIds.includes(String(cat.id)) ? 'btn-dark' : 'btn-outline-dark'
+                    }`}
+                    onClick={() => toggleSkill(String(cat.id))}
+                  >
+                    {cat.name}
+                  </button>
+                ))}
               </div>
             </div>
 
-            <div className='col-lg-6 mb-md-4 mb-3'>
-              <div className='inputGroup'>
-                <label htmlFor='experience' className='form-label'>
-                  {t('profile.experience')}
-                </label>
-                <input
-                  type='number'
-                  className='form-control'
-                  placeholder='0'
-                  id='experience'
-                  name='experience'
-                  value={formData.experience}
-                  onChange={handleChanges}
-                  min='0'
-                />
-                <small className='form-text text-muted mt-1 d-block'>
-                  Years of experience
-                </small>
-              </div>
-            </div>
-
-            <div className='col-md-12 mb-md-4 mb-3'>
-              <div className='inputGroup'>
-                <label htmlFor='description' className='form-label'>
-                  {t('profile.description')}
-                </label>
-                <textarea
-                  className='form-control'
-                  rows='5'
-                  placeholder={t('profile.description')}
-                  id='description'
-                  name='description'
-                  value={formData.description}
-                  onChange={handleChanges}
-                />
-              </div>
-            </div>
-
-            <div className='col-lg-6 mb-md-4 mb-3'>
-              <div className='inputGroup'>
-                <label className='form-label'>
-                  {t('profile.rate')}
-                </label>
-                <div className='rateType-radioButtons'>
-                  <div className='form-check paintJobRadio'>
-                    <label className='form-check-label' htmlFor='hourlyRateRecruiter'>
-                      <span>{t('setupProfile.hourlyRate')}</span>
-                      <input
-                        className='form-check-input'
-                        type='radio'
-                        name='rateType'
-                        id='hourlyRateRecruiter'
-                        value='hourly'
-                        checked={formData.rateType === 'hourly'}
-                        onChange={handleChanges}
-                      />
-                    </label>
-                  </div>
-                  <div className='form-check paintJobRadio'>
-                    <label className='form-check-label' htmlFor='fixedRateRecruiter'>
-                      <span>{t('setupProfile.fixedRate')}</span>
-                      <input
-                        className='form-check-input'
-                        type='radio'
-                        name='rateType'
-                        id='fixedRateRecruiter'
-                        value='fixed'
-                        checked={formData.rateType === 'fixed'}
-                        onChange={handleChanges}
-                      />
-                    </label>
-                  </div>
-                </div>
-                <input
-                  type='text'
-                  className='form-control mt-2'
-                  placeholder='Enter rate'
-                  id='rate'
-                  name='rate'
-                  value={formData.rate}
-                  onChange={handleChanges}
-                />
-              </div>
-            </div>
-
-            <div className='col-lg-6 mb-md-4 mb-3'>
+            <div className='col-lg-8 mb-md-4 mb-3'>
               <div className='inputGroup'>
                 <label htmlFor='serviceArea' className='form-label'>
                   {t('profile.serviceArea')}
@@ -212,50 +197,65 @@ const ContactInformation = () => {
                 <input
                   type='text'
                   className='form-control'
-                  placeholder={t('profile.serviceArea')}
                   id='serviceArea'
                   name='serviceArea'
                   value={formData.serviceArea}
                   onChange={handleChanges}
+                  placeholder={t('setupProfile.searchLocation')}
                 />
+                <div className='d-flex flex-wrap gap-2 mt-2'>
+                  <button
+                    type='button'
+                    className='btn btn-sm btn-dark'
+                    onClick={handleGeocode}
+                    disabled={locationLoading}
+                  >
+                    {t('marketplace.findAddress')}
+                  </button>
+                  <button
+                    type='button'
+                    className='btn btn-sm btn-outline-dark'
+                    onClick={handleUseGps}
+                    disabled={locationLoading}
+                  >
+                    {t('marketplace.useMyLocation')}
+                  </button>
+                </div>
+                {formData.latitude != null && (
+                  <small className='text-success d-block mt-2'>
+                    {t('marketplace.locationSaved')} ({formData.latitude.toFixed(4)},{' '}
+                    {formData.longitude.toFixed(4)})
+                  </small>
+                )}
               </div>
             </div>
 
-            <div className='col-md-12 mb-md-4 mb-3'>
+            <div className='col-lg-4 mb-md-4 mb-3'>
               <div className='inputGroup'>
-                <label htmlFor='portfolio' className='form-label'>
-                  {t('profile.portfolio')}
+                <label htmlFor='searchRadiusKm' className='form-label'>
+                  {t('marketplace.travelRadiusKm')}
                 </label>
                 <input
-                  type='file'
-                  className='form-control'
-                  id='portfolio'
-                  name='portfolio'
-                  multiple
-                  accept='image/*'
+                  type='range'
+                  className='form-range'
+                  id='searchRadiusKm'
+                  name='searchRadiusKm'
+                  min='10'
+                  max='100'
+                  step='5'
+                  value={formData.searchRadiusKm}
                   onChange={handleChanges}
                 />
-                <small className='form-text text-muted mt-2 d-block'>
-                  {t('jobPosting.uploadHelpText')}
-                </small>
+                <p className='mb-0 small'>
+                  {formData.searchRadiusKm} {t('setupProfile.km')}
+                </p>
               </div>
-            </div>
-
-            <div className='col-md-12 mb-3'>
-              <p className='text-muted small'>
-                <em>{t('profile.profileTip')}</em>
-              </p>
             </div>
 
             <div className='col-md-12'>
-              <div className='d-flex gap-3'>
-                <button type='submit' className='customBtn btn-bgRed'>
-                  {t('profile.editProfile')}
-                </button>
-                <button type='button' className='customBtn btn-bgBlack'>
-                  {t('profile.viewPublicProfile')}
-                </button>
-              </div>
+              <button type='submit' className='customBtn btn-bgRed' disabled={saving}>
+                {saving ? t('marketplace.saving') : t('buttons.update')}
+              </button>
             </div>
           </div>
         </form>

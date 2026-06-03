@@ -28,10 +28,11 @@ const PaymentsAndEarnings = () => {
     }
   };
 
-  const completed = transactions.filter((tx) => tx.status === 'completed');
-  const pending = transactions.filter((tx) => tx.status === 'pending');
+  const leadUnlocks = transactions.filter((tx) => tx.type === 'lead_unlock');
+  const completed = leadUnlocks.filter((tx) => tx.status === 'completed');
+  const pending = leadUnlocks.filter((tx) => tx.status === 'pending');
 
-  const totalEarned = completed.reduce((sum, tx) => sum + Number(tx.amount || 0), 0);
+  const totalSpent = completed.reduce((sum, tx) => sum + Number(tx.amount || 0), 0);
   const pendingTotal = pending.reduce((sum, tx) => sum + Number(tx.amount || 0), 0);
 
   const getStatusBadge = (status) => {
@@ -55,8 +56,8 @@ const PaymentsAndEarnings = () => {
           <div className="col-lg-6 mb-3">
             <div className="card border-0 shadow-sm">
               <div className="card-body">
-                <h5 className="card-title text-muted mb-3">Total Earned</h5>
-                <h2 className="mb-0 text-success">{formatMoney(totalEarned)}</h2>
+                <h5 className="card-title text-muted mb-3">Total Spent on Leads</h5>
+                <h2 className="mb-0 text-success">{formatMoney(totalSpent)}</h2>
               </div>
             </div>
           </div>

@@ -2,8 +2,8 @@
 import { getJobSteps } from '../../utils/jobStatus';
 import './JobWorkflow.css';
 
-const JobProgress = ({ status, paymentStatus = 'unpaid' }) => {
-  const steps = getJobSteps(status, paymentStatus);
+const JobProgress = ({ status, userHasUnlocked = false }) => {
+  const steps = getJobSteps(status, userHasUnlocked);
 
   return (
     <div className="job-progress mb-4">
@@ -23,5 +23,3 @@ const JobProgress = ({ status, paymentStatus = 'unpaid' }) => {
 };
 
 export default JobProgress;
-
-

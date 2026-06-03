@@ -64,18 +64,6 @@ const UserHeader = () => {
                   </Link>
 
                   <Link
-                    to='/user/saved-leads'
-                    className={`${
-                      isActive('/user/saved-leads') ? 'active' : ''
-                    }`}
-                  >
-                    <div className={`btn__witchIcon`}>
-                      <img src={postedjobicon} alt='' />
-                      <span>Saved Leads</span>
-                    </div>
-                  </Link>
-
-                  <Link
                     to='/chat'
                     className={`${isActive('/chat') ? 'active' : ''}`}
                   >

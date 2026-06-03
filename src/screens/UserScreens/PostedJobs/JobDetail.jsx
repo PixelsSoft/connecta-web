@@ -10,16 +10,7 @@ import DashboardFooter from '../../../components/Layouts/DashboardFooter';
 import axiosInstance from '../../../utils/axios';
 import { API_ENDPOINTS } from '../../../config/api';
 import { getJobQuestionsAnswers } from '../../../utils/jobQuestions';
-import JobProgress from '../../../components/JobWorkflow/JobProgress';
-import QuoteCard from '../../../components/JobWorkflow/QuoteCard';
-import {
-  JOB_STATUS_LABELS,
-  JOB_STATUS_BADGE,
-  formatMoney,
-  getPaymentStatusLabel,
-  getPaymentStatusBadge,
-} from '../../../utils/jobStatus';
-import PaymentModal from '../../../components/JobWorkflow/PaymentModal';
+import { JOB_STATUS_LABELS, JOB_STATUS_BADGE } from '../../../utils/jobStatus';
 import '../../../components/JobWorkflow/JobWorkflow.css';
 
 import recruiterjobdetailbanner from '../../../assets/images/recruiter-job-detail-banner.png';
@@ -27,8 +18,8 @@ import editIcon from '../../../assets/images/edit-icon.png';
 import interestedProImg from '../../../assets/images/interested-pro-img.png';
 import paintingHouseSmIcon from '../../../assets/images/painting-house-sm-icon.png';
 
-const INTERESTED_PRO_BLURB =
-  'This professional has shown interest in your job. Start chat to know more and find a good fit for the job.';
+const CONNECTED_PRO_BLURB =
+  'This professional is interested in your job and can contact you directly.';
 
 const JobDetail = () => {
   const { t } = useTranslation('common');
@@ -38,8 +29,7 @@ const JobDetail = () => {
   const [job, setJob] = useState(null);
   const [previousJobs, setPreviousJobs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [actionLoading, setActionLoading] = useState(false);
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
+
   useEffect(() => {
     fetchJobDetail();
   }, [id]);
@@ -105,65 +95,6 @@ const JobDetail = () => {
     }
   };
 
-  const handleAcceptQuote = async (quoteId) => {
-    setActionLoading(true);
-    try {
-      const acceptRes = await axiosInstance.post(API_ENDPOINTS.JOBS.QUOTE_ACCEPT(id, quoteId));
-      if (!acceptRes.data.success) return;
-
-      toast.success('Quote accepted');
-      await fetchJobDetail();
-      setShowPaymentModal(true);
-    } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to accept quote');
-    } finally {
-      setActionLoading(false);
-    }
-  };
-
-  const handleRejectQuote = async (quoteId) => {
-    setActionLoading(true);
-    try {
-      const response = await axiosInstance.post(API_ENDPOINTS.JOBS.QUOTE_REJECT(id, quoteId));
-      if (response.data.success) {
-        toast.success('Quote rejected');
-        fetchJobDetail();
-      }
-    } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to reject quote');
-    } finally {
-      setActionLoading(false);
-    }
-  };
-
-  const handlePay = () => {
-    setShowPaymentModal(true);
-  };
-
-  const handlePaymentSuccess = (updatedJob) => {
-    if (updatedJob) {
-      setJob(updatedJob);
-    } else {
-      fetchJobDetail();
-    }
-  };
-
-  const handleConfirmCompletion = async () => {
-    if (!window.confirm('Confirm that the work is completed to your satisfaction?')) return;
-    setActionLoading(true);
-    try {
-      const response = await axiosInstance.post(API_ENDPOINTS.JOBS.CONFIRM_COMPLETION(id));
-      if (response.data.success) {
-        toast.success('Job marked as completed!');
-        fetchJobDetail();
-      }
-    } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to confirm completion');
-    } finally {
-      setActionLoading(false);
-    }
-  };
-
   const fetchPreviousJobs = async () => {
     if (!user?.id) return;
     try {
@@ -186,12 +117,9 @@ const JobDetail = () => {
       <UserLayout>
         <section className='recruiter__job-detail'>
           <div className='container'>
-            <div className='row'>
-              <div className='col-md-12 text-center py-5'>
-                <div className='spinner-border text-primary' role='status'>
-                  <span className='visually-hidden'>Loading...</span>
-                </div>
-                <p className='mt-3'>Loading job details...</p>
+            <div className='col-md-12 text-center py-5'>
+              <div className='spinner-border text-primary' role='status'>
+                <span className='visually-hidden'>Loading...</span>
               </div>
             </div>
           </div>
@@ -204,18 +132,11 @@ const JobDetail = () => {
     return (
       <UserLayout>
         <section className='recruiter__job-detail'>
-          <div className='container'>
-            <div className='row'>
-              <div className='col-md-12 text-center py-5'>
-                <h3>Job not found</h3>
-                <button
-                  className='btn btn-primary mt-3'
-                  onClick={() => navigate('/user/posted-jobs')}
-                >
-                  Back to Posted Jobs
-                </button>
-              </div>
-            </div>
+          <div className='container text-center py-5'>
+            <h3>Job not found</h3>
+            <button className='btn btn-primary mt-3' onClick={() => navigate('/user/posted-jobs')}>
+              Back to Posted Jobs
+            </button>
           </div>
         </section>
       </UserLayout>
@@ -223,129 +144,54 @@ const JobDetail = () => {
   }
 
   const questionsAnswers = getJobQuestionsAnswers(job);
-  const cleanDescription = job.description || '';
-  const pendingQuotes = (job.quotes || []).filter((q) => q.status === 'pending');
   const statusBadge = JOB_STATUS_BADGE[job.status] || 'bg-secondary';
+  const unlockedList = (job.unlocks || []).filter((u) => u.unlocked_at);
 
   return (
     <UserLayout>
-      <PaymentModal
-        show={showPaymentModal}
-        onHide={() => setShowPaymentModal(false)}
-        jobId={id}
-        onSuccess={handlePaymentSuccess}
-      />
       <section className='recruiter__job-detail'>
         <div className='container'>
           <div className='row'>
             <div className='col-xl-8 mb-xl-0 mb-5'>
               <div className='recruiter__job-detail-content'>
                 <div className='recruiter__job-detail-content-banner mb-3'>
-                  <img
-                    src={job.image || recruiterjobdetailbanner}
-                    className='img-fluid'
-                    alt=''
-                  />
+                  <img src={job.image || recruiterjobdetailbanner} className='img-fluid' alt='' />
                 </div>
                 <div className='recruiter__job-detail-content-header mb-lg-4 mb-3'>
                   <div className='jobDetail-headLeft'>
                     <h2 className='mb-2'>{job.title}</h2>
-                    <p>Posted Date: {new Date(job.created_at).toLocaleDateString()}</p>
-                    <p className='mb-0 d-flex flex-wrap gap-2 align-items-center'>
+                    <p>Posted: {new Date(job.created_at).toLocaleDateString()}</p>
+                    <p className='mb-0'>
                       <span className={`badge ${statusBadge}`}>
                         {JOB_STATUS_LABELS[job.status] || job.status}
                       </span>
-                      {job.payment_status && job.payment_status !== 'unpaid' && (
-                        <span className={`badge ${getPaymentStatusBadge(job.payment_status)}`}>
-                          {getPaymentStatusLabel(job.payment_status)}
-                        </span>
-                      )}
+                    </p>
+                    <p className='text-muted small mt-2 mb-0'>
+                      {(job.unlock_count ?? 0) > 0
+                        ? `${job.unlock_count} professional${job.unlock_count === 1 ? '' : 's'} can contact you`
+                        : 'Professionals matching your job can reach out to you'}
                     </p>
                   </div>
                   <div className='jobDetail-headRight'>
-                    {job.status === 'awaiting_payment' && (
-                      <button
-                        className='customBtn btn-bgGreen me-2'
-                        onClick={handlePay}
-                        disabled={actionLoading}
-                      >
-                        Pay with Stripe
-                      </button>
-                    )}
-                    {job.status === 'pending_completion' && (
-                      <button
-                        className='customBtn btn-bgGreen me-2'
-                        onClick={handleConfirmCompletion}
-                        disabled={actionLoading}
-                      >
-                        Confirm Completion
-                      </button>
-                    )}
                     <button className='customBtn btn__witchIcon me-2'>
                       <img src={editIcon} alt='' />
                       <span>Edit Job</span>
                     </button>
-                    {job.status !== 'closed' && job.status !== 'completed' && (
-                      <button
-                        className='customBtn btn-bgRed me-2'
-                        onClick={handleCloseJob}
-                      >
-                        Close This Position
+                    {job.status === 'open' && (
+                      <button className='customBtn btn-bgRed me-2' onClick={handleCloseJob}>
+                        Close Job
                       </button>
                     )}
-                    <button
-                      className='btn btn-outline-danger'
-                      onClick={handleDeleteJob}
-                    >
+                    <button className='btn btn-outline-danger' onClick={handleDeleteJob}>
                       Delete
                     </button>
                   </div>
                 </div>
 
-                <JobProgress status={job.status} paymentStatus={job.payment_status} />
-
-                {(job.status === 'awaiting_payment' || job.status === 'in_progress' || job.status === 'pending_completion') && job.assigned_professional && (
-                  <div className='job-deal-box mb-4'>
-                    <h4>Active Deal</h4>
-                    <p className='mb-1'>
-                      <strong>Professional:</strong> {job.assigned_professional.name}
-                    </p>
-                    <p className='mb-1'>
-                      <strong>Agreed price:</strong> {formatMoney(job.final_amount)}
-                    </p>
-                    {job.status === 'awaiting_payment' && (
-                      <button
-                        type='button'
-                        className='customBtn btn-bgRed mt-2'
-                        onClick={handlePay}
-                        disabled={actionLoading}
-                      >
-                        Complete Payment (Stripe)
-                      </button>
-                    )}
-                  </div>
-                )}
-
-                {pendingQuotes.length > 0 && (
-                  <div className='mb-4'>
-                    <h4 className='mb-3'>Quotes from Professionals</h4>
-                    {pendingQuotes.map((quote) => (
-                      <QuoteCard
-                        key={quote.id}
-                        quote={quote}
-                        showActions={job.status === 'open'}
-                        onAccept={handleAcceptQuote}
-                        onReject={handleRejectQuote}
-                        processing={actionLoading}
-                      />
-                    ))}
-                  </div>
-                )}
-
                 <div className='recruiter__job-detail-content-overview'>
                   <div className='mb-lg-4 mb-3'>
                     <h4 className='mb-2'>Overview</h4>
-                    <p>{cleanDescription || 'No description provided.'}</p>
+                    <p>{job.description || 'No description provided.'}</p>
                   </div>
 
                   {job.location && (
@@ -363,23 +209,19 @@ const JobDetail = () => {
                   )}
 
                   {questionsAnswers.length > 0 && (
-                    <>
-                      <div className='mb-lg-4 mb-3'>
-                        <h4>Question Related Job</h4>
-                      </div>
-                      <div className='recruiter__job-detail-content-overviewQuestion'>
-                        {questionsAnswers.map((qa, index) => (
-                          <div className='job-detail-question' key={index}>
-                            <h5>
-                              <span>Q{index + 1}</span> {qa.question}
-                            </h5>
-                            <p>
-                              <span>A{index + 1}</span> {qa.answer}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    </>
+                    <div className='recruiter__job-detail-content-overviewQuestion'>
+                      <h4 className='mb-3'>Job Questions</h4>
+                      {questionsAnswers.map((qa, index) => (
+                        <div className='job-detail-question' key={index}>
+                          <h5>
+                            <span>Q{index + 1}</span> {qa.question}
+                          </h5>
+                          <p>
+                            <span>A{index + 1}</span> {qa.answer}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
                   )}
                 </div>
               </div>
@@ -388,24 +230,28 @@ const JobDetail = () => {
             <div className='col-xl-4'>
               <div className='interested-pro'>
                 <div className='interested-pro-head'>
-                  <h3>Interested Professionals</h3>
-                  <p>Total Interest: {job.interested_count || 0}</p>
+                  <h3>Professionals in Contact</h3>
+                  <p>
+                    {unlockedList.length > 0
+                      ? `${unlockedList.length} professional${unlockedList.length === 1 ? '' : 's'} connected`
+                      : 'Waiting for professionals'}
+                  </p>
                 </div>
 
                 <div className='interested-pro-boxes'>
-                  {job.interests && job.interests.length > 0 ? (
-                    job.interests.map((interest) => (
+                  {unlockedList.length > 0 ? (
+                    unlockedList.map((unlock) => (
                       <InterestedProBox
-                        key={interest.id || interest.professional_id}
-                        userImg={interest.professional?.profile_image || interestedProImg}
-                        userName={interest.professional?.name || 'Professional'}
+                        key={unlock.id || unlock.professional_id}
+                        userImg={unlock.professional?.profile_image || interestedProImg}
+                        userName={unlock.professional?.name || 'Professional'}
                         ratingValue={4}
                         ratingValueText='4/5'
-                        topProLabel='Top Professional'
-                        description={INTERESTED_PRO_BLURB}
-                        professionalId={interest.professional_id}
-                        userEmail={interest.professional?.email}
-                        userAvatar={interest.professional?.profile_image || null}
+                        topProLabel='Connected'
+                        description={CONNECTED_PRO_BLURB}
+                        professionalId={unlock.professional_id}
+                        userEmail={unlock.professional?.email}
+                        userAvatar={unlock.professional?.profile_image || null}
                         jobDetails={{
                           title: job.title,
                           description: job.description,
@@ -419,7 +265,7 @@ const JobDetail = () => {
                   ) : (
                     <div className='text-center py-4'>
                       <p className='text-muted mb-0'>
-                        No professionals have shown interest yet.
+                        No professionals have contacted you about this job yet.
                       </p>
                     </div>
                   )}
@@ -439,12 +285,11 @@ const JobDetail = () => {
                     <JobBox
                       icon={prevJob.category?.image || paintingHouseSmIcon}
                       title={prevJob.title}
-                      headerRightLabel='Interested'
-                      position={String(prevJob.interested_count || 0)}
+                      headerRightLabel='Responses'
+                      position={String(prevJob.unlock_count || 0)}
                       description={prevJob.description}
                       date={new Date(prevJob.created_at).toLocaleDateString()}
                       status={prevJob.status}
-                      paymentStatus={prevJob.payment_status}
                       to={`/user/posted-jobs/${prevJob.id}`}
                     />
                   </div>

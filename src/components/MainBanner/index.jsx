@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import servicearrowicon from '../../assets/images/service-arrow-icon.png';
 
 import { useTranslation } from 'react-i18next';
@@ -15,6 +16,9 @@ import COLXXL10 from '../COLXXL10';
 
 const MainBanner = () => {
   const { t } = useTranslation();
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const isProfessional = isAuthenticated && user?.user_type === 'professional';
+
   return (
     <section className='main-banner'>
       <div className='container position-relative'>
@@ -24,15 +28,30 @@ const MainBanner = () => {
               <h1>{t('home:banner.title')}</h1>
               <p>{t('home:banner.description')}</p>
               <div className='main__banner-btns'>
+                {isProfessional ? (
+                  <Link
+                    to='/recruiter/posted-jobs'
+                    className='customBtn btn-bgRed btn__witchIcon '
+                  >
+                    <span>{t('common:buttons.browseLeads')}</span>
+                    <img src={servicearrowicon} alt='Icon' />
+                  </Link>
+                ) : (
+                  <Link
+                    to='/find-professionals'
+                    className='customBtn btn-bgRed btn__witchIcon '
+                  >
+                    <span>{t('common:buttons.bookService')}</span>
+                    <img src={servicearrowicon} alt='Icon' />
+                  </Link>
+                )}
                 <Link
-                  to={'/find-professionals'}
-                  className='customBtn btn-bgRed btn__witchIcon '
+                  to={isProfessional ? '/recruiter/account-setting/contact-info' : '/sign-up'}
+                  className='customBtn btn-bgWhite'
                 >
-                  <span>{t('common:buttons.bookService')}</span>
-                  <img src={servicearrowicon} alt='Icon' />
-                </Link>
-                <Link to={'/sign-up'} className='customBtn btn-bgWhite'>
-                  {t('common:buttons.offerServices')}
+                  {isProfessional
+                    ? t('common:home.profileSettings')
+                    : t('common:buttons.offerServices')}
                 </Link>
               </div>
             </div>

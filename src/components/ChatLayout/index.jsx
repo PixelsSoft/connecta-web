@@ -21,6 +21,8 @@ import {
   subscribeToConversations,
   markMessagesAsRead,
 } from '../../services/chatService';
+import axiosInstance from '../../utils/axios';
+import { API_ENDPOINTS } from '../../config/api';
 
 
 const ChatLayout = () => {
@@ -39,7 +41,8 @@ const ChatLayout = () => {
   const [conversations, setConversations] = useState([]);
   const [selectedConversation, setSelectedConversation] = useState(null);
   const [messages, setMessages] = useState([]);
-  const [loading, setLoading] = useState(!location.state?.userId); // Don't load if coming from "Start Chat"
+  const startChatUserId = location.state?.partnerId || location.state?.userId;
+  const [loading, setLoading] = useState(!startChatUserId);
   const [sending, setSending] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [firebaseError, setFirebaseError] = useState(false);
@@ -79,7 +82,7 @@ const ChatLayout = () => {
         setFirebaseError(true);
         setLoading(false);
         
-        if (!location.state?.userId && !error.message?.includes('permissions')) {
+        if (!startChatUserId && !error.message?.includes('permissions')) {
           toast.error('Chat connection failed. Please try again.');
         }
       }
@@ -91,14 +94,14 @@ const ChatLayout = () => {
     return () => {
       if (unsubscribe) unsubscribe();
     };
-  }, [user?.id, location.state?.userId]);
+  }, [user?.id, startChatUserId]);
 
   useEffect(() => {
-    if (!location.state?.userId || !user) {
+    if (!startChatUserId || !user) {
       return;
     }
-    
-    const otherUserId = location.state.userId.toString();
+
+    const otherUserId = startChatUserId.toString();
     const conversationId = [user.id.toString(), otherUserId].sort().join('_');
     
     const tempConversation = {
@@ -138,6 +141,16 @@ const ChatLayout = () => {
 
     const syncWithFirebase = async () => {
       try {
+        if (location.state?.jobId && user.user_type === 'professional') {
+          const accessRes = await axiosInstance.get(
+            API_ENDPOINTS.JOBS.CHAT_ACCESS(location.state.jobId)
+          );
+          if (!accessRes.data?.data?.can_chat) {
+            toast.error(accessRes.data?.data?.message || 'Unlock the lead before chatting');
+            return;
+          }
+        }
+
         await getOrCreateConversation(
           user.id.toString(),
           otherUserId,
@@ -156,7 +169,8 @@ const ChatLayout = () => {
           location.state.jobDetails || null
         );
         setFirebaseSynced(true);
-        toast.success(`Chat with ${location.state.userName} is ready!`);
+        console.log('Chat with Firebase synced');
+        // toast.success(`Chat with ${location.state.userName} is ready!`);
       } catch (error) {
         setFirebaseSynced(false);
         toast.error('Failed to connect to chat. Please refresh the page.');
@@ -164,7 +178,7 @@ const ChatLayout = () => {
     };
     
     syncWithFirebase();
-  }, [location.state?.userId, user?.id]);
+  }, [startChatUserId, user?.id]);
 
   // Subscribe to messages when conversation is selected
   useEffect(() => {
@@ -215,7 +229,7 @@ const ChatLayout = () => {
     }
 
     // Check if conversation is synced with Firebase (only for new conversations from "Start Chat")
-    if (location.state?.userId && !firebaseSynced) {
+    if (startChatUserId && !firebaseSynced) {
       toast.error('Chat is connecting... Please wait a moment and try again.');
       return;
     }
@@ -509,7 +523,7 @@ service cloud.firestore {
                     <div className='text-center py-5 text-muted'>
                       <i className='bi bi-chat-text' style={{ fontSize: '48px', color: '#dedede' }}></i>
                       <p className='mt-3'>No messages yet. Start the conversation!</p>
-                      {location.state?.userId && (
+                      {startChatUserId && (
                         <small>Say hello to {selectedOtherUser.name}!</small>
                       )}
                     </div>
@@ -574,7 +588,7 @@ service cloud.firestore {
                           type='text'
                           className='chat-input'
                           placeholder={
-                            location.state?.userId && !firebaseSynced
+                            startChatUserId && !firebaseSynced
                               ? 'Connecting to chat...'
                               : file
                               ? `File: ${file.name}`
@@ -582,7 +596,7 @@ service cloud.firestore {
                           }
                           value={message}
                           onChange={(e) => setMessage(e.target.value)}
-                          disabled={sending || (location.state?.userId && !firebaseSynced)}
+                          disabled={sending || (startChatUserId && !firebaseSynced)}
                         />
                         <label className='chat-file-upload'>
                           <input
@@ -590,7 +604,7 @@ service cloud.firestore {
                             onChange={handleFileChange}
                             style={{ display: 'none' }}
                             accept='image/*,.pdf,.doc,.docx,.txt'
-                            disabled={sending || (location.state?.userId && !firebaseSynced)}
+                            disabled={sending || (startChatUserId && !firebaseSynced)}
                           />
                           <span role='img' aria-label='Attach file'>
                             <img src={attachIcon} alt='' />
@@ -600,12 +614,12 @@ service cloud.firestore {
                       <button 
                         type='submit' 
                         className='chat-send-btn' 
-                        disabled={sending || (!message.trim() && !file) || (location.state?.userId && !firebaseSynced)}
+                        disabled={sending || (!message.trim() && !file) || (startChatUserId && !firebaseSynced)}
                       >
                         {sending ? '...' : <img src={sendIcon} alt='Send' />}
                       </button>
                     </div>
-                    {location.state?.userId && !firebaseSynced && (
+                    {startChatUserId && !firebaseSynced && (
                       <div className='text-center mt-2'>
                         <small className='text-muted'>
                           <span className='spinner-border spinner-border-sm me-2' role='status'></span>

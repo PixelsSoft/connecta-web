@@ -41,21 +41,15 @@ export const API_ENDPOINTS = {
     SHOW: (id) => `/jobs/${id}`,
     UPDATE: (id) => `/jobs/${id}`,
     DELETE: (id) => `/jobs/${id}`,
-    INTERESTED: (id) => `/jobs/${id}/interested`,
-    SHORTLIST: (id) => `/jobs/${id}/shortlist`,
-    MARK_COMPLETE: (id) => `/jobs/${id}/mark-complete`,
-    CONFIRM_COMPLETION: (id) => `/jobs/${id}/confirm-completion`,
-    QUOTES: (jobId) => `/jobs/${jobId}/quotes`,
-    QUOTE_ACCEPT: (jobId, quoteId) => `/jobs/${jobId}/quotes/${quoteId}/accept`,
-    QUOTE_REJECT: (jobId, quoteId) => `/jobs/${jobId}/quotes/${quoteId}/reject`,
+    CHAT_ACCESS: (id) => `/jobs/${id}/chat-access`,
   },
 
   PAYMENTS: {
-    INTENT: '/payments/intent',
-    CONFIRM: '/payments/confirm',
-    CHECKOUT: '/payments/checkout',
-    VERIFY: '/payments/verify',
+    LEAD_UNLOCK_INTENT: '/payments/lead-unlock/intent',
+    LEAD_UNLOCK_CONFIRM: '/payments/lead-unlock/confirm',
   },
+
+  GEOCODE: '/geocode',
 
   // Categories
   CATEGORIES: {
