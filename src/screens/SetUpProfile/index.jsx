@@ -73,6 +73,7 @@ const SetUpProfile = () => {
     useProfessionalProfile();
   const [formData, setFormData] = useState({
     companyOrBusinessName: '',
+    uidMwstNumber: '',
     companyPhoneNo: '',
     companyAddress: '',
     selectedServices: [],
@@ -106,7 +107,8 @@ const SetUpProfile = () => {
         if (profile) {
           setFormData((prev) => ({
             ...prev,
-            companyOrBusinessName: profile.name || prev.companyOrBusinessName,
+            companyOrBusinessName: profile.company_name || profile.name || prev.companyOrBusinessName,
+            uidMwstNumber: profile.uid_number || prev.uidMwstNumber,
             companyPhoneNo: profile.phone || prev.companyPhoneNo,
             companyAddress: profile.address || prev.companyAddress,
             selectedServices: (profile.skill_category_ids || []).map(String),
@@ -186,7 +188,8 @@ const SetUpProfile = () => {
     try {
       if (step === 1) {
         await saveProfile({
-          name: formData.companyOrBusinessName || user?.name,
+          company_name: formData.companyOrBusinessName || undefined,
+          uid_number: formData.uidMwstNumber || undefined,
           phone: formData.companyPhoneNo || undefined,
           address: formData.companyAddress || undefined,
         });
@@ -430,7 +433,8 @@ const SetUpProfile = () => {
                                     className='form-control'
                                     placeholder={t('setupProfile.typeNumberHere')}
                                     id='UIDMWSTNumber'
-                                    name='UIDMWSTNumber'
+                                    name='uidMwstNumber'
+                                    value={formData.uidMwstNumber}
                                     onChange={handleChanges}
                                   />
                                 </div>

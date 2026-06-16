@@ -11,7 +11,7 @@ const SignUP = () => {
   const navigate = useNavigate();
   const { t } = useTranslation("common");
   const dispatch = useDispatch();
-  const { loading, error, requiresOtp, otpEmail } = useSelector((state) => state.auth);
+  const { loading, error, fieldErrors, requiresOtp, otpEmail } = useSelector((state) => state.auth);
   
   const [accountType, setAccountType] = useState("customer");
   const [formData, setFormData] = useState({
@@ -47,6 +47,104 @@ const SignUP = () => {
     dispatch(register(userData));
   };
 
+  const fieldError = (field) =>
+    fieldErrors[field] ? (
+      <div className="text-danger small mt-1">{fieldErrors[field]}</div>
+    ) : null;
+
+  const inputClass = (field) =>
+    `form-control${fieldErrors[field] ? " is-invalid" : ""}`;
+
+  const signUpFields = (idPrefix = "") => (
+    <>
+      <div className="inputGroup">
+        <label htmlFor={`${idPrefix}fullName`} className="form-label">
+          {t("forms.fullName")}
+        </label>
+        <input
+          type="text"
+          className={inputClass("name")}
+          id={`${idPrefix}fullName`}
+          name="name"
+          placeholder="Jon Doe"
+          value={formData.name}
+          onChange={handleInputChange}
+          required
+          disabled={loading}
+        />
+        {fieldError("name")}
+      </div>
+      <div className="inputGroup">
+        <label htmlFor={`${idPrefix}userEmail`} className="form-label">
+          {t("forms.email")}
+        </label>
+        <input
+          type="email"
+          className={inputClass("email")}
+          id={`${idPrefix}userEmail`}
+          name="email"
+          placeholder="jon.doe@mail.com"
+          value={formData.email}
+          onChange={handleInputChange}
+          required
+          disabled={loading}
+        />
+        {fieldError("email")}
+      </div>
+      <div className="inputGroup">
+        <label htmlFor={`${idPrefix}userPassword`} className="form-label">
+          {t("forms.password")}
+        </label>
+        <input
+          type="password"
+          className={inputClass("password")}
+          id={`${idPrefix}userPassword`}
+          name="password"
+          placeholder="••••••••"
+          value={formData.password}
+          onChange={handleInputChange}
+          required
+          disabled={loading}
+        />
+        {fieldError("password")}
+      </div>
+      <div className="inputGroup">
+        <label htmlFor={`${idPrefix}userPasswordConfirm`} className="form-label">
+          {t("forms.confirmPassword")}
+        </label>
+        <input
+          type="password"
+          className={inputClass("password_confirmation")}
+          id={`${idPrefix}userPasswordConfirm`}
+          name="password_confirmation"
+          placeholder="••••••••"
+          value={formData.password_confirmation}
+          onChange={handleInputChange}
+          required
+          disabled={loading}
+        />
+        {fieldError("password_confirmation")}
+      </div>
+      <div className="inputGroup">
+        <label htmlFor={`${idPrefix}phoneNumber`} className="form-label">
+          {t("forms.phoneNumber")}{" "}
+          <span className="text-muted">(optional)</span>
+        </label>
+        <input
+          type="tel"
+          className={inputClass("phone")}
+          id={`${idPrefix}phoneNumber`}
+          name="phone"
+          placeholder="+1234567890"
+          value={formData.phone}
+          onChange={handleInputChange}
+          disabled={loading}
+        />
+        {fieldError("phone")}
+      </div>
+    </>
+  );
+
   return (
     <DefaultLayout2>
       <section className="auth-sec">
@@ -59,7 +157,9 @@ const SignUP = () => {
 
                 {error && (
                   <div className="alert alert-danger" role="alert">
-                    {error}
+                    {error.split("\n").map((line) => (
+                      <div key={line}>{line}</div>
+                    ))}
                   </div>
                 )}
 
@@ -72,90 +172,7 @@ const SignUP = () => {
                   <Tab eventKey="customer" title={t("buttons.customerAccount")}>
                     <form onSubmit={handleSubmit}>
                       <div className="auth-contentForm">
-                        <div className="inputGroup">
-                          <label htmlFor="fullName" className="form-label">
-                            {t("forms.fullName")}
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="fullName"
-                            name="name"
-                            placeholder="Jon Doe"
-                            value={formData.name}
-                            onChange={handleInputChange}
-                            required
-                            disabled={loading}
-                          />
-                        </div>
-                        <div className="inputGroup">
-                          <label htmlFor="userEmail" className="form-label">
-                            {t("forms.email")}
-                          </label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            id="userEmail"
-                            name="email"
-                            placeholder="jon.doe@mail.com"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            required
-                            disabled={loading}
-                          />
-                        </div>
-                        <div className="inputGroup">
-                          <label htmlFor="userPassword" className="form-label">
-                            {t("forms.password")}
-                          </label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            id="userPassword"
-                            name="password"
-                            placeholder="••••••••"
-                            value={formData.password}
-                            onChange={handleInputChange}
-                            required
-                            disabled={loading}
-                          />
-                        </div>
-                        <div className="inputGroup">
-                          <label
-                            htmlFor="userPasswordConfirm"
-                            className="form-label"
-                          >
-                            {t("forms.confirmPassword")}
-                          </label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            id="userPasswordConfirm"
-                            name="password_confirmation"
-                            placeholder="••••••••"
-                            value={formData.password_confirmation}
-                            onChange={handleInputChange}
-                            required
-                            disabled={loading}
-                          />
-                        </div>
-                        <div className="inputGroup">
-                          <label htmlFor="phoneNumber" className="form-label">
-                            {t("forms.phoneNumber")}{" "}
-                            <span className="text-muted">(optional)</span>
-                          </label>
-                          <input
-                            type="tel"
-                            className="form-control"
-                            id="phoneNumber"
-                            name="phone"
-                            placeholder="+1234567890"
-                            value={formData.phone}
-                            onChange={handleInputChange}
-                            disabled={loading}
-                          />
-                        </div>
-
+                        {signUpFields("")}
                         <button
                           type="submit"
                           className="customBtn btn-bgRed w-100"
@@ -185,96 +202,7 @@ const SignUP = () => {
                   >
                     <form onSubmit={handleSubmit}>
                       <div className="auth-contentForm">
-                        <div className="inputGroup">
-                          <label htmlFor="fullNamePro" className="form-label">
-                            {t("forms.fullName")}
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="fullNamePro"
-                            name="name"
-                            placeholder="Jon Doe"
-                            value={formData.name}
-                            onChange={handleInputChange}
-                            required
-                            disabled={loading}
-                          />
-                        </div>
-                        <div className="inputGroup">
-                          <label htmlFor="userEmailPro" className="form-label">
-                            {t("forms.email")}
-                          </label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            id="userEmailPro"
-                            name="email"
-                            placeholder="jon.doe@mail.com"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            required
-                            disabled={loading}
-                          />
-                        </div>
-                        <div className="inputGroup">
-                          <label
-                            htmlFor="userPasswordPro"
-                            className="form-label"
-                          >
-                            {t("forms.password")}
-                          </label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            id="userPasswordPro"
-                            name="password"
-                            placeholder="••••••••"
-                            value={formData.password}
-                            onChange={handleInputChange}
-                            required
-                            disabled={loading}
-                          />
-                        </div>
-                        <div className="inputGroup">
-                          <label
-                            htmlFor="userPasswordConfirmPro"
-                            className="form-label"
-                          >
-                            {t("forms.confirmPassword")}
-                          </label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            id="userPasswordConfirmPro"
-                            name="password_confirmation"
-                            placeholder="••••••••"
-                            value={formData.password_confirmation}
-                            onChange={handleInputChange}
-                            required
-                            disabled={loading}
-                          />
-                        </div>
-                        <div className="inputGroup">
-                          <label
-                            htmlFor="phoneNumberPro"
-                            className="form-label"
-                          >
-                            {t("forms.phoneNumber")}{" "}
-                            <span className="text-muted">(optional)</span>
-                          </label>
-                          <input
-                            type="tel"
-                            className="form-control"
-                            id="phoneNumberPro"
-                            name="phone"
-                            placeholder="+1234567890"
-                            value={formData.phone}
-                            onChange={handleInputChange}
-                            disabled={loading}
-                          />
-                        </div>
-
+                        {signUpFields("pro-")}
                         <button
                           type="submit"
                           className="customBtn btn-bgRed w-100"

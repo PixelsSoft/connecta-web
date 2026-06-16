@@ -9,7 +9,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
-  const { loading, error, isAuthenticated, requiresOtp, otpEmail, user } = useSelector((state) => state.auth);
+  const { loading, error, fieldErrors, isAuthenticated, requiresOtp, otpEmail, user } = useSelector((state) => state.auth);
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -43,7 +43,9 @@ const Login = () => {
                 <h2>{t('buttons.Title_login')}</h2>
                 {error && (
                   <div className="alert alert-danger" role="alert">
-                    {error}
+                    {error.split('\n').map((line) => (
+                      <div key={line}>{line}</div>
+                    ))}
                   </div>
                 )}
                 <form onSubmit={handleSubmit}>
@@ -54,7 +56,7 @@ const Login = () => {
                       </label>
                       <input
                         type='email'
-                        className='form-control'
+                        className={`form-control${fieldErrors.email ? ' is-invalid' : ''}`}
                         id='userName'
                         placeholder='info@wrappixel.com'
                         value={email}
@@ -62,6 +64,9 @@ const Login = () => {
                         required
                         disabled={loading}
                       />
+                      {fieldErrors.email && (
+                        <div className="text-danger small mt-1">{fieldErrors.email}</div>
+                      )}
                     </div>
                     <div className='inputGroup'>
                       <label htmlFor='userPassword' className='form-label'>
@@ -69,7 +74,7 @@ const Login = () => {
                       </label>
                       <input
                         type='password'
-                        className='form-control'
+                        className={`form-control${fieldErrors.password ? ' is-invalid' : ''}`}
                         id='userPassword'
                         placeholder={t('forms.password')}
                         value={password}
@@ -77,6 +82,9 @@ const Login = () => {
                         required
                         disabled={loading}
                       />
+                      {fieldErrors.password && (
+                        <div className="text-danger small mt-1">{fieldErrors.password}</div>
+                      )}
                     </div>
                     <div className='forgotDiv'>
                       <div className='form-check'>

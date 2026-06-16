@@ -425,6 +425,12 @@
     "useMyRadius": "My travel radius",
     "noJobsMatch": "No jobs match your filters.",
     "noGps": "No GPS",
-    "professionalCannotPostJob": "Professionals cannot post jobs. Browse available leads to find customers."
+    "professionalCannotPostJob": "Professionals cannot post jobs. Browse available leads to find customers.",
+    "verificationPendingTitle": "Business verification pending",
+    "verificationPendingText": "Submit your company name and UID/MWST number in Profile, then wait for admin approval before you can browse and unlock leads.",
+    "verificationRejectedTitle": "Verification rejected",
+    "verificationRejectedText": "Your business verification was rejected. Update your company details in Profile and contact support if needed.",
+    "verificationApproved": "Your business is verified. You can browse and unlock leads.",
+    "verificationRequiredBanner": "Your account must be verified by Connecta24 before you can view leads. Complete your company profile and wait for admin approval."
   }
 }

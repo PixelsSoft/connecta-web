@@ -101,6 +101,13 @@ const PostedJobs = () => {
           setPagination(response.data.data.pagination || null);
           if (response.data.data.marketplace) {
             setMarketplace(response.data.data.marketplace);
+            const mp = response.data.data.marketplace;
+            if (mp.verification_status && user && token) {
+              dispatch(setCredentials({
+                user: { ...user, verification_status: mp.verification_status },
+                token,
+              }));
+            }
           }
 
           if (list.length === 0) {
@@ -285,6 +292,15 @@ const PostedJobs = () => {
               >
                 {savingLocation ? 'Saving...' : 'Use my location'}
               </button>
+            </div>
+          )}
+          {marketplace.verification_required && (
+            <div className='alert alert-warning mb-3'>
+              <strong>{t('marketplace.verificationPendingTitle')}</strong>
+              <p className='mb-2 small mt-1'>{t('marketplace.verificationRequiredBanner')}</p>
+              <a href='/recruiter/account-setting/contact-info' className='btn btn-sm btn-dark'>
+                {t('profile.myProfile')}
+              </a>
             </div>
           )}
           <div className='row'>

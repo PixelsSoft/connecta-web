@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../../utils/axios';
 import { API_ENDPOINTS } from '../../config/api';
+import { formatApiErrorMessage, getFieldErrors } from '../../utils/apiErrors';
 
 // Helper function to safely parse JSON from localStorage
 const getStoredUser = () => {
@@ -21,6 +22,7 @@ const initialState = {
   isAuthenticated: !!localStorage.getItem('auth_token'),
   loading: false,
   error: null,
+  fieldErrors: {},
   requiresOtp: false,
   otpEmail: null,
 };
@@ -146,6 +148,7 @@ const authSlice = createSlice({
     },
     clearError: (state) => {
       state.error = null;
+      state.fieldErrors = {};
     },
   },
   extraReducers: (builder) => {
@@ -164,7 +167,8 @@ const authSlice = createSlice({
       })
       .addCase(register.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message || 'Registration failed';
+        state.fieldErrors = getFieldErrors(action.payload?.errors);
+        state.error = formatApiErrorMessage(action.payload, 'Registration failed');
       });
 
     // Login
@@ -185,7 +189,8 @@ const authSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message || 'Login failed';
+        state.fieldErrors = getFieldErrors(action.payload?.errors);
+        state.error = formatApiErrorMessage(action.payload, 'Login failed');
         // Check if it's an email verification error (403 status)
         if (action.payload?.requires_otp && action.payload?.email) {
           state.requiresOtp = true;
@@ -212,7 +217,8 @@ const authSlice = createSlice({
       })
       .addCase(verifyOtp.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message || 'OTP verification failed';
+        state.fieldErrors = getFieldErrors(action.payload?.errors);
+        state.error = formatApiErrorMessage(action.payload, 'OTP verification failed');
       });
 
     // Resend OTP
@@ -226,7 +232,8 @@ const authSlice = createSlice({
       })
       .addCase(resendOtp.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message || 'Failed to resend OTP';
+        state.fieldErrors = getFieldErrors(action.payload?.errors);
+        state.error = formatApiErrorMessage(action.payload, 'Failed to resend OTP');
       });
 
     // Logout
@@ -268,7 +275,8 @@ const authSlice = createSlice({
       })
       .addCase(forgotPassword.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message || 'Failed to send reset code';
+        state.fieldErrors = getFieldErrors(action.payload?.errors);
+        state.error = formatApiErrorMessage(action.payload, 'Failed to send reset code');
       });
 
     // Reset Password
@@ -284,7 +292,8 @@ const authSlice = createSlice({
       })
       .addCase(resetPassword.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message || 'Failed to reset password';
+        state.fieldErrors = getFieldErrors(action.payload?.errors);
+        state.error = formatApiErrorMessage(action.payload, 'Failed to reset password');
       });
   },
 });

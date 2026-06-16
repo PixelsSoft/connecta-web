@@ -13,12 +13,15 @@ const ContactInformation = () => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
+    companyName: '',
+    uidNumber: '',
     address: '',
     serviceArea: '',
     skillIds: [],
     searchRadiusKm: 50,
     latitude: null,
     longitude: null,
+    verificationStatus: 'pending',
   });
 
   useEffect(() => {
@@ -30,12 +33,15 @@ const ContactInformation = () => {
           setFormData({
             name: profile.name || '',
             phone: profile.phone || '',
+            companyName: profile.company_name || '',
+            uidNumber: profile.uid_number || '',
             address: profile.address || '',
             serviceArea: profile.address || '',
             skillIds: (profile.skill_category_ids || []).map(String),
             searchRadiusKm: profile.search_radius_km || 50,
             latitude: profile.latitude ?? null,
             longitude: profile.longitude ?? null,
+            verificationStatus: profile.verification_status || 'pending',
           });
         }
       } catch {
@@ -114,6 +120,8 @@ const ContactInformation = () => {
       await saveProfile({
         name: formData.name,
         phone: formData.phone,
+        company_name: formData.companyName || undefined,
+        uid_number: formData.uidNumber || undefined,
         address: formData.serviceArea || formData.address,
         skill_category_ids: formData.skillIds.map((id) => parseInt(id, 10)),
         search_radius_km: formData.searchRadiusKm,
@@ -121,6 +129,10 @@ const ContactInformation = () => {
         longitude: longitude ?? undefined,
       });
       toast.success(t('marketplace.profileUpdated'));
+      const refreshed = await loadProfile();
+      if (refreshed?.verification_status) {
+        setFormData((prev) => ({ ...prev, verificationStatus: refreshed.verification_status }));
+      }
     } catch (err) {
       toast.error(err.response?.data?.message || err.message || 'Update failed');
     } finally {
@@ -135,6 +147,24 @@ const ContactInformation = () => {
           <h2>{t('profile.myProfile')}</h2>
           <p className='mt-2'>{t('profile.profileSubtext')}</p>
         </div>
+
+        {formData.verificationStatus === 'pending' && (
+          <div className='alert alert-warning mb-4'>
+            <strong>{t('marketplace.verificationPendingTitle')}</strong>
+            <p className='mb-0 small mt-1'>{t('marketplace.verificationPendingText')}</p>
+          </div>
+        )}
+        {formData.verificationStatus === 'rejected' && (
+          <div className='alert alert-danger mb-4'>
+            <strong>{t('marketplace.verificationRejectedTitle')}</strong>
+            <p className='mb-0 small mt-1'>{t('marketplace.verificationRejectedText')}</p>
+          </div>
+        )}
+        {formData.verificationStatus === 'approved' && (
+          <div className='alert alert-success mb-4 py-2'>
+            {t('marketplace.verificationApproved')}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div className='row'>
@@ -151,6 +181,39 @@ const ContactInformation = () => {
                   value={formData.name}
                   onChange={handleChanges}
                   required
+                />
+              </div>
+            </div>
+
+            <div className='col-lg-6 mb-md-4 mb-3'>
+              <div className='inputGroup'>
+                <label htmlFor='companyName' className='form-label'>
+                  {t('setupProfile.companyOrBusinessName')}
+                </label>
+                <input
+                  type='text'
+                  className='form-control'
+                  id='companyName'
+                  name='companyName'
+                  value={formData.companyName}
+                  onChange={handleChanges}
+                />
+              </div>
+            </div>
+
+            <div className='col-lg-6 mb-md-4 mb-3'>
+              <div className='inputGroup'>
+                <label htmlFor='uidNumber' className='form-label'>
+                  {t('setupProfile.uidMwstNumber')}
+                </label>
+                <input
+                  type='text'
+                  className='form-control'
+                  id='uidNumber'
+                  name='uidNumber'
+                  value={formData.uidNumber}
+                  onChange={handleChanges}
+                  placeholder={t('setupProfile.typeNumberHere')}
                 />
               </div>
             </div>
