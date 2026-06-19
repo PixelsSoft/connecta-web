@@ -232,13 +232,15 @@ p {
   background-repeat: no-repeat;
   padding: 90px 0 120px;
   min-height: 640px;
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
+  z-index: 10;
 }
 .main__banner-content {
   text-align: center;
   color: #fff;
   position: relative;
-  z-index: 2;
+  z-index: 12;
   max-width: 890px;
   margin: 0 auto;
 }
@@ -298,6 +300,8 @@ p {
   position: absolute;
   width: 100%;
   top: 0;
+  z-index: 1;
+  pointer-events: none;
 }
 .mainBanner-iconImgs-1,
 .mainBanner-iconImgs-2,
@@ -385,6 +389,8 @@ p {
 
 .home-aboutSec {
   padding: 60px 0;
+  position: relative;
+  z-index: 1;
 }
 
 .why-chooseSec .sec-head h2 {

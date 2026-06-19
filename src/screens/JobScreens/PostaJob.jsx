@@ -21,13 +21,13 @@ const PostaJob = () => {
   const [step, setStep] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const { category } = useParams();
+  const { category, subcategory: subcategorySlug } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { categoriesWithSubcategories, loading } = useSelector((state) => state.category);
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
-  const [selectedSubcategory, setSelectedSubcategory] = useState("");
+  const [selectedSubcategorySlug, setSelectedSubcategorySlug] = useState("");
   const [subcategories, setSubcategories] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [questionAnswers, setQuestionAnswers] = useState({});
@@ -74,39 +74,17 @@ const PostaJob = () => {
     return categoriesWithSubcategories.find((cat) => cat.slug === category) || null;
   }, [category, categoriesWithSubcategories]);
 
-  // Load subcategories when matched category is ready
-  useEffect(() => {
-    if (!matched) return;
-    setLoadingSubcategories(true);
-    setSelectedSubcategory("");
-    setQuestions([]);
-    setQuestionAnswers({});
-    if (matched.subcategories && matched.subcategories.length > 0) {
-      setSubcategories(matched.subcategories);
-    } else {
-      setSubcategories([]);
-    }
-    setLoadingSubcategories(false);
-  }, [matched]);
+  const selectedSubcategoryObj = useMemo(() => {
+    if (!matched?.subcategories?.length || !selectedSubcategorySlug) return null;
+    return matched.subcategories.find((sub) => sub.slug === selectedSubcategorySlug) || null;
+  }, [matched, selectedSubcategorySlug]);
 
-  const handleSubcategoryChange = async (subcategoryName) => {
-    if (!subcategoryName) {
-      setSelectedSubcategory("");
-      setQuestions([]);
-      setQuestionAnswers({});
-      return;
-    }
-    setSelectedSubcategory(subcategoryName);
-    setQuestions([]);
-    setQuestionAnswers({});
-
-    const subcategory = matched?.subcategories?.find((sub) => sub.name === subcategoryName);
-    if (!matched?.id || !subcategory) return;
-
+  const loadQuestionsForSubcategory = async (sub) => {
+    if (!matched?.slug || !sub?.slug) return;
     setLoadingQuestions(true);
     try {
       const response = await axiosInstance.get(
-        API_ENDPOINTS.CATEGORIES.QUESTIONS(matched.id, subcategory.id)
+        API_ENDPOINTS.CATEGORIES.QUESTIONS_BY_SLUG(matched.slug, sub.slug)
       );
       if (response.data.success && response.data.data) {
         setQuestions(response.data.data);
@@ -117,6 +95,48 @@ const PostaJob = () => {
       setQuestions([]);
     } finally {
       setLoadingQuestions(false);
+    }
+  };
+
+  // Load subcategories when matched category is ready
+  useEffect(() => {
+    if (!matched) return;
+    setLoadingSubcategories(true);
+    setQuestions([]);
+    setQuestionAnswers({});
+    if (!subcategorySlug) {
+      setSelectedSubcategorySlug("");
+    }
+    if (matched.subcategories && matched.subcategories.length > 0) {
+      setSubcategories(matched.subcategories);
+    } else {
+      setSubcategories([]);
+    }
+    setLoadingSubcategories(false);
+  }, [matched, subcategorySlug]);
+
+  // Pre-select subcategory from search URL (/post-a-job/:category/:subcategory)
+  useEffect(() => {
+    if (!matched || !subcategorySlug || subcategories.length === 0) return;
+    const sub = subcategories.find((s) => s.slug === subcategorySlug);
+    if (!sub) return;
+    setSelectedSubcategorySlug(sub.slug);
+    loadQuestionsForSubcategory(sub);
+  }, [matched, subcategorySlug, subcategories]);
+
+  const handleSubcategoryChange = async (slug) => {
+    if (!slug) {
+      setSelectedSubcategorySlug("");
+      setQuestions([]);
+      setQuestionAnswers({});
+      return;
+    }
+    setSelectedSubcategorySlug(slug);
+    setQuestions([]);
+    setQuestionAnswers({});
+    const sub = matched?.subcategories?.find((item) => item.slug === slug);
+    if (sub) {
+      await loadQuestionsForSubcategory(sub);
     }
   };
 
@@ -255,12 +275,16 @@ const PostaJob = () => {
         return;
       }
 
-      const subcategoryObj = matched?.subcategories?.find((s) => s.name === selectedSubcategory);
+      const subcategoryObj = selectedSubcategoryObj;
 
       const data = new FormData();
       data.append("category_id", matched.id);
       if (subcategoryObj?.id) data.append("subcategory_id", subcategoryObj.id);
-      data.append("title", formData.jobTitle || `${matched.name} - ${selectedSubcategory}`);
+      data.append(
+        "title",
+        formData.jobTitle ||
+          `${subcategoryObj?.name || matched.name}${subcategoryObj ? "" : ""}`
+      );
       data.append("description", formData.description || "");
       data.append("location", formData.location || "");
       if (formData.latitude != null) data.append("latitude", String(formData.latitude));
@@ -310,7 +334,7 @@ const PostaJob = () => {
         <div className="paj-loading">
           <h4>Category not found</h4>
           <Link to="/find-professionals" className="paj-btn-primary mt-3">
-            Back to Categories
+            Back to search
           </Link>
         </div>
       </DefaultLayout2>
@@ -352,29 +376,53 @@ const PostaJob = () => {
           {step === 1 && (
             <div className="paj-step-content">
               <div className="paj-step-head">
-                <h2>What type of {matched.name} do you need?</h2>
-                <p>Select the specific service and answer a few quick questions.</p>
+                <h2>
+                  {selectedSubcategoryObj
+                    ? t("jobPosting.serviceMatched", { defaultValue: "We matched your request" })
+                    : `What type of ${matched.name} do you need?`}
+                </h2>
+                <p>
+                  {selectedSubcategoryObj
+                    ? "Confirm the service below and answer a few quick questions."
+                    : "Select the specific service and answer a few quick questions."}
+                </p>
               </div>
 
-              <div className="paj-field">
-                <label>Select {matched.name} type</label>
-                {loadingSubcategories ? (
-                  <div className="paj-loading-inline">Loading...</div>
-                ) : (
-                  <select
-                    className="paj-select"
-                    value={selectedSubcategory}
-                    onChange={(e) => handleSubcategoryChange(e.target.value)}
-                  >
-                    <option value="">— Choose a service —</option>
-                    {subcategories.map((sub, i) => (
-                      <option key={i} value={sub.name}>{sub.name}</option>
-                    ))}
-                  </select>
-                )}
-              </div>
+              {selectedSubcategoryObj && (
+                <div className="paj-matched-service">
+                  <div>
+                    <strong>{selectedSubcategoryObj.name}</strong>
+                    <span>{matched.name}</span>
+                  </div>
+                  <Link to="/find-professionals" className="paj-link-muted">
+                    {t("jobPosting.changeService", { defaultValue: "Change service" })}
+                  </Link>
+                </div>
+              )}
 
-              {selectedSubcategory && (
+              {!selectedSubcategoryObj && (
+                <div className="paj-field">
+                  <label>Select {matched.name} type</label>
+                  {loadingSubcategories ? (
+                    <div className="paj-loading-inline">Loading...</div>
+                  ) : (
+                    <select
+                      className="paj-select"
+                      value={selectedSubcategorySlug}
+                      onChange={(e) => handleSubcategoryChange(e.target.value)}
+                    >
+                      <option value="">— Choose a service —</option>
+                      {subcategories.map((sub) => (
+                        <option key={sub.id} value={sub.slug}>
+                          {sub.name}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                </div>
+              )}
+
+              {selectedSubcategorySlug && (
                 <div className="paj-questions">
                   {loadingQuestions ? (
                     <div className="paj-loading-inline">Loading questions...</div>
@@ -401,7 +449,7 @@ const PostaJob = () => {
                 <button
                   className="paj-btn-primary"
                   onClick={nextStep}
-                  disabled={!selectedSubcategory || loadingQuestions}
+                  disabled={!selectedSubcategorySlug || loadingQuestions}
                 >
                   Next →
                 </button>

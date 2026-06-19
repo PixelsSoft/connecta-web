@@ -394,6 +394,38 @@
   padding: 8px 0;
 }
 
+.paj-matched-service {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+  background: #f8faf8;
+  border: 1px solid #e2ebe4;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.paj-matched-service strong {
+  display: block;
+  font-size: 16px;
+  color: #111;
+  margin-bottom: 4px;
+}
+
+.paj-matched-service span {
+  font-size: 13px;
+  color: #666;
+}
+
+.paj-link-muted {
+  font-size: 14px;
+  color: var(--greenColor, #26472b);
+  font-weight: 600;
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
 /* ---- Responsive ---- */
 @media (max-width: 600px) {
   .paj-card {

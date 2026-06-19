@@ -83,6 +83,14 @@ const AppRouter = () => {
         <Route path="/reset-password" element={<ResetPassword />} />
 
         <Route
+          path="/post-a-job/:category/:subcategory"
+          element={
+            <CustomerOnlyRoute>
+              <PostaJob />
+            </CustomerOnlyRoute>
+          }
+        />
+        <Route
           path="/post-a-job/:category"
           element={
             <CustomerOnlyRoute>

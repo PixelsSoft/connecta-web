@@ -60,6 +60,7 @@ export const API_ENDPOINTS = {
     BY_SLUG: (slug) => `/categories/slug/${slug}`,
     QUESTIONS: (categoryId, subcategoryId) => `/categories/${categoryId}/subcategories/${subcategoryId}/questions`,
     QUESTIONS_BY_SLUG: (categorySlug, subcategorySlug) => `/categories/${categorySlug}/subcategories/${subcategorySlug}/questions-by-slug`,
+    SEARCH: '/categories/search',
   },
 
   // Transactions

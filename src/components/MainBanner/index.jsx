@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import servicearrowicon from '../../assets/images/service-arrow-icon.png';
-
 import { useTranslation } from 'react-i18next';
+import ServiceSearch from '../ServiceSearch/ServiceSearch';
+import { POPULAR_SERVICE_QUERIES } from '../../utils/categoryIcons';
+import '../ServiceSearch/ServiceSearch.css';
 
 import bannerIconImg1 from '../../assets/images/banner-icon-img1.png';
 import bannerIconImg2 from '../../assets/images/banner-icon-img2.png';
@@ -13,6 +15,8 @@ import bannerIconImg5 from '../../assets/images/banner-icon-img5.png';
 import bannerIconImg6 from '../../assets/images/banner-icon-img6.png';
 
 import COLXXL10 from '../COLXXL10';
+
+const BANNER_POPULAR = POPULAR_SERVICE_QUERIES.slice(0, 6);
 
 const MainBanner = () => {
   const { t } = useTranslation();
@@ -27,6 +31,20 @@ const MainBanner = () => {
             <div className='main__banner-content'>
               <h1>{t('home:banner.title')}</h1>
               <p>{t('home:banner.description')}</p>
+
+              {!isProfessional && (
+                <div className='main__banner-search'>
+                  <span className='main__banner-search-label'>
+                    {t('common:jobPosting.searchFirstTitle')}
+                  </span>
+                  <ServiceSearch
+                    variant='banner'
+                    placeholder={t('common:jobPosting.searchPlaceholder')}
+                    popularQueries={BANNER_POPULAR}
+                  />
+                </div>
+              )}
+
               <div className='main__banner-btns'>
                 {isProfessional ? (
                   <Link
@@ -41,7 +59,7 @@ const MainBanner = () => {
                     to='/find-professionals'
                     className='customBtn btn-bgRed btn__witchIcon '
                   >
-                    <span>{t('common:buttons.bookService')}</span>
+                    <span>{t('common:buttons.browseCategories')}</span>
                     <img src={servicearrowicon} alt='Icon' />
                   </Link>
                 )}

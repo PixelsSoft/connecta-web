@@ -14,8 +14,9 @@ const axiosInstance = axios.create({
 // Request interceptor - Add token to requests and start loading
 axiosInstance.interceptors.request.use(
   (config) => {
-    // Start loading
-    loadingManager.startLoading();
+    if (!config.skipGlobalLoading) {
+      loadingManager.startLoading();
+    }
     
     const token = localStorage.getItem('auth_token');
     if (token) {
@@ -33,13 +34,15 @@ axiosInstance.interceptors.request.use(
 // Response interceptor - Handle errors and stop loading
 axiosInstance.interceptors.response.use(
   (response) => {
-    // Stop loading on success
-    loadingManager.stopLoading();
+    if (!response.config?.skipGlobalLoading) {
+      loadingManager.stopLoading();
+    }
     return response;
   },
   async (error) => {
-    // Stop loading on error
-    loadingManager.stopLoading();
+    if (!error.config?.skipGlobalLoading) {
+      loadingManager.stopLoading();
+    }
     
     const originalRequest = error.config;
 
