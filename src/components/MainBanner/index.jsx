@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import servicearrowicon from '../../assets/images/service-arrow-icon.png';
 import { useTranslation } from 'react-i18next';
 import ServiceSearch from '../ServiceSearch/ServiceSearch';
-import { POPULAR_SERVICE_QUERIES } from '../../utils/categoryIcons';
+import { getPopularServiceQueries } from '../../utils/categoryIcons';
 import '../ServiceSearch/ServiceSearch.css';
 
 import bannerIconImg1 from '../../assets/images/banner-icon-img1.png';
@@ -16,10 +16,9 @@ import bannerIconImg6 from '../../assets/images/banner-icon-img6.png';
 
 import COLXXL10 from '../COLXXL10';
 
-const BANNER_POPULAR = POPULAR_SERVICE_QUERIES.slice(0, 6);
-
 const MainBanner = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const bannerPopular = getPopularServiceQueries(i18n.language).slice(0, 6);
   const { isAuthenticated, user } = useSelector((state) => state.auth);
   const isProfessional = isAuthenticated && user?.user_type === 'professional';
 
@@ -40,7 +39,7 @@ const MainBanner = () => {
                   <ServiceSearch
                     variant='banner'
                     placeholder={t('common:jobPosting.searchPlaceholder')}
-                    popularQueries={BANNER_POPULAR}
+                    popularQueries={bannerPopular}
                   />
                 </div>
               )}

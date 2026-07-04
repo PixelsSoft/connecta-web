@@ -4,14 +4,14 @@ import DefaultLayout2 from "../../components/Layouts/DefaultLayout2";
 import { useTranslation } from "react-i18next";
 import { fetchCategoriesWithSubcategories } from "../../store/slices/categorySlice";
 import ServiceSearch from "../../components/ServiceSearch/ServiceSearch";
-import { getCategoryIcon, POPULAR_SERVICE_QUERIES } from "../../utils/categoryIcons";
+import { getCategoryIcon, getPopularServiceQueries } from "../../utils/categoryIcons";
 import jobPostingBannerImg from "../../assets/images/jobPosting-banner-img.png";
 import { Link } from "react-router-dom";
 import "../../components/ServiceSearch/ServiceSearch.css";
 
 const FindProfessional = () => {
   const dispatch = useDispatch();
-  const { t } = useTranslation("common");
+  const { t, i18n } = useTranslation("common");
   const { categoriesWithSubcategories, loading } = useSelector((state) => state.category);
   const [showBrowse, setShowBrowse] = useState(false);
 
@@ -42,7 +42,7 @@ const FindProfessional = () => {
 
                 <ServiceSearch
                   placeholder={t("jobPosting.searchPlaceholder")}
-                  popularQueries={POPULAR_SERVICE_QUERIES}
+                  popularQueries={getPopularServiceQueries(i18n.language)}
                   autoFocus
                 />
 

@@ -50,3 +50,20 @@ export const POPULAR_SERVICE_QUERIES = [
   'Gardener',
   'Solar panel',
 ];
+
+export const POPULAR_SERVICE_QUERIES_DE = [
+  'Elektriker',
+  'Maler',
+  'Reinigungsservice',
+  'Glasgeländer',
+  'Klempner',
+  'Umzugsunternehmen',
+  'Architekt',
+  'Küchenrenovierung',
+  'Poolinstallation',
+  'Gärtner',
+  'Solarpanel',
+];
+
+export const getPopularServiceQueries = (language) =>
+  String(language || '').startsWith('de') ? POPULAR_SERVICE_QUERIES_DE : POPULAR_SERVICE_QUERIES;
