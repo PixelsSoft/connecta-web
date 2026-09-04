@@ -1,8 +1,7 @@
 const apiConfig = {
-  // baseURL: 'http://localhost:8000/api/v1',
-  baseURL: 'https://backendconnecta.pixelssoft.com/api/v1',
-  // cdnURL: 'http://localhost:8000/storage',
-  cdnURL: 'https://backendconnecta.pixelssoft.com/storage',
+  // Built from VITE_API_BASE_URL in .env (e.g. https://backendconnecta.pixelssoft.com/api)
+  baseURL: `${(import.meta.env.VITE_API_BASE_URL || 'https://backendconnecta.pixelssoft.com/api').replace(/\/$/, '')}/v1`,
+  cdnURL: `${(import.meta.env.VITE_API_BASE_URL || 'https://backendconnecta.pixelssoft.com/api').replace(/\/api\/?$/, '')}/storage`,
 };
 
 export default apiConfig;

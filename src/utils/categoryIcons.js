@@ -65,5 +65,75 @@ export const POPULAR_SERVICE_QUERIES_DE = [
   'Solarpanel',
 ];
 
-export const getPopularServiceQueries = (language) =>
-  String(language || '').startsWith('de') ? POPULAR_SERVICE_QUERIES_DE : POPULAR_SERVICE_QUERIES;
+export const POPULAR_SERVICE_QUERIES_FR = [
+  'Électricien',
+  'Peintre',
+  'Nettoyage',
+  'Garde-corps en verre',
+  'Plombier',
+  'Déménagement',
+  'Architecte',
+  'Rénovation cuisine',
+  'Installation piscine',
+  'Jardinier',
+  'Panneau solaire',
+];
+
+export const POPULAR_SERVICE_QUERIES_IT = [
+  'Elettricista',
+  'Pittore',
+  'Pulizia',
+  'Ringhiera in vetro',
+  'Idraulico',
+  'Trasloco',
+  'Architetto',
+  'Ristrutturazione cucina',
+  'Installazione piscina',
+  'Giardiniere',
+  'Pannello solare',
+];
+
+export function resolveUiLanguage(language) {
+  if (typeof localStorage !== 'undefined') {
+    try {
+      const stored = String(localStorage.getItem('connecta_ui_lang') || '').toLowerCase();
+      if (stored.startsWith('de') || stored.startsWith('fr') || stored.startsWith('it') || stored.startsWith('en')) {
+        return stored.slice(0, 2);
+      }
+    } catch {
+      /* ignore */
+    }
+  }
+
+  const fromArg = String(language || '').toLowerCase();
+  if (fromArg.startsWith('de') || fromArg.startsWith('fr') || fromArg.startsWith('it') || fromArg.startsWith('en')) {
+    // i18n-shim is hardcoded to "en"; prefer googtrans/html when available
+    if (fromArg !== 'en') return fromArg.slice(0, 2);
+  }
+
+  if (typeof document !== 'undefined') {
+    const htmlLang = String(document.documentElement?.lang || '').toLowerCase();
+    if (htmlLang.startsWith('de') || htmlLang.startsWith('fr') || htmlLang.startsWith('it')) {
+      return htmlLang.slice(0, 2);
+    }
+
+    const googtrans =
+      document.cookie
+        .split(';')
+        .map((c) => c.trim())
+        .find((c) => c.startsWith('googtrans=')) || '';
+    const match = googtrans.match(/googtrans=\/[a-z]{2}\/([a-z]{2})/i);
+    if (match?.[1] && match[1].toLowerCase() !== 'en') return match[1].toLowerCase();
+  }
+
+  if (fromArg.startsWith('en')) return 'en';
+  return 'en';
+}
+
+export const getPopularServiceQueries = (language) => {
+  const lang = resolveUiLanguage(language);
+  if (lang === 'de') return POPULAR_SERVICE_QUERIES_DE;
+  if (lang === 'fr') return POPULAR_SERVICE_QUERIES_FR;
+  if (lang === 'it') return POPULAR_SERVICE_QUERIES_IT;
+  return POPULAR_SERVICE_QUERIES;
+};

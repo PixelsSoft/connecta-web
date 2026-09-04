@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import servicearrowicon from '../../assets/images/service-arrow-icon.png';
 import { useTranslation } from 'react-i18next';
 import ServiceSearch from '../ServiceSearch/ServiceSearch';
-import { getPopularServiceQueries } from '../../utils/categoryIcons';
+import { getPopularServiceQueries, resolveUiLanguage } from '../../utils/categoryIcons';
 import '../ServiceSearch/ServiceSearch.css';
 
 import bannerIconImg1 from '../../assets/images/banner-icon-img1.png';
@@ -18,9 +18,27 @@ import COLXXL10 from '../COLXXL10';
 
 const MainBanner = () => {
   const { t, i18n } = useTranslation();
-  const bannerPopular = getPopularServiceQueries(i18n.language).slice(0, 6);
+  const [uiLang, setUiLang] = useState(() => resolveUiLanguage(i18n.language));
+  const bannerPopular = getPopularServiceQueries(uiLang).slice(0, 6);
   const { isAuthenticated, user } = useSelector((state) => state.auth);
   const isProfessional = isAuthenticated && user?.user_type === 'professional';
+
+  useEffect(() => {
+    const syncLang = (event) => {
+      const next = event?.detail?.lang || resolveUiLanguage(i18n.language);
+      setUiLang(resolveUiLanguage(next));
+    };
+    window.addEventListener('connecta:language', syncLang);
+    // Re-check after Google Translate applies html lang
+    const timer = setInterval(() => {
+      const resolved = resolveUiLanguage(i18n.language);
+      setUiLang((prev) => (prev !== resolved ? resolved : prev));
+    }, 1500);
+    return () => {
+      window.removeEventListener('connecta:language', syncLang);
+      clearInterval(timer);
+    };
+  }, [i18n.language]);
 
   return (
     <section className='main-banner'>

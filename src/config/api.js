@@ -1,5 +1,7 @@
-// API Configuration
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
+// API Configuration — prefer .env; never default to 127.0.0.1
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  'https://backendconnecta.pixelssoft.com/api';
 
 // API Endpoints
 export const API_ENDPOINTS = {

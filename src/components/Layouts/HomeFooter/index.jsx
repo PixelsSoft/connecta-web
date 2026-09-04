@@ -21,6 +21,12 @@ const HomeFooter = () => {
   const [selectedLang, setSelectedLang] = useState('');
 
   const handleLanguageChange = (lang) => {
+    try {
+      localStorage.setItem('connecta_ui_lang', lang);
+      window.dispatchEvent(new CustomEvent('connecta:language', { detail: { lang } }));
+    } catch {
+      /* ignore storage errors */
+    }
     applyGoogleTranslateLanguage(lang);
   };
 

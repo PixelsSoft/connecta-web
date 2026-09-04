@@ -4,7 +4,7 @@ import DefaultLayout2 from "../../components/Layouts/DefaultLayout2";
 import { useTranslation } from "react-i18next";
 import { fetchCategoriesWithSubcategories } from "../../store/slices/categorySlice";
 import ServiceSearch from "../../components/ServiceSearch/ServiceSearch";
-import { getCategoryIcon, getPopularServiceQueries } from "../../utils/categoryIcons";
+import { getCategoryIcon, getPopularServiceQueries, resolveUiLanguage } from "../../utils/categoryIcons";
 import jobPostingBannerImg from "../../assets/images/jobPosting-banner-img.png";
 import { Link } from "react-router-dom";
 import "../../components/ServiceSearch/ServiceSearch.css";
@@ -42,7 +42,7 @@ const FindProfessional = () => {
 
                 <ServiceSearch
                   placeholder={t("jobPosting.searchPlaceholder")}
-                  popularQueries={getPopularServiceQueries(i18n.language)}
+                  popularQueries={getPopularServiceQueries(resolveUiLanguage(i18n.language))}
                   autoFocus
                 />
 
